@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">TourIn</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="search_less_travel_more">Search less, Travel More!</string>
+    <string name="we_will_help_find_tourist_attractions_according_to_your_interests">We will help find tourist attractions according to your interests.</string>
+    <string name="enjoy_your_vacation">Enjoy Your Vacation</string>
+    <string name="we_will_guide_you_to_find_public_facilities">We will guide you to find public facilities.</string>
+    <string name="let_s_travel">Let’s Travel!</string>
+    <string name="discover_new_bali_in_indonesia">Discover new bali in indonesia!</string>
+    <string name="get_started">Get Started</string>
+</resources>
