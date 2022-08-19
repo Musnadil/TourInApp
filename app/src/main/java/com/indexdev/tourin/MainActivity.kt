@@ -17,7 +17,9 @@ class MainActivity : AppCompatActivity() {
         R.id.splashScreenFragment,
         R.id.firstOnBoardingFragment,
         R.id.secondOnBoardingFragment,
-        R.id.thirdOnBoardingFragment
+        R.id.thirdOnBoardingFragment,
+        R.id.loginFragment,
+        R.id.registerFragment
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {

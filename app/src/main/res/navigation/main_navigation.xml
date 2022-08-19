@@ -47,18 +47,28 @@
         android:name="com.indexdev.tourin.ui.onboarding.ThirdOnBoardingFragment"
         android:label="fragment_third_on_boarding"
         tools:layout="@layout/fragment_third_on_boarding" >
+
         <action
-            android:id="@+id/action_thirdOnBoardingFragment_to_homeFragment"
-            app:destination="@id/homeFragment"
+            android:id="@+id/action_thirdOnBoardingFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
             app:popUpToInclusive="true"
             app:popUpTo="@id/thirdOnBoardingFragment"
             app:exitAnim="@anim/slide_out"
-            app:enterAnim="@anim/slide_in"
-            />
+            app:enterAnim="@anim/slide_in"/>
     </fragment>
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.indexdev.tourin.ui.home.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" />
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.indexdev.tourin.ui.auth.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" />
+    <fragment
+        android:id="@+id/registerFragment"
+        android:name="com.indexdev.tourin.ui.auth.RegisterFragment"
+        android:label="fragment_register"
+        tools:layout="@layout/fragment_register" />
 </navigation>

@@ -8,4 +8,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="white_theme">#EEEEEE</color>
+    <color name="grey_theme">#393E46</color>
+    <color name="light_grey_theme">#5A5D61</color>
+    <color name="teal_theme">#00ADB5</color>
 </resources>

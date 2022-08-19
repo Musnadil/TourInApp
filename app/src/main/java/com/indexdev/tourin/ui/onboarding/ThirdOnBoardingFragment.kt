@@ -23,7 +23,7 @@ class ThirdOnBoardingFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.btnNext.setOnClickListener {
-            findNavController().navigate(R.id.action_thirdOnBoardingFragment_to_homeFragment)
+            findNavController().navigate(R.id.action_thirdOnBoardingFragment_to_loginFragment)
         }
     }
 }

@@ -9,9 +9,9 @@
     <ImageView
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:foreground="@drawable/foreground_white"
+        android:foreground="@drawable/fg_white"
         android:scaleType="centerCrop"
-        android:src="@drawable/second_onboarding"
+        android:src="@drawable/bg_second_onboarding"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
