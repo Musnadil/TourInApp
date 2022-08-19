@@ -17,4 +17,9 @@
     <string name="log_in">Log In</string>
     <string name="don_t_have_an_account">Don\'t have an account?</string>
     <string name="create">Create</string>
+    <string name="bg_login">bg_login</string>
+    <string name="register">Register</string>
+    <string name="create_new_account">Create new account</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="already_have_account">Already have account?</string>
 </resources>
