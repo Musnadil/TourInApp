@@ -28,11 +28,11 @@ class LoginFragment : Fragment() {
         binding.btnLogin.setOnClickListener {
             binding.emailContainer.error = null
             binding.passwordContainer.error = null
-            if (binding.etEmail.text.isNullOrEmpty()){
+            if (binding.etEmail.text.isNullOrEmpty()) {
                 binding.emailContainer.error = "You must fill in the password field!"
-            }else if(binding.etPassword.text.isNullOrEmpty()){
+            } else if (binding.etPassword.text.isNullOrEmpty()) {
                 binding.passwordContainer.error = "You must fill in the password field!"
-            }else{
+            } else {
                 findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
             }
         }
