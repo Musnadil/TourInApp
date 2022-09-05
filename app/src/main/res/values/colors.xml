@@ -10,5 +10,7 @@
     <color name="white_theme">#EEEEEE</color>
     <color name="grey_theme">#393E46</color>
     <color name="light_grey_theme">#5A5D61</color>
+    <color name="light_grey">#B3B3B3</color>
     <color name="teal_theme">#00ADB5</color>
+    <color name="yellow_theme">#FFB800</color>
 </resources>

@@ -22,4 +22,9 @@
     <string name="create_new_account">Create new account</string>
     <string name="confirm_password">Confirm Password</string>
     <string name="already_have_account">Already have account?</string>
+    <string name="candi_borobudur">Candi Borobudur</string>
+    <string name="greeting">Good Morning,</string>
+    <string name="john_doe">John Doe</string>
+    <string name="popular_tour">Popular Tour</string>
+    <string name="recommended_for_you">Recommended for you</string>
 </resources>
