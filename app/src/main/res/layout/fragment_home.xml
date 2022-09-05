@@ -4,12 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.home.HomeFragment">
+    tools:context=".ui.home.HomeFragment"
+    android:fitsSystemWindows="true">
 
     <ImageView
         android:id="@+id/iv_profile"
         android:layout_width="48dp"
         android:layout_height="48dp"
+        android:layout_marginTop="16dp"
         android:layout_marginStart="16dp"
         android:background="@drawable/circle"
         android:backgroundTint="@color/light_grey"
