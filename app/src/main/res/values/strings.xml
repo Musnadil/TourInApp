@@ -27,4 +27,6 @@
     <string name="john_doe">John Doe</string>
     <string name="popular_tour">Popular Tour</string>
     <string name="recommended_for_you">Recommended for you</string>
+    <string name="route">Route</string>
+    <string name="example_address">Jl. Badrawati, Kw. Candi Borobudur, Borobudur, Kec. Borobudur, Kabupaten Magelang, Jawa Tengah</string>
 </resources>

@@ -26,11 +26,12 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/bottom_desc"
         android:layout_width="match_parent"
-        android:layout_height="96dp"
+        android:layout_height="128dp"
         android:background="@drawable/rounded_top"
         app:layout_constraintBottom_toTopOf="@id/navigation_bar">
 
         <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/lottie_location"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_marginStart="16dp"
@@ -41,6 +42,61 @@
             app:lottie_fileName="location_pin.json"
             app:lottie_loop="true"
             app:lottie_speed="1" />
+
+        <TextView
+            android:id="@+id/btn_route"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/bg_start"
+            android:backgroundTint="@color/teal_theme"
+            android:drawablePadding="8dp"
+            android:paddingVertical="4dp"
+            android:paddingStart="6dp"
+            android:paddingEnd="8dp"
+            android:text="@string/route"
+            android:textColor="@color/white_theme"
+            android:textFontWeight="600"
+            android:textSize="16sp"
+            app:drawableStartCompat="@drawable/ic_directions"
+            app:drawableTint="@color/white_theme"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="8dp"
+            android:orientation="vertical"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/btn_route"
+            app:layout_constraintStart_toEndOf="@id/lottie_location"
+            >
+            <TextView
+                android:id="@+id/tv_tour_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:maxLines="1"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:text="Destination Name"
+                />
+            <TextView
+                android:id="@+id/tv_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLines="3"
+                android:ellipsize="end"
+                android:text="@string/example_address"
+                />
+
+        </LinearLayout>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <View

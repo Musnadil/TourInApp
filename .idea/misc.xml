@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/KULIAH/SMT7(Magang)/Android Studio/TourIn/app/src/main/res/drawable/background_start.xml" value="0.1575" />
+        <entry key="..\:/KULIAH/SMT7(Magang)/Android Studio/TourIn/app/src/main/res/drawable/bg_start.xml" value="0.148" />
         <entry key="..\:/KULIAH/SMT7(Magang)/Android Studio/TourIn/app/src/main/res/drawable/bg_til.xml" value="0.157" />
         <entry key="..\:/KULIAH/SMT7(Magang)/Android Studio/TourIn/app/src/main/res/drawable/circle.xml" value="0.1575" />
         <entry key="..\:/KULIAH/SMT7(Magang)/Android Studio/TourIn/app/src/main/res/drawable/custom_cursor_et.xml" value="0.157" />
@@ -18,12 +19,13 @@
         <entry key="..\:/KULIAH/SMT7(Magang)/Android Studio/TourIn/app/src/main/res/drawable/ic_person.xml" value="0.157" />
         <entry key="..\:/KULIAH/SMT7(Magang)/Android Studio/TourIn/app/src/main/res/drawable/ic_star.xml" value="0.1925" />
         <entry key="..\:/KULIAH/SMT7(Magang)/Android Studio/TourIn/app/src/main/res/drawable/rounded_top.xml" value="0.148" />
+        <entry key="..\:/KULIAH/SMT7(Magang)/Android Studio/TourIn/app/src/main/res/layout-v28/fragment_maps.xml" value="0.2734375" />
         <entry key="..\:/KULIAH/SMT7(Magang)/Android Studio/TourIn/app/src/main/res/layout/activity_main.xml" value="0.1716612377850163" />
         <entry key="..\:/KULIAH/SMT7(Magang)/Android Studio/TourIn/app/src/main/res/layout/activity_maps.xml" value="0.1716612377850163" />
         <entry key="..\:/KULIAH/SMT7(Magang)/Android Studio/TourIn/app/src/main/res/layout/fragment_first_on_boarding.xml" value="0.1716612377850163" />
         <entry key="..\:/KULIAH/SMT7(Magang)/Android Studio/TourIn/app/src/main/res/layout/fragment_home.xml" value="0.264" />
         <entry key="..\:/KULIAH/SMT7(Magang)/Android Studio/TourIn/app/src/main/res/layout/fragment_login.xml" value="0.1742671009771987" />
-        <entry key="..\:/KULIAH/SMT7(Magang)/Android Studio/TourIn/app/src/main/res/layout/fragment_maps.xml" value="0.21376656690893545" />
+        <entry key="..\:/KULIAH/SMT7(Magang)/Android Studio/TourIn/app/src/main/res/layout/fragment_maps.xml" value="0.22245673279864922" />
         <entry key="..\:/KULIAH/SMT7(Magang)/Android Studio/TourIn/app/src/main/res/layout/fragment_register.xml" value="0.264" />
         <entry key="..\:/KULIAH/SMT7(Magang)/Android Studio/TourIn/app/src/main/res/layout/fragment_second_on_boarding.xml" value="0.1716612377850163" />
         <entry key="..\:/KULIAH/SMT7(Magang)/Android Studio/TourIn/app/src/main/res/layout/fragment_splash_screen.xml" value="0.16111111111111112" />
