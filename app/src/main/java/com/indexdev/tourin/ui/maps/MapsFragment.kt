@@ -21,8 +21,9 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.tasks.Task
 import com.indexdev.tourin.R
 import com.indexdev.tourin.databinding.FragmentMapsBinding
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class MapsFragment : Fragment(), GoogleMap.OnMarkerClickListener {
 
     private var _binding: FragmentMapsBinding? = null

@@ -8,7 +8,9 @@ import androidx.navigation.findNavController
 import com.indexdev.tourin.databinding.ActivityMainBinding
 import com.indexdev.tourin.ui.lightStatusBar
 import com.indexdev.tourin.ui.setFullScreen
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 @Suppress("DEPRECATION")
 @SuppressLint("InlinedApi")
 class MainActivity : AppCompatActivity() {

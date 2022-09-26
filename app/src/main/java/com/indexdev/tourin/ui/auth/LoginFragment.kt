@@ -8,7 +8,10 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.indexdev.tourin.R
 import com.indexdev.tourin.databinding.FragmentLoginBinding
+import com.indexdev.tourin.ui.auth.RegisterFragment.Companion.EMAIL
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class LoginFragment : Fragment() {
     private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
@@ -22,6 +25,8 @@ class LoginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val email = arguments?.getString(EMAIL)
+        binding.etEmail.setText(email)
         binding.btnCreateAccount.setOnClickListener {
             findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
         }
@@ -29,7 +34,7 @@ class LoginFragment : Fragment() {
             binding.emailContainer.error = null
             binding.passwordContainer.error = null
             if (binding.etEmail.text.isNullOrEmpty()) {
-                binding.emailContainer.error = "You must fill in the password field!"
+                binding.emailContainer.error = "You must fill in the email field!"
             } else if (binding.etPassword.text.isNullOrEmpty()) {
                 binding.passwordContainer.error = "You must fill in the password field!"
             } else {

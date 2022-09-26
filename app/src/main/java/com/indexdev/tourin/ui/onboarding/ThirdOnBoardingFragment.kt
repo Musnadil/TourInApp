@@ -11,7 +11,9 @@ import com.indexdev.tourin.R
 import com.indexdev.tourin.databinding.FragmentThirdOnBoardingBinding
 import com.indexdev.tourin.ui.splashscreen.SplashScreenFragment.Companion.ON_BOARDING
 import com.indexdev.tourin.ui.splashscreen.SplashScreenFragment.Companion.SHARED_PREF
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ThirdOnBoardingFragment : Fragment() {
     private var _binding: FragmentThirdOnBoardingBinding? = null
     private val binding get() = _binding!!

@@ -8,7 +8,9 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.indexdev.tourin.R
 import com.indexdev.tourin.databinding.FragmentFirstOnBoardingBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class FirstOnBoardingFragment : Fragment() {
     private var _binding: FragmentFirstOnBoardingBinding? = null
     private val binding get() = _binding!!
