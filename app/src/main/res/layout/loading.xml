@@ -1,19 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/loading"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:alpha=".7"
-    android:background="@color/black"
-    android:id="@+id/loading">
+    android:layout_height="match_parent">
 
-    <com.airbnb.lottie.LottieAnimationView
-        android:layout_width="168dp"
-        android:layout_height="168dp"
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha=".7"
+        android:background="@color/black" />
+
+    <View
+        android:id="@+id/white_rounded"
+        android:layout_width="96dp"
+        android:layout_height="74dp"
+        android:background="@drawable/bg_til"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:layout_width="128dp"
+        android:layout_height="128dp"
+        app:layout_constraintBottom_toBottomOf="@id/white_rounded"
+        app:layout_constraintEnd_toEndOf="@id/white_rounded"
+        app:layout_constraintStart_toStartOf="@id/white_rounded"
+        app:layout_constraintTop_toTopOf="@id/white_rounded"
         app:lottie_autoPlay="true"
         app:lottie_fileName="loading.json"
         app:lottie_loop="true" />

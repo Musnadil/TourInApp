@@ -65,7 +65,4 @@ class HomeFragment : Fragment() {
             else -> {binding.tvGreating.text = "Good Morning,"}
         }
     }
-
-    private fun locationPermission(){
-    }
 }

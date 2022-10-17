@@ -12,6 +12,7 @@ import com.indexdev.tourin.R
 import com.indexdev.tourin.data.api.Status.*
 import com.indexdev.tourin.data.model.request.RegisterRequest
 import com.indexdev.tourin.databinding.FragmentRegisterBinding
+import com.indexdev.tourin.ui.alertDialog
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -21,7 +22,7 @@ class RegisterFragment : Fragment() {
     private val authViewModel: AuthViewModel by viewModels()
     val bundle = Bundle()
 
-    companion object{
+    companion object {
         const val EMAIL = "email"
     }
 
@@ -63,7 +64,7 @@ class RegisterFragment : Fragment() {
                 binding.confirmPasswordContainer.error = "Password confirmation failed!"
                 binding.etConfirmPassword.requestFocus()
             } else {
-                bundle.putString(EMAIL,binding.etEmail.text.toString())
+                bundle.putString(EMAIL, binding.etEmail.text.toString())
                 val registerRequest = RegisterRequest(
                     binding.etEmail.text.toString(),
                     binding.etUsername.text.toString(),
@@ -84,29 +85,42 @@ class RegisterFragment : Fragment() {
                     binding.loading.root.visibility = View.GONE
                     when (resources.data?.code) {
                         200 -> {
-                            AlertDialog.Builder(requireContext())
-                                .setTitle("Successful Registration")
-                                .setMessage(resources.data.message)
-                                .setPositiveButton("OK") { positive, _ ->
-                                    positive.dismiss()
-                                    findNavController().navigate(R.id.action_registerFragment_to_loginFragment,bundle)
-                                }
-                                .show()
+                            alertDialog(requireContext(),
+                                "Successful Registration",
+                                resources.data.message,
+                                findNavController().navigate(
+                                R.id.action_registerFragment_to_loginFragment,
+                                bundle
+                            ))
+//                            AlertDialog.Builder(requireContext())
+//                                .setTitle("Successful Registration")
+//                                .setMessage(resources.data.message)
+//                                .setCancelable(false)
+//                                .setPositiveButton("OK") { positive, _ ->
+//                                    positive.dismiss()
+//                                    findNavController().navigate(
+//                                        R.id.action_registerFragment_to_loginFragment,
+//                                        bundle
+//                                    )
+//                                }
+//                                .show()
                         }
                         401 -> {
                             AlertDialog.Builder(requireContext())
                                 .setTitle("Registration failed")
                                 .setMessage(resources.data.message)
+                                .setCancelable(false)
                                 .setPositiveButton("OK") { positive, _ ->
                                     positive.dismiss()
                                     binding.etEmail.requestFocus()
                                 }
                                 .show()
                         }
-                        402 ->{
+                        402 -> {
                             AlertDialog.Builder(requireContext())
                                 .setTitle("Registration failed")
                                 .setMessage(resources.data.message)
+                                .setCancelable(false)
                                 .setPositiveButton("OK") { positive, _ ->
                                     positive.dismiss()
                                     binding.etEmail.requestFocus()
@@ -120,6 +134,7 @@ class RegisterFragment : Fragment() {
                     AlertDialog.Builder(requireContext())
                         .setTitle("Message")
                         .setMessage(resources.message ?: "error")
+                        .setCancelable(false)
                         .setPositiveButton("OK") { positiveButton, _ ->
                             positiveButton.dismiss()
                         }
