@@ -20,7 +20,12 @@ class SplashScreenFragment : Fragment() {
     companion object {
         const val SHARED_PREF = "SHAREDPREF"
         const val ON_BOARDING = "ON_BOARDING"
+        const val ID_USER = "ID_USER"
+        const val USERNAME = "USERNAME"
+        const val TOKEN = "TOKEN"
+        const val DEFAULT_TOKEN = "DEFAULT_TOKEN"
     }
+
     private var _binding: FragmentSplashScreenBinding? = null
     private val binding get() = _binding!!
     override fun onCreateView(
@@ -35,11 +40,16 @@ class SplashScreenFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val preference = requireContext().getSharedPreferences(SHARED_PREF,Context.MODE_PRIVATE)
         val showOnBoarding = preference.getBoolean(ON_BOARDING,true)
+        val login = preference.getString(TOKEN, DEFAULT_TOKEN)
         Handler(Looper.getMainLooper()).postDelayed({
-            if (showOnBoarding){
-                findNavController().navigate(R.id.action_splashScreenFragment_to_firstOnBoardingFragment)
+            if (login != DEFAULT_TOKEN){
+                findNavController().navigate(R.id.action_splashScreenFragment_to_homeFragment)
             }else{
-                findNavController().navigate(R.id.action_splashScreenFragment_to_loginFragment)
+                if (showOnBoarding){
+                    findNavController().navigate(R.id.action_splashScreenFragment_to_firstOnBoardingFragment)
+                }else{
+                    findNavController().navigate(R.id.action_splashScreenFragment_to_loginFragment)
+                }
             }
         },3000)
     }

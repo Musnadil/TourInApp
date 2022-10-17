@@ -1,6 +1,7 @@
 package com.indexdev.tourin.ui.auth
 
 import android.app.AlertDialog
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +14,10 @@ import com.indexdev.tourin.data.api.Status.*
 import com.indexdev.tourin.data.model.request.LoginRequest
 import com.indexdev.tourin.databinding.FragmentLoginBinding
 import com.indexdev.tourin.ui.auth.RegisterFragment.Companion.EMAIL
+import com.indexdev.tourin.ui.splashscreen.SplashScreenFragment.Companion.ID_USER
+import com.indexdev.tourin.ui.splashscreen.SplashScreenFragment.Companion.SHARED_PREF
+import com.indexdev.tourin.ui.splashscreen.SplashScreenFragment.Companion.TOKEN
+import com.indexdev.tourin.ui.splashscreen.SplashScreenFragment.Companion.USERNAME
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -74,7 +79,8 @@ class LoginFragment : Fragment() {
     }
 
     private fun resultLogin() {
-
+        val preference = requireContext().getSharedPreferences(SHARED_PREF,Context.MODE_PRIVATE)
+        val userEditor = preference.edit()
         authViewModel.login.observe(viewLifecycleOwner) { resources ->
             when (resources.status) {
                 LOADING -> {
@@ -84,6 +90,10 @@ class LoginFragment : Fragment() {
                     binding.loading.root.visibility = View.GONE
                     when (resources.data?.code) {
                         200 -> {
+                            userEditor.putString(ID_USER, resources.data.id)
+                            userEditor.putString(USERNAME, resources.data.username)
+                            userEditor.putString(TOKEN, resources.data.token)
+                            userEditor.apply()
                             findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
                         }
                         405 -> {
