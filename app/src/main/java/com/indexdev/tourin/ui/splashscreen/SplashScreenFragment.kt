@@ -23,7 +23,7 @@ class SplashScreenFragment : Fragment() {
         const val ID_USER = "ID_USER"
         const val USERNAME = "USERNAME"
         const val TOKEN = "TOKEN"
-        const val DEFAULT_TOKEN = "DEFAULT_TOKEN"
+        const val DEFAULT_VALUE = "DEFAULT_VALUE"
     }
 
     private var _binding: FragmentSplashScreenBinding? = null
@@ -40,9 +40,9 @@ class SplashScreenFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val preference = requireContext().getSharedPreferences(SHARED_PREF,Context.MODE_PRIVATE)
         val showOnBoarding = preference.getBoolean(ON_BOARDING,true)
-        val login = preference.getString(TOKEN, DEFAULT_TOKEN)
+        val login = preference.getString(TOKEN, DEFAULT_VALUE)
         Handler(Looper.getMainLooper()).postDelayed({
-            if (login != DEFAULT_TOKEN){
+            if (login != DEFAULT_VALUE){
                 findNavController().navigate(R.id.action_splashScreenFragment_to_homeFragment)
             }else{
                 if (showOnBoarding){
