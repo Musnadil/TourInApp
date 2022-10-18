@@ -29,4 +29,9 @@
     <string name="recommended_for_you">Recommended for you</string>
     <string name="route">Route</string>
     <string name="example_address">Jl. Badrawati, Kw. Candi Borobudur, Borobudur, Kec. Borobudur, Kabupaten Magelang, Jawa Tengah</string>
+    <string name="failed_login">Failed login</string>
+    <string name="message">Message</string>
+    <string name="error">Error</string>
+    <string name="registration_failed">Registration failed</string>
+    <string name="successful_registration">Successful Registration</string>
 </resources>

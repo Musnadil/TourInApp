@@ -1,6 +1,5 @@
 package com.indexdev.tourin.ui.auth
 
-import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -85,60 +84,37 @@ class RegisterFragment : Fragment() {
                     binding.loading.root.visibility = View.GONE
                     when (resources.data?.code) {
                         200 -> {
-                            alertDialog(requireContext(),
-                                "Successful Registration",
+                            alertDialog(
+                                requireContext(),
+                                getString(R.string.successful_registration),
                                 resources.data.message,
                                 findNavController().navigate(
-                                R.id.action_registerFragment_to_loginFragment,
-                                bundle
-                            ))
-//                            AlertDialog.Builder(requireContext())
-//                                .setTitle("Successful Registration")
-//                                .setMessage(resources.data.message)
-//                                .setCancelable(false)
-//                                .setPositiveButton("OK") { positive, _ ->
-//                                    positive.dismiss()
-//                                    findNavController().navigate(
-//                                        R.id.action_registerFragment_to_loginFragment,
-//                                        bundle
-//                                    )
-//                                }
-//                                .show()
+                                    R.id.action_registerFragment_to_loginFragment,
+                                    bundle
+                                )
+                            )
                         }
                         401 -> {
-                            AlertDialog.Builder(requireContext())
-                                .setTitle("Registration failed")
-                                .setMessage(resources.data.message)
-                                .setCancelable(false)
-                                .setPositiveButton("OK") { positive, _ ->
-                                    positive.dismiss()
-                                    binding.etEmail.requestFocus()
-                                }
-                                .show()
+                            alertDialog(
+                                requireContext(),
+                                getString(R.string.registration_failed),
+                                resources.data.message,
+                                binding.etEmail.requestFocus()
+                            )
                         }
                         402 -> {
-                            AlertDialog.Builder(requireContext())
-                                .setTitle("Registration failed")
-                                .setMessage(resources.data.message)
-                                .setCancelable(false)
-                                .setPositiveButton("OK") { positive, _ ->
-                                    positive.dismiss()
-                                    binding.etEmail.requestFocus()
-                                }
-                                .show()
+                            alertDialog(
+                                requireContext(),
+                                getString(R.string.registration_failed),
+                                resources.data.message,
+                                binding.etEmail.requestFocus()
+                            )
                         }
                     }
                 }
                 ERROR -> {
                     binding.loading.root.visibility = View.GONE
-                    AlertDialog.Builder(requireContext())
-                        .setTitle("Message")
-                        .setMessage(resources.message ?: "error")
-                        .setCancelable(false)
-                        .setPositiveButton("OK") { positiveButton, _ ->
-                            positiveButton.dismiss()
-                        }
-                        .show()
+                    alertDialog(requireContext(), getString(R.string.message), resources.message ?: getString(R.string.error))
                 }
             }
         }

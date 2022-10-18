@@ -1,6 +1,5 @@
 package com.indexdev.tourin.ui.auth
 
-import android.app.AlertDialog
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,6 +12,7 @@ import com.indexdev.tourin.R
 import com.indexdev.tourin.data.api.Status.*
 import com.indexdev.tourin.data.model.request.LoginRequest
 import com.indexdev.tourin.databinding.FragmentLoginBinding
+import com.indexdev.tourin.ui.alertDialog
 import com.indexdev.tourin.ui.auth.RegisterFragment.Companion.EMAIL
 import com.indexdev.tourin.ui.splashscreen.SplashScreenFragment.Companion.ID_USER
 import com.indexdev.tourin.ui.splashscreen.SplashScreenFragment.Companion.SHARED_PREF
@@ -43,7 +43,6 @@ class LoginFragment : Fragment() {
         }
         login()
         resultLogin()
-
     }
 
 
@@ -67,19 +66,8 @@ class LoginFragment : Fragment() {
         }
     }
 
-    private fun failedDialog(message: String) {
-        AlertDialog.Builder(requireContext())
-            .setTitle("Failed login")
-            .setMessage(message)
-            .setCancelable(false)
-            .setPositiveButton("OK") { positive, _ ->
-                positive.dismiss()
-            }
-            .show()
-    }
-
     private fun resultLogin() {
-        val preference = requireContext().getSharedPreferences(SHARED_PREF,Context.MODE_PRIVATE)
+        val preference = requireContext().getSharedPreferences(SHARED_PREF, Context.MODE_PRIVATE)
         val userEditor = preference.edit()
         authViewModel.login.observe(viewLifecycleOwner) { resources ->
             when (resources.status) {
@@ -97,29 +85,39 @@ class LoginFragment : Fragment() {
                             findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
                         }
                         405 -> {
-                            failedDialog(resources.data.message)
+                            alertDialog(
+                                requireContext(),
+                                getString(R.string.failed_login),
+                                resources.data.message
+                            )
                         }
                         404 -> {
-                            failedDialog(resources.data.message)
+                            alertDialog(
+                                requireContext(),
+                                getString(R.string.failed_login),
+                                resources.data.message
+                            )
                         }
                         402 -> {
-                            failedDialog(resources.data.message)
+                            alertDialog(
+                                requireContext(),
+                                getString(R.string.failed_login),
+                                resources.data.message
+                            )
                         }
                     }
                 }
                 ERROR -> {
                     binding.loading.root.visibility = View.GONE
-                    AlertDialog.Builder(requireContext())
-                        .setTitle("Message")
-                        .setMessage(resources.message ?: "error")
-                        .setPositiveButton("OK") { positiveButton, _ ->
-                            positiveButton.dismiss()
-                        }
-                        .show()
+                    alertDialog(
+                        requireContext(),
+                        getString(R.string.message),
+                        resources.message ?: getString(
+                            R.string.error
+                        )
+                    )
                 }
-
             }
-
         }
     }
 }
