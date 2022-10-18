@@ -17,7 +17,8 @@
         android:backgroundTint="@color/light_grey"
         android:src="@drawable/ic_person"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="@string/image_profiles" />
 
     <TextView
         android:id="@+id/tv_greating"
@@ -60,7 +61,8 @@
         android:textFontWeight="600"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_username" />
+        app:layout_constraintTop_toBottomOf="@id/tv_username"
+        tools:targetApi="p" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_popular_tour"
@@ -84,7 +86,8 @@
         android:textFontWeight="600"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/rv_popular_tour" />
+        app:layout_constraintTop_toBottomOf="@id/rv_popular_tour"
+        tools:targetApi="p" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_recommendation"
@@ -103,12 +106,13 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:fontFamily="@font/poppins_regular"
-        android:text="All new bali tours"
+        android:text="@string/all_new_bali_tours"
         android:textColor="@color/black"
         android:textFontWeight="600"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/rv_recommendation" />
+        app:layout_constraintTop_toBottomOf="@id/rv_recommendation"
+        tools:targetApi="p" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_all_tour"

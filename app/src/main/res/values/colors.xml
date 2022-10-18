@@ -13,4 +13,6 @@
     <color name="light_grey">#B3B3B3</color>
     <color name="teal_theme">#00ADB5</color>
     <color name="yellow_theme">#FFB800</color>
+    <color name="grey">#dddddd</color>
+
 </resources>

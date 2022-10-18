@@ -4,6 +4,7 @@ import com.indexdev.tourin.data.model.request.LoginRequest
 import com.indexdev.tourin.data.model.request.RegisterRequest
 import com.indexdev.tourin.data.model.response.ResponseLogin
 import com.indexdev.tourin.data.model.response.ResponseRegister
+import com.indexdev.tourin.data.model.response.ResponseTourList
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
@@ -15,6 +16,6 @@ interface ApiService {
     @POST("login")
     suspend fun authLogin(@Body loginRequest: LoginRequest): ResponseLogin
 
-//    @GET("wisata")
-//    suspend fun getTour()
+    @GET("wisata")
+    suspend fun getTourList():List<ResponseTourList>
 }

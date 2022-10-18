@@ -34,4 +34,6 @@
     <string name="error">Error</string>
     <string name="registration_failed">Registration failed</string>
     <string name="successful_registration">Successful Registration</string>
+    <string name="all_new_bali_tours">All new bali tours</string>
+    <string name="image_profiles">image profiles</string>
 </resources>
