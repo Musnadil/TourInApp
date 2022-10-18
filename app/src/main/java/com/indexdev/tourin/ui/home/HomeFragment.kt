@@ -14,7 +14,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.indexdev.tourin.R
-import com.indexdev.tourin.data.api.Status
 import com.indexdev.tourin.data.api.Status.*
 import com.indexdev.tourin.data.model.response.ResponseTourList
 import com.indexdev.tourin.databinding.FragmentHomeBinding
@@ -30,6 +29,7 @@ class HomeFragment : Fragment() {
     private val binding get() = _binding!!
     private val homeViewModel: HomeViewModel by viewModels()
     private lateinit var popularTourAdapter: PopularTourAdapter
+    private val listPopularTour: MutableList<ResponseTourList> = ArrayList()
 
     companion object {
         private const val LOCATION_REQUEST_CODE = 1
@@ -65,7 +65,6 @@ class HomeFragment : Fragment() {
                 LOCATION_REQUEST_CODE
             )
             return
-
         }
     }
 
@@ -92,27 +91,32 @@ class HomeFragment : Fragment() {
             }
         }
     }
-    private fun fetchTourList(){
+
+    private fun fetchTourList() {
         homeViewModel.getTourList()
-        homeViewModel.tourList.observe(viewLifecycleOwner){ tourList ->
-            when(tourList.status){
+        homeViewModel.tourList.observe(viewLifecycleOwner) { tourList ->
+            when (tourList.status) {
                 SUCCESS -> {
-//                    binding.shimmerPopularTour.visibility = View.GONE
-                    popularTourAdapter.submitData(tourList.data)
+                    if (!tourList.data.isNullOrEmpty()) {
+                        listPopularTour.clear()
+                        val sortedList = tourList.data.sortedByDescending { data -> data.rating }
+                        for (i in 0..4) {
+                            listPopularTour.add(sortedList[i])
+                        }
+                    }
+                    popularTourAdapter.submitData(listPopularTour)
                 }
                 ERROR -> {
                     Toast.makeText(requireContext(), tourList.message, Toast.LENGTH_SHORT)
                         .show()
-//                    binding.shimmerPopularTour.visibility = View.GONE
                 }
-                LOADING ->{
-//                    binding.shimmerPopularTour.visibility = View.VISIBLE
-                }
+                LOADING -> {}
             }
         }
     }
-    private fun detailTour(){
-        popularTourAdapter = PopularTourAdapter(object : PopularTourAdapter.OnClickListener{
+
+    private fun detailTour() {
+        popularTourAdapter = PopularTourAdapter(object : PopularTourAdapter.OnClickListener {
             override fun onClickItem(data: ResponseTourList) {
                 TODO("Not yet implemented")
             }

@@ -1,6 +1,7 @@
 package com.indexdev.tourin.ui.home
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
@@ -9,7 +10,6 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.facebook.shimmer.Shimmer
 import com.facebook.shimmer.ShimmerDrawable
-import com.indexdev.tourin.R
 import com.indexdev.tourin.data.model.response.ResponseTourList
 import com.indexdev.tourin.databinding.ItemTourBinding
 
@@ -44,6 +44,7 @@ class PopularTourAdapter(private val onClickItem: OnClickListener) :
     val shimmerDrawable = ShimmerDrawable().apply {
         setShimmer(shimmer)
     }
+
     inner class ViewHolder(private val binding: ItemTourBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(data: ResponseTourList) {
@@ -53,7 +54,12 @@ class PopularTourAdapter(private val onClickItem: OnClickListener) :
                 .transform(CenterCrop())
                 .into(binding.ivTour)
             binding.tvTourName.text = data.wisata
-            binding.tvRate.text = data.rating
+            if (data.rating == "0") {
+                binding.icStar.visibility = View.GONE
+                binding.tvRate.visibility = View.GONE
+            } else {
+                binding.tvRate.text = data.rating
+            }
             binding.root.setOnClickListener {
                 onClickItem.onClickItem(data)
             }

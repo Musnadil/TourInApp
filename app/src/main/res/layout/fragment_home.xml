@@ -4,21 +4,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.home.HomeFragment"
-    android:fitsSystemWindows="true">
+    android:fitsSystemWindows="true"
+    tools:context=".ui.home.HomeFragment">
 
     <ImageView
         android:id="@+id/iv_profile"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:layout_marginTop="16dp"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
         android:background="@drawable/circle"
         android:backgroundTint="@color/light_grey"
+        android:contentDescription="@string/image_profiles"
         android:src="@drawable/ic_person"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:contentDescription="@string/image_profiles" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tv_greating"
@@ -79,14 +79,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="201dp"
         android:fontFamily="@font/poppins_regular"
         android:text="@string/recommended_for_you"
         android:textColor="@color/black"
         android:textFontWeight="600"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/rv_popular_tour"
+        app:layout_constraintTop_toBottomOf="@id/tv_popular_tour"
         tools:targetApi="p" />
 
     <androidx.recyclerview.widget.RecyclerView
@@ -104,14 +104,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="201dp"
         android:fontFamily="@font/poppins_regular"
         android:text="@string/all_new_bali_tours"
         android:textColor="@color/black"
         android:textFontWeight="600"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/rv_recommendation"
+        app:layout_constraintTop_toBottomOf="@id/tv_recommendation"
         tools:targetApi="p" />
 
     <androidx.recyclerview.widget.RecyclerView
