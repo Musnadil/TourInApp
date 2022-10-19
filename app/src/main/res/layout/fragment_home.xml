@@ -6,123 +6,137 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     tools:context=".ui.home.HomeFragment">
-
-    <ImageView
-        android:id="@+id/iv_profile"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/circle"
-        android:backgroundTint="@color/light_grey"
-        android:contentDescription="@string/image_profiles"
-        android:src="@drawable/ic_person"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/tv_greating"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:fontFamily="@font/poppins_regular"
-        android:text="@string/greeting"
-        android:textColor="@color/black"
-        android:textSize="16sp"
-        app:layout_constraintStart_toEndOf="@id/iv_profile"
-        app:layout_constraintTop_toTopOf="@id/iv_profile" />
-
-    <TextView
-        android:id="@+id/tv_username"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:ellipsize="end"
-        android:fontFamily="@font/poppins_regular"
-        android:text="@string/john_doe"
-        android:textColor="@color/black"
-        android:textFontWeight="900"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="@id/iv_profile"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/iv_profile"
-        tools:targetApi="p" />
-
-    <TextView
-        android:id="@+id/tv_popular_tour"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:fontFamily="@font/poppins_regular"
-        android:text="@string/popular_tour"
-        android:textColor="@color/black"
-        android:textFontWeight="600"
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_username"
-        tools:targetApi="p" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_popular_tour"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:orientation="horizontal"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintTop_toBottomOf="@id/tv_popular_tour"
-        tools:listitem="@layout/item_tour" />
-
-    <TextView
-        android:id="@+id/tv_recommendation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="201dp"
-        android:fontFamily="@font/poppins_regular"
-        android:text="@string/recommended_for_you"
-        android:textColor="@color/black"
-        android:textFontWeight="600"
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_popular_tour"
-        tools:targetApi="p" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_recommendation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:orientation="horizontal"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintTop_toBottomOf="@id/tv_recommendation"
-        tools:listitem="@layout/item_tour" />
-
-    <TextView
-        android:id="@+id/tv_all_tour"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="201dp"
-        android:fontFamily="@font/poppins_regular"
-        android:text="@string/all_new_bali_tours"
-        android:textColor="@color/black"
-        android:textFontWeight="600"
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_recommendation"
-        tools:targetApi="p" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_all_tour"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
+        android:scrollbars="none"
+        app:layout_constraintTop_toTopOf="parent"
         android:orientation="vertical"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintTop_toBottomOf="@id/tv_all_tour"
-        tools:listitem="@layout/item_all_tour" />
+        >
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/iv_profile"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/circle"
+                android:backgroundTint="@color/light_grey"
+                android:contentDescription="@string/image_profiles"
+                android:src="@drawable/ic_person"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_greating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:fontFamily="@font/poppins_regular"
+                android:text="@string/greeting"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                app:layout_constraintStart_toEndOf="@id/iv_profile"
+                app:layout_constraintTop_toTopOf="@id/iv_profile" />
+
+            <TextView
+                android:id="@+id/tv_username"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:ellipsize="end"
+                android:fontFamily="@font/poppins_regular"
+                android:text="@string/john_doe"
+                android:textColor="@color/black"
+                android:textFontWeight="900"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@id/iv_profile"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/iv_profile"
+                tools:targetApi="p" />
+
+            <TextView
+                android:id="@+id/tv_popular_tour"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/poppins_regular"
+                android:text="@string/popular_tour"
+                android:textColor="@color/black"
+                android:textFontWeight="600"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_username"
+                tools:targetApi="p" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_popular_tour"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintTop_toBottomOf="@id/tv_popular_tour"
+                tools:listitem="@layout/item_tour" />
+
+            <TextView
+                android:id="@+id/tv_recommendation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="201dp"
+                android:fontFamily="@font/poppins_regular"
+                android:text="@string/recommended_for_you"
+                android:textColor="@color/black"
+                android:textFontWeight="600"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_popular_tour"
+                tools:targetApi="p" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_recommendation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintTop_toBottomOf="@id/tv_recommendation"
+                tools:listitem="@layout/item_tour" />
+
+            <TextView
+                android:id="@+id/tv_all_tour"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="201dp"
+                android:fontFamily="@font/poppins_regular"
+                android:text="@string/all_new_bali_tours"
+                android:textColor="@color/black"
+                android:textFontWeight="600"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_recommendation"
+                tools:targetApi="p" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_all_tour"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:orientation="vertical"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintTop_toBottomOf="@id/tv_all_tour"
+                tools:listitem="@layout/item_all_tour" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
