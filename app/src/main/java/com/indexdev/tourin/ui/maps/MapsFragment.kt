@@ -1,7 +1,10 @@
 package com.indexdev.tourin.ui.maps
 
+import android.annotation.SuppressLint
 import android.content.IntentSender
+import android.location.Location
 import android.os.Bundle
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,21 +24,58 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.tasks.Task
 import com.indexdev.tourin.R
 import com.indexdev.tourin.databinding.FragmentMapsBinding
+import com.indexdev.tourin.ui.home.HomeFragment.Companion.LAT
+import com.indexdev.tourin.ui.home.HomeFragment.Companion.LONG
+import com.indexdev.tourin.ui.home.HomeFragment.Companion.TOUR_NAME
 import dagger.hilt.android.AndroidEntryPoint
+import kotlin.math.acos
+import kotlin.math.sin
 
 @AndroidEntryPoint
 class MapsFragment : Fragment(), GoogleMap.OnMarkerClickListener {
 
     private var _binding: FragmentMapsBinding? = null
     private val binding get() = _binding!!
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
+    private lateinit var mMap: GoogleMap
 
+    private val locationRequest: LocationRequest = LocationRequest.create().apply {
+        interval = 3000
+        fastestInterval = 3000
+        priority = Priority.PRIORITY_HIGH_ACCURACY
+        maxWaitTime = 5000
+    }
 
+    //last update location and calculate distance
+    private var locationCallback: LocationCallback = object : LocationCallback() {
+        override fun onLocationResult(locationResult: LocationResult) {
+            val locationList = locationResult.locations
+            if (locationList.isNotEmpty()) {
+                val location = locationList.last()
+                val calculateDistance = calculateDistanceInKM(
+                    location.latitude,
+                    location.longitude,
+                    arguments?.getString(LAT).toString().toDouble(),
+                    arguments?.getString(LONG).toString().toDouble())
+                if (calculateDistance>= 0.008){
+//                    calculateDistance
+                    // far from destination
+                }else{
+                    // in range of destination
+                }
+            }
+        }
+
+    }
+
+    @SuppressLint("MissingPermission")
     private val callback = OnMapReadyCallback { googleMap ->
-        val sydney = LatLng(-34.0, 151.0)
-        googleMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
-        googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
-        googleMap.setOnMarkerClickListener(this)
-        googleMap.uiSettings.isCompassEnabled = true
+        mMap = googleMap
+        mMap.setOnMarkerClickListener(this)
+        mMap.uiSettings.isMyLocationButtonEnabled = false
+        mMap.uiSettings.isCompassEnabled = true
+        mMap.isMyLocationEnabled = true
+        getLocationUpdate()
 
     }
 
@@ -48,10 +88,14 @@ class MapsFragment : Fragment(), GoogleMap.OnMarkerClickListener {
         return binding.root
     }
 
+    @SuppressLint("MissingPermission")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync(callback)
+
+        //set tour name
+        binding.tvTourName.text = arguments?.getString(TOUR_NAME)
 
         //get navBar Height
         val navBarHeight = resources.getIdentifier("navigation_bar_height", "dimen", "android")
@@ -75,10 +119,20 @@ class MapsFragment : Fragment(), GoogleMap.OnMarkerClickListener {
         rlp.topMargin = resources.getDimensionPixelSize(statusBarHeight)
         rlp.rightMargin = 16
 
+        //activate fused location
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
+
+
         binding.btnBack.setOnClickListener {
             findNavController().popBackStack()
         }
     }
+
+    private fun getPOI() {
+        //get from api
+    }
+
+    // ask for turn on gps
     private fun requestDevicesLocationSettings() {
         val locationReq = LocationRequest.create().apply {
             interval = 1000
@@ -91,7 +145,11 @@ class MapsFragment : Fragment(), GoogleMap.OnMarkerClickListener {
         val task: Task<LocationSettingsResponse> = client.checkLocationSettings(builder.build())
         task.addOnSuccessListener { locationSettingsResponse ->
             //move camera to destination
-            Toast.makeText(requireContext(), "sure", Toast.LENGTH_SHORT).show()
+            val lat = arguments?.getString(LAT)
+            val long = arguments?.getString(LONG)
+            val touristSites = LatLng(lat.toString().toDouble(), long.toString().toDouble())
+            markerTour(touristSites)
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(touristSites, 12f))
         }
         task.addOnFailureListener { exception ->
             if (exception is ResolvableApiException) {
@@ -105,7 +163,12 @@ class MapsFragment : Fragment(), GoogleMap.OnMarkerClickListener {
                 }
             }
         }
+    }
 
+    private fun markerTour(latLong: LatLng) {
+        val markerOptions = MarkerOptions().position(latLong)
+        markerOptions.title(arguments?.getString(TOUR_NAME)?:"Destination Name")
+        mMap.addMarker(markerOptions)
     }
 
     override fun onResume() {
@@ -114,4 +177,44 @@ class MapsFragment : Fragment(), GoogleMap.OnMarkerClickListener {
     }
 
     override fun onMarkerClick(p0: Marker) = false
+
+
+    // calculate distance between 2 point
+    private fun calculateDistanceInKM(
+        lat1: Double,
+        lon1: Double,
+        lat2: Double,
+        lon2: Double
+    ): Double {
+        val theta = lon1 - lon2
+        var dist =
+            sin(deg2rad(lat1)) * sin(deg2rad(lat2)) +
+                    kotlin.math.cos(deg2rad(lat1)) * kotlin.math.cos(deg2rad(lat2)) * kotlin.math.cos(
+                deg2rad(theta)
+            )
+        dist = acos(dist)
+        dist = rad2deg(dist)
+        dist *= 60 * 1.1515
+        dist *= 1.609344
+        return dist
+
+    }
+
+    private fun deg2rad(deg: Double): Double {
+        return deg * Math.PI / 180.0
+    }
+
+    private fun rad2deg(rad: Double): Double {
+        return rad * 180.0 / Math.PI
+    }
+
+    @SuppressLint("MissingPermission")
+    private fun getLocationUpdate() {
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
+        fusedLocationClient.requestLocationUpdates(
+            locationRequest,
+            locationCallback,
+            Looper.getMainLooper()
+        )
+    }
 }

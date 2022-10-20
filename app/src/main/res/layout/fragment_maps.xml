@@ -19,6 +19,7 @@
         android:layout_marginStart="16dp"
         android:background="@drawable/circle"
         android:backgroundTint="@color/white_theme"
+        android:contentDescription="@string/button_back"
         android:src="@drawable/ic_back"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/status_bar" />
@@ -43,57 +44,74 @@
             app:lottie_loop="true"
             app:lottie_speed="1" />
 
-        <TextView
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_route"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
-            android:background="@drawable/bg_start"
-            android:backgroundTint="@color/teal_theme"
-            android:drawablePadding="8dp"
-            android:paddingVertical="4dp"
-            android:paddingStart="6dp"
-            android:paddingEnd="8dp"
+            android:drawableLeft="@drawable/ic_directions"
             android:text="@string/route"
-            android:textColor="@color/white_theme"
-            android:textFontWeight="600"
-            android:textSize="16sp"
-            app:drawableStartCompat="@drawable/ic_directions"
-            app:drawableTint="@color/white_theme"
+            android:textAllCaps="false"
+            app:cornerRadius="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:drawableTint="@color/white"
+            />
+
+        <!--        <TextView-->
+        <!--            android:id="@+id/btn_route"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_marginEnd="16dp"-->
+        <!--            android:background="@drawable/bg_start"-->
+        <!--            android:backgroundTint="@color/teal_theme"-->
+        <!--            android:drawablePadding="8dp"-->
+        <!--            android:paddingVertical="4dp"-->
+        <!--            android:paddingStart="6dp"-->
+        <!--            android:paddingEnd="8dp"-->
+        <!--            android:text="@string/route"-->
+        <!--            android:clickable="true"-->
+        <!--            android:textColor="@color/white_theme"-->
+        <!--            android:textFontWeight="600"-->
+        <!--            android:textSize="16sp"-->
+        <!--            app:drawableStartCompat="@drawable/ic_directions"-->
+        <!--            app:drawableTint="@color/white_theme"-->
+        <!--            app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--            app:layout_constraintEnd_toEndOf="parent"-->
+        <!--            app:layout_constraintTop_toTopOf="parent"-->
+        <!--            android:focusable="true"-->
+        <!--            tools:targetApi="p" />-->
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="8dp"
             android:orientation="vertical"
-            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/btn_route"
             app:layout_constraintStart_toEndOf="@id/lottie_location"
-            >
+            app:layout_constraintTop_toTopOf="parent">
+
             <TextView
                 android:id="@+id/tv_tour_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
-                android:singleLine="true"
                 android:maxLines="1"
+                android:singleLine="true"
+                android:text="@string/destination_name"
                 android:textColor="@color/black"
                 android:textSize="16sp"
-                android:textStyle="bold"
-                android:text="Destination Name"
-                />
+                android:textStyle="bold" />
+
             <TextView
                 android:id="@+id/tv_address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:maxLines="3"
                 android:ellipsize="end"
-                android:text="@string/example_address"
-                />
+                android:maxLines="3"
+                android:text="@string/example_address" />
 
         </LinearLayout>
 

@@ -34,6 +34,10 @@ class HomeFragment : Fragment() {
 
     companion object {
         private const val LOCATION_REQUEST_CODE = 1
+        const val ID_TOUR = "ID_TOUR"
+        const val TOUR_NAME = "TOUR_NAME"
+        const val LAT = "LAT"
+        const val LONG = "LONG"
     }
 
     override fun onCreateView(
@@ -136,7 +140,12 @@ class HomeFragment : Fragment() {
     private fun detailTour() {
         popularTourAdapter = PopularTourAdapter(object : PopularTourAdapter.OnClickListener {
             override fun onClickItem(data: ResponseTourList) {
-                TODO("Not yet implemented")
+                val POIBundle = Bundle()
+                POIBundle.putString(ID_TOUR,data.idWisata)
+                POIBundle.putString(TOUR_NAME,data.wisata)
+                POIBundle.putString(LAT,data.lat)
+                POIBundle.putString(LONG,data.longi)
+                findNavController().navigate(R.id.action_homeFragment_to_mapsFragment,POIBundle)
             }
 
         })
