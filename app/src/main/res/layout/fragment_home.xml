@@ -15,7 +15,7 @@
         >
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
             <ImageView
                 android:id="@+id/iv_profile"
@@ -127,11 +127,13 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_all_tour"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginTop="4dp"
                 android:orientation="vertical"
+                android:nestedScrollingEnabled="false"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintTop_toBottomOf="@id/tv_all_tour"
+                app:layout_constraintBottom_toBottomOf="parent"
                 tools:listitem="@layout/item_all_tour" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 

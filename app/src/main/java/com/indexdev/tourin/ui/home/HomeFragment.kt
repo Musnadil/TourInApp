@@ -29,6 +29,7 @@ class HomeFragment : Fragment() {
     private val binding get() = _binding!!
     private val homeViewModel: HomeViewModel by viewModels()
     private lateinit var popularTourAdapter: PopularTourAdapter
+    private lateinit var allListTourAdapter: AllListTourAdapter
     private val listPopularTour: MutableList<ResponseTourList> = ArrayList()
 
     companion object {
@@ -49,7 +50,8 @@ class HomeFragment : Fragment() {
         val username = preference.getString(USERNAME, DEFAULT_VALUE)
 
         greeting(username ?: "Username")
-        fetchTourList()
+        fetchPopularTourList()
+        fetchAllListTour()
         detailTour()
 
         binding.ivProfile.setOnClickListener {
@@ -92,14 +94,14 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun fetchTourList() {
-        homeViewModel.getTourList()
-        homeViewModel.tourList.observe(viewLifecycleOwner) { tourList ->
-            when (tourList.status) {
+    private fun fetchPopularTourList() {
+        homeViewModel.getPopularTourList()
+        homeViewModel.popularTourList.observe(viewLifecycleOwner) { popularTourList ->
+            when (popularTourList.status) {
                 SUCCESS -> {
-                    if (!tourList.data.isNullOrEmpty()) {
+                    if (!popularTourList.data.isNullOrEmpty()) {
                         listPopularTour.clear()
-                        val sortedList = tourList.data.sortedByDescending { data -> data.rating }
+                        val sortedList = popularTourList.data.sortedByDescending { data -> data.rating }
                         for (i in 0..4) {
                             listPopularTour.add(sortedList[i])
                         }
@@ -107,11 +109,27 @@ class HomeFragment : Fragment() {
                     popularTourAdapter.submitData(listPopularTour)
                 }
                 ERROR -> {
-                    Toast.makeText(requireContext(), tourList.message, Toast.LENGTH_SHORT)
+                    Toast.makeText(requireContext(), popularTourList.message, Toast.LENGTH_SHORT)
                         .show()
                 }
                 LOADING -> {}
             }
+        }
+    }
+    private fun fetchAllListTour(){
+        homeViewModel.getAllTourList()
+        homeViewModel.allListTour.observe(viewLifecycleOwner){ allTourList ->
+            when(allTourList.status){
+                SUCCESS -> {
+                    allListTourAdapter.submitData(allTourList.data)
+                }
+                ERROR -> {
+                    Toast.makeText(requireContext(), allTourList.message, Toast.LENGTH_SHORT)
+                        .show()
+                }
+                LOADING -> {}
+            }
+
         }
     }
 
@@ -123,6 +141,13 @@ class HomeFragment : Fragment() {
 
         })
         binding.rvPopularTour.adapter = popularTourAdapter
+
+        allListTourAdapter = AllListTourAdapter(object : AllListTourAdapter.OnclickListener{
+            override fun onClickItem(data: ResponseTourList) {
+                TODO("Not yet implemented")
+            }
+        })
+        binding.rvAllTour.adapter = allListTourAdapter
     }
 
 

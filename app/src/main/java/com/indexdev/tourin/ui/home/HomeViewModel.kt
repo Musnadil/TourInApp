@@ -13,16 +13,30 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(private val repository: Repository): ViewModel() {
-    private val _tourList : MutableLiveData<Resource<List<ResponseTourList>>> = MutableLiveData()
-    val tourList : LiveData<Resource<List<ResponseTourList>>> get() =  _tourList
+    private val _popularTourList : MutableLiveData<Resource<List<ResponseTourList>>> = MutableLiveData()
+    val popularTourList : LiveData<Resource<List<ResponseTourList>>> get() =  _popularTourList
 
-    fun getTourList(){
+    fun getPopularTourList(){
         viewModelScope.launch {
-            _tourList.postValue(Resource.loading())
+            _popularTourList.postValue(Resource.loading())
             try {
-                _tourList.postValue(Resource.success(repository.getTourList()))
+                _popularTourList.postValue(Resource.success(repository.getTourList()))
             } catch (e:Exception){
-                _tourList.postValue(Resource.error(e.localizedMessage?:"error occurred"))
+                _popularTourList.postValue(Resource.error(e.localizedMessage?:"error occurred"))
+            }
+        }
+    }
+
+    private val _allListTour : MutableLiveData<Resource<List<ResponseTourList>>> = MutableLiveData()
+    val allListTour : LiveData<Resource<List<ResponseTourList>>> get() = _popularTourList
+
+    fun getAllTourList(){
+        viewModelScope.launch {
+            _allListTour.postValue(Resource.loading())
+            try {
+                _allListTour.postValue(Resource.success(repository.getTourList()))
+            }catch (e:Exception){
+                _allListTour.postValue(Resource.error(e.localizedMessage?:"error occurred"))
             }
         }
     }
