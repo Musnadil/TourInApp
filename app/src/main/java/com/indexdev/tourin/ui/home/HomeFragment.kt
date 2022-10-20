@@ -58,9 +58,6 @@ class HomeFragment : Fragment() {
         fetchAllListTour()
         detailTour()
 
-        binding.ivProfile.setOnClickListener {
-            findNavController().navigate(R.id.action_homeFragment_to_mapsFragment)
-        }
         if (ActivityCompat.checkSelfPermission(
                 requireContext(),
                 Manifest.permission.ACCESS_FINE_LOCATION
@@ -103,9 +100,11 @@ class HomeFragment : Fragment() {
         homeViewModel.popularTourList.observe(viewLifecycleOwner) { popularTourList ->
             when (popularTourList.status) {
                 SUCCESS -> {
+                    binding.shimmerPopularTour.visibility = View.GONE
                     if (!popularTourList.data.isNullOrEmpty()) {
                         listPopularTour.clear()
-                        val sortedList = popularTourList.data.sortedByDescending { data -> data.rating }
+                        val sortedList =
+                            popularTourList.data.sortedByDescending { data -> data.rating }
                         for (i in 0..4) {
                             listPopularTour.add(sortedList[i])
                         }
@@ -116,22 +115,28 @@ class HomeFragment : Fragment() {
                     Toast.makeText(requireContext(), popularTourList.message, Toast.LENGTH_SHORT)
                         .show()
                 }
-                LOADING -> {}
+                LOADING -> {
+                    binding.shimmerPopularTour.visibility = View.VISIBLE
+                }
             }
         }
     }
-    private fun fetchAllListTour(){
+
+    private fun fetchAllListTour() {
         homeViewModel.getAllTourList()
-        homeViewModel.allListTour.observe(viewLifecycleOwner){ allTourList ->
-            when(allTourList.status){
+        homeViewModel.allListTour.observe(viewLifecycleOwner) { allTourList ->
+            when (allTourList.status) {
                 SUCCESS -> {
+                    binding.shimmerPopularTour.visibility = View.GONE
                     allListTourAdapter.submitData(allTourList.data)
                 }
                 ERROR -> {
                     Toast.makeText(requireContext(), allTourList.message, Toast.LENGTH_SHORT)
                         .show()
                 }
-                LOADING -> {}
+                LOADING -> {
+                    binding.shimmerAllTour.visibility = View.VISIBLE
+                }
             }
 
         }
@@ -141,19 +146,24 @@ class HomeFragment : Fragment() {
         popularTourAdapter = PopularTourAdapter(object : PopularTourAdapter.OnClickListener {
             override fun onClickItem(data: ResponseTourList) {
                 val POIBundle = Bundle()
-                POIBundle.putString(ID_TOUR,data.idWisata)
-                POIBundle.putString(TOUR_NAME,data.wisata)
-                POIBundle.putString(LAT,data.lat)
-                POIBundle.putString(LONG,data.longi)
-                findNavController().navigate(R.id.action_homeFragment_to_mapsFragment,POIBundle)
+                POIBundle.putString(ID_TOUR, data.idWisata)
+                POIBundle.putString(TOUR_NAME, data.wisata)
+                POIBundle.putString(LAT, data.lat)
+                POIBundle.putString(LONG, data.longi)
+                findNavController().navigate(R.id.action_homeFragment_to_mapsFragment, POIBundle)
             }
 
         })
         binding.rvPopularTour.adapter = popularTourAdapter
 
-        allListTourAdapter = AllListTourAdapter(object : AllListTourAdapter.OnclickListener{
+        allListTourAdapter = AllListTourAdapter(object : AllListTourAdapter.OnclickListener {
             override fun onClickItem(data: ResponseTourList) {
-                TODO("Not yet implemented")
+                val POIBundle = Bundle()
+                POIBundle.putString(ID_TOUR, data.idWisata)
+                POIBundle.putString(TOUR_NAME, data.wisata)
+                POIBundle.putString(LAT, data.lat)
+                POIBundle.putString(LONG, data.longi)
+                findNavController().navigate(R.id.action_homeFragment_to_mapsFragment, POIBundle)
             }
         })
         binding.rvAllTour.adapter = allListTourAdapter

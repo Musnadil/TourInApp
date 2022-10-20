@@ -6,13 +6,14 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     tools:context=".ui.home.HomeFragment">
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:scrollbars="none"
-        app:layout_constraintTop_toTopOf="parent"
         android:orientation="vertical"
-        >
+        android:scrollbars="none"
+        app:layout_constraintTop_toTopOf="parent">
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -84,6 +85,27 @@
                 app:layout_constraintTop_toBottomOf="@id/tv_popular_tour"
                 tools:listitem="@layout/item_tour" />
 
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/shimmer_popular_tour"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:layout_constraintTop_toTopOf="@id/rv_popular_tour">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <include layout="@layout/shimmer_tour_with_rate" />
+
+                    <include layout="@layout/shimmer_tour_with_rate" />
+
+                    <include layout="@layout/shimmer_tour_with_rate" />
+
+                    <include layout="@layout/shimmer_tour_with_rate" />
+                </LinearLayout>
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
             <TextView
                 android:id="@+id/tv_recommendation"
                 android:layout_width="wrap_content"
@@ -109,6 +131,27 @@
                 app:layout_constraintTop_toBottomOf="@id/tv_recommendation"
                 tools:listitem="@layout/item_tour" />
 
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/shimmer_recommendation_tour"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:layout_constraintTop_toTopOf="@id/rv_recommendation">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <include layout="@layout/shimmer_tour_with_rate" />
+
+                    <include layout="@layout/shimmer_tour_with_rate" />
+
+                    <include layout="@layout/shimmer_tour_with_rate" />
+
+                    <include layout="@layout/shimmer_tour_with_rate" />
+                </LinearLayout>
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
             <TextView
                 android:id="@+id/tv_all_tour"
                 android:layout_width="wrap_content"
@@ -129,16 +172,41 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="4dp"
-                android:orientation="vertical"
                 android:nestedScrollingEnabled="false"
+                android:orientation="vertical"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_constraintTop_toBottomOf="@id/tv_all_tour"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_all_tour"
                 tools:listitem="@layout/item_all_tour" />
+
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/shimmer_all_tour"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:visibility="gone"
+                app:layout_constraintTop_toBottomOf="@id/tv_all_tour">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <include layout="@layout/shimmer_tour_without_rate" />
+
+                    <include layout="@layout/shimmer_tour_without_rate" />
+
+                    <include layout="@layout/shimmer_tour_without_rate" />
+
+                    <include layout="@layout/shimmer_tour_without_rate" />
+
+                    <include layout="@layout/shimmer_tour_without_rate" />
+
+                </LinearLayout>
+            </com.facebook.shimmer.ShimmerFrameLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
