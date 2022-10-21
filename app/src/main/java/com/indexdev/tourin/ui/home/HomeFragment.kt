@@ -127,7 +127,7 @@ class HomeFragment : Fragment() {
         homeViewModel.allListTour.observe(viewLifecycleOwner) { allTourList ->
             when (allTourList.status) {
                 SUCCESS -> {
-                    binding.shimmerPopularTour.visibility = View.GONE
+                    binding.shimmerAllTour.visibility = View.GONE
                     allListTourAdapter.submitData(allTourList.data)
                 }
                 ERROR -> {
