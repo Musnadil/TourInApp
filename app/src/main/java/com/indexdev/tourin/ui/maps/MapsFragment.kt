@@ -9,7 +9,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RelativeLayout
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.*
@@ -17,18 +19,22 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.tasks.Task
 import com.indexdev.tourin.R
+import com.indexdev.tourin.data.api.Status.*
+import com.indexdev.tourin.data.model.response.ResponsePOI
 import com.indexdev.tourin.databinding.FragmentMapsBinding
+import com.indexdev.tourin.ui.calculateDistanceInKM
+import com.indexdev.tourin.ui.getBitmapFromVectorDrawable
+import com.indexdev.tourin.ui.home.HomeFragment.Companion.ID_TOUR
 import com.indexdev.tourin.ui.home.HomeFragment.Companion.LAT
 import com.indexdev.tourin.ui.home.HomeFragment.Companion.LONG
 import com.indexdev.tourin.ui.home.HomeFragment.Companion.TOUR_NAME
 import dagger.hilt.android.AndroidEntryPoint
-import kotlin.math.acos
-import kotlin.math.sin
 
 @AndroidEntryPoint
 class MapsFragment : Fragment(), GoogleMap.OnMarkerClickListener {
@@ -38,6 +44,7 @@ class MapsFragment : Fragment(), GoogleMap.OnMarkerClickListener {
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var mMap: GoogleMap
     var locationList :MutableList<Location> = ArrayList()
+    private val mapsViewModel:MapsViewModel by viewModels()
 
     private val locationRequest: LocationRequest = LocationRequest.create().apply {
         interval = 3000
@@ -96,6 +103,7 @@ class MapsFragment : Fragment(), GoogleMap.OnMarkerClickListener {
         mapFragment?.getMapAsync(callback)
 
         setupFab()
+        getPOI()
 
         //set tour name
         binding.tvTourName.text = arguments?.getString(TOUR_NAME)
@@ -147,9 +155,6 @@ class MapsFragment : Fragment(), GoogleMap.OnMarkerClickListener {
 
     }
 
-    private fun getPOI() {
-        //get from api
-    }
 
     // ask for turn on gps
     private fun requestDevicesLocationSettings() {
@@ -190,6 +195,57 @@ class MapsFragment : Fragment(), GoogleMap.OnMarkerClickListener {
         mMap.addMarker(markerOptions)
     }
 
+    private fun getPOI() {
+        val tourId = arguments?.getString(ID_TOUR)?.toInt()
+        mapsViewModel.getPoiList(tourId!!)
+        mapsViewModel.poiList.observe(viewLifecycleOwner){ poiList ->
+            when(poiList.status){
+                SUCCESS -> {
+                    if (!poiList.data.isNullOrEmpty()){
+                        poiFacility(poiList.data)
+                    } else{
+                        Toast.makeText(requireContext(), "Can't get POI List", Toast.LENGTH_SHORT).show()
+                    }
+                }
+                ERROR -> {
+                    Toast.makeText(requireContext(), poiList.message, Toast.LENGTH_SHORT).show()
+                }
+                LOADING -> {}
+            }
+        }
+
+    }
+    private fun poiFacility(facility : List<ResponsePOI>){
+        for (i in facility){
+            val latLong = LatLng(i.lat.toDouble(),i.longi.toDouble())
+            val iconWorship = getBitmapFromVectorDrawable(requireActivity(),R.drawable.worship_place_poi)
+            val iconToilet = getBitmapFromVectorDrawable(requireActivity(),R.drawable.toilet_poi)
+            val iconFoodPlace = getBitmapFromVectorDrawable(requireActivity(),R.drawable.food_place_poi)
+            val iconEvacuation = getBitmapFromVectorDrawable(requireActivity(),R.drawable.evacuation_place_poi)
+            val iconParking = getBitmapFromVectorDrawable(requireActivity(),R.drawable.parking_poi)
+            val markerOptions = MarkerOptions().title(i.namaFasilitas).position(latLong)
+            when (i.kodeFasilitas) {
+                "F01" -> {
+                    markerOptions.icon(BitmapDescriptorFactory.fromBitmap(iconWorship))
+                }
+                "F02" -> {
+                    markerOptions.icon(BitmapDescriptorFactory.fromBitmap(iconToilet))
+                }
+                "F03" -> {
+                    markerOptions.icon(BitmapDescriptorFactory.fromBitmap(iconFoodPlace))
+                }
+                "F04" -> {
+                    markerOptions.icon(BitmapDescriptorFactory.fromBitmap(iconEvacuation))
+                }
+                "F05" -> {
+                    markerOptions.icon(BitmapDescriptorFactory.fromBitmap(iconParking))
+                }
+            }
+            mMap.addMarker(markerOptions)
+        }
+
+    }
+
     override fun onResume() {
         super.onResume()
         requestDevicesLocationSettings()
@@ -198,34 +254,7 @@ class MapsFragment : Fragment(), GoogleMap.OnMarkerClickListener {
     override fun onMarkerClick(p0: Marker) = false
 
 
-    // calculate distance between 2 point
-    private fun calculateDistanceInKM(
-        lat1: Double,
-        lon1: Double,
-        lat2: Double,
-        lon2: Double
-    ): Double {
-        val theta = lon1 - lon2
-        var dist =
-            sin(deg2rad(lat1)) * sin(deg2rad(lat2)) +
-                    kotlin.math.cos(deg2rad(lat1)) * kotlin.math.cos(deg2rad(lat2)) * kotlin.math.cos(
-                deg2rad(theta)
-            )
-        dist = acos(dist)
-        dist = rad2deg(dist)
-        dist *= 60 * 1.1515
-        dist *= 1.609344
-        return dist
 
-    }
-
-    private fun deg2rad(deg: Double): Double {
-        return deg * Math.PI / 180.0
-    }
-
-    private fun rad2deg(rad: Double): Double {
-        return rad * 180.0 / Math.PI
-    }
 
     @SuppressLint("MissingPermission")
     private fun getLocationUpdate() {
