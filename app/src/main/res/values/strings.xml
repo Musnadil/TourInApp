@@ -38,4 +38,6 @@
     <string name="image_profiles">image profiles</string>
     <string name="button_back">button back</string>
     <string name="destination_name">Destination Name</string>
+    <string name="my_location">My Location</string>
+    <string name="tour_location">Tour Location</string>
 </resources>

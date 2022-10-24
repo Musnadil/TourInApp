@@ -50,38 +50,13 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:drawableLeft="@drawable/ic_directions"
+            android:drawableTint="@color/white"
             android:text="@string/route"
             android:textAllCaps="false"
             app:cornerRadius="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:drawableTint="@color/white"
-            />
-
-        <!--        <TextView-->
-        <!--            android:id="@+id/btn_route"-->
-        <!--            android:layout_width="wrap_content"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:layout_marginEnd="16dp"-->
-        <!--            android:background="@drawable/bg_start"-->
-        <!--            android:backgroundTint="@color/teal_theme"-->
-        <!--            android:drawablePadding="8dp"-->
-        <!--            android:paddingVertical="4dp"-->
-        <!--            android:paddingStart="6dp"-->
-        <!--            android:paddingEnd="8dp"-->
-        <!--            android:text="@string/route"-->
-        <!--            android:clickable="true"-->
-        <!--            android:textColor="@color/white_theme"-->
-        <!--            android:textFontWeight="600"-->
-        <!--            android:textSize="16sp"-->
-        <!--            app:drawableStartCompat="@drawable/ic_directions"-->
-        <!--            app:drawableTint="@color/white_theme"-->
-        <!--            app:layout_constraintBottom_toBottomOf="parent"-->
-        <!--            app:layout_constraintEnd_toEndOf="parent"-->
-        <!--            app:layout_constraintTop_toTopOf="parent"-->
-        <!--            android:focusable="true"-->
-        <!--            tools:targetApi="p" />-->
+            app:layout_constraintTop_toTopOf="parent" />
 
         <LinearLayout
             android:layout_width="0dp"
@@ -116,6 +91,49 @@
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.github.clans.fab.FloatingActionMenu
+        android:id="@+id/fab_menu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        app:layout_constraintBottom_toTopOf="@id/bottom_desc"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:menu_animationDelayPerItem="55"
+        app:menu_buttonSpacing="0dp"
+        app:menu_colorNormal="@color/teal_theme"
+        app:menu_colorPressed="@color/teal_theme_pressed"
+        app:menu_fab_size="normal"
+        app:menu_icon="@drawable/ic_maps"
+        app:menu_labels_colorNormal="@color/white_theme"
+        app:menu_labels_cornerRadius="5dp"
+        app:menu_labels_position="left"
+        app:menu_labels_textColor="@color/grey_theme"
+        app:menu_labels_textSize="12sp"
+        app:menu_openDirection="up">
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fab_tour_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_location"
+            app:fab_colorNormal="@color/grey_theme"
+            app:fab_colorPressed="@color/light_grey_theme"
+            app:fab_label="@string/tour_location"
+            app:fab_size="mini"
+            />
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fab_my_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_my_location"
+            app:fab_colorNormal="@color/grey_theme"
+            app:fab_colorPressed="@color/light_grey_theme"
+            app:fab_label="@string/my_location"
+            app:fab_size="mini" />
+
+    </com.github.clans.fab.FloatingActionMenu>
 
     <View
         android:id="@+id/navigation_bar"

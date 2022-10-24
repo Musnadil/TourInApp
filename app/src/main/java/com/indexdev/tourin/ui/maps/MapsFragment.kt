@@ -9,7 +9,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RelativeLayout
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.google.android.gms.common.api.ResolvableApiException
@@ -38,6 +37,7 @@ class MapsFragment : Fragment(), GoogleMap.OnMarkerClickListener {
     private val binding get() = _binding!!
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var mMap: GoogleMap
+    var locationList :MutableList<Location> = ArrayList()
 
     private val locationRequest: LocationRequest = LocationRequest.create().apply {
         interval = 3000
@@ -49,18 +49,19 @@ class MapsFragment : Fragment(), GoogleMap.OnMarkerClickListener {
     //last update location and calculate distance
     private var locationCallback: LocationCallback = object : LocationCallback() {
         override fun onLocationResult(locationResult: LocationResult) {
-            val locationList = locationResult.locations
+            locationList = locationResult.locations
             if (locationList.isNotEmpty()) {
                 val location = locationList.last()
                 val calculateDistance = calculateDistanceInKM(
                     location.latitude,
                     location.longitude,
                     arguments?.getString(LAT).toString().toDouble(),
-                    arguments?.getString(LONG).toString().toDouble())
-                if (calculateDistance>= 0.008){
+                    arguments?.getString(LONG).toString().toDouble()
+                )
+                if (calculateDistance >= 0.008) {
 //                    calculateDistance
                     // far from destination
-                }else{
+                } else {
                     // in range of destination
                 }
             }
@@ -83,7 +84,7 @@ class MapsFragment : Fragment(), GoogleMap.OnMarkerClickListener {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentMapsBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
@@ -93,6 +94,8 @@ class MapsFragment : Fragment(), GoogleMap.OnMarkerClickListener {
         super.onViewCreated(view, savedInstanceState)
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync(callback)
+
+        setupFab()
 
         //set tour name
         binding.tvTourName.text = arguments?.getString(TOUR_NAME)
@@ -128,6 +131,22 @@ class MapsFragment : Fragment(), GoogleMap.OnMarkerClickListener {
         }
     }
 
+    private fun setupFab() {
+        binding.apply {
+            fabMyLocation.setOnClickListener {
+                fabMenu.close(true)
+                val location = locationList.last()
+                val userLocation = LatLng(location.latitude,location.longitude)
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(userLocation,12f))
+            }
+            fabTourLocation.setOnClickListener {
+                fabMenu.close(true)
+                requestDevicesLocationSettings()
+            }
+        }
+
+    }
+
     private fun getPOI() {
         //get from api
     }
@@ -143,7 +162,7 @@ class MapsFragment : Fragment(), GoogleMap.OnMarkerClickListener {
             .addLocationRequest(locationReq)
         val client: SettingsClient = LocationServices.getSettingsClient(requireActivity())
         val task: Task<LocationSettingsResponse> = client.checkLocationSettings(builder.build())
-        task.addOnSuccessListener { locationSettingsResponse ->
+        task.addOnSuccessListener {
             //move camera to destination
             val lat = arguments?.getString(LAT)
             val long = arguments?.getString(LONG)
@@ -167,7 +186,7 @@ class MapsFragment : Fragment(), GoogleMap.OnMarkerClickListener {
 
     private fun markerTour(latLong: LatLng) {
         val markerOptions = MarkerOptions().position(latLong)
-        markerOptions.title(arguments?.getString(TOUR_NAME)?:"Destination Name")
+        markerOptions.title(arguments?.getString(TOUR_NAME) ?: "Destination Name")
         mMap.addMarker(markerOptions)
     }
 
