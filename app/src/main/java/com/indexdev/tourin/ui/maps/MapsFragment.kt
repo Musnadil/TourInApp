@@ -1,8 +1,10 @@
 package com.indexdev.tourin.ui.maps
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.content.IntentSender
 import android.location.Location
+import android.net.Uri
 import android.os.Bundle
 import android.os.Looper
 import android.view.LayoutInflater
@@ -43,8 +45,8 @@ class MapsFragment : Fragment(), GoogleMap.OnMarkerClickListener {
     private val binding get() = _binding!!
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var mMap: GoogleMap
-    var locationList :MutableList<Location> = ArrayList()
-    private val mapsViewModel:MapsViewModel by viewModels()
+    var locationList: MutableList<Location> = ArrayList()
+    private val mapsViewModel: MapsViewModel by viewModels()
 
     private val locationRequest: LocationRequest = LocationRequest.create().apply {
         interval = 3000
@@ -83,6 +85,8 @@ class MapsFragment : Fragment(), GoogleMap.OnMarkerClickListener {
         mMap.uiSettings.isMyLocationButtonEnabled = false
         mMap.uiSettings.isCompassEnabled = true
         mMap.isMyLocationEnabled = true
+        val customInfoWindow = CustomInfoWindow(requireActivity())
+        mMap.setInfoWindowAdapter(customInfoWindow)
         getLocationUpdate()
 
     }
@@ -144,15 +148,14 @@ class MapsFragment : Fragment(), GoogleMap.OnMarkerClickListener {
             fabMyLocation.setOnClickListener {
                 fabMenu.close(true)
                 val location = locationList.last()
-                val userLocation = LatLng(location.latitude,location.longitude)
-                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(userLocation,12f))
+                val userLocation = LatLng(location.latitude, location.longitude)
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 12f))
             }
             fabTourLocation.setOnClickListener {
                 fabMenu.close(true)
                 requestDevicesLocationSettings()
             }
         }
-
     }
 
 
@@ -175,6 +178,7 @@ class MapsFragment : Fragment(), GoogleMap.OnMarkerClickListener {
             markerTour(touristSites)
             mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(touristSites, 12f))
         }
+        // always request to turn on gps
         task.addOnFailureListener { exception ->
             if (exception is ResolvableApiException) {
                 try {
@@ -191,20 +195,20 @@ class MapsFragment : Fragment(), GoogleMap.OnMarkerClickListener {
 
     private fun markerTour(latLong: LatLng) {
         val markerOptions = MarkerOptions().position(latLong)
-        markerOptions.title(arguments?.getString(TOUR_NAME) ?: "Destination Name")
         mMap.addMarker(markerOptions)
     }
 
     private fun getPOI() {
         val tourId = arguments?.getString(ID_TOUR)?.toInt()
         mapsViewModel.getPoiList(tourId!!)
-        mapsViewModel.poiList.observe(viewLifecycleOwner){ poiList ->
-            when(poiList.status){
+        mapsViewModel.poiList.observe(viewLifecycleOwner) { poiList ->
+            when (poiList.status) {
                 SUCCESS -> {
-                    if (!poiList.data.isNullOrEmpty()){
+                    if (!poiList.data.isNullOrEmpty()) {
                         poiFacility(poiList.data)
-                    } else{
-                        Toast.makeText(requireContext(), "Can't get POI List", Toast.LENGTH_SHORT).show()
+                    } else {
+                        Toast.makeText(requireContext(), "Can't get POI List", Toast.LENGTH_SHORT)
+                            .show()
                     }
                 }
                 ERROR -> {
@@ -215,14 +219,18 @@ class MapsFragment : Fragment(), GoogleMap.OnMarkerClickListener {
         }
 
     }
-    private fun poiFacility(facility : List<ResponsePOI>){
-        for (i in facility){
-            val latLong = LatLng(i.lat.toDouble(),i.longi.toDouble())
-            val iconWorship = getBitmapFromVectorDrawable(requireActivity(),R.drawable.worship_place_poi)
-            val iconToilet = getBitmapFromVectorDrawable(requireActivity(),R.drawable.toilet_poi)
-            val iconFoodPlace = getBitmapFromVectorDrawable(requireActivity(),R.drawable.food_place_poi)
-            val iconEvacuation = getBitmapFromVectorDrawable(requireActivity(),R.drawable.evacuation_place_poi)
-            val iconParking = getBitmapFromVectorDrawable(requireActivity(),R.drawable.parking_poi)
+
+    private fun poiFacility(facility: List<ResponsePOI>) {
+        for (i in facility) {
+            val latLong = LatLng(i.lat.toDouble(), i.longi.toDouble())
+            val iconWorship =
+                getBitmapFromVectorDrawable(requireActivity(), R.drawable.worship_place_poi)
+            val iconToilet = getBitmapFromVectorDrawable(requireActivity(), R.drawable.toilet_poi)
+            val iconFoodPlace =
+                getBitmapFromVectorDrawable(requireActivity(), R.drawable.food_place_poi)
+            val iconEvacuation =
+                getBitmapFromVectorDrawable(requireActivity(), R.drawable.evacuation_place_poi)
+            val iconParking = getBitmapFromVectorDrawable(requireActivity(), R.drawable.parking_poi)
             val markerOptions = MarkerOptions().title(i.namaFasilitas).position(latLong)
             when (i.kodeFasilitas) {
                 "F01" -> {
@@ -241,8 +249,22 @@ class MapsFragment : Fragment(), GoogleMap.OnMarkerClickListener {
                     markerOptions.icon(BitmapDescriptorFactory.fromBitmap(iconParking))
                 }
             }
-            mMap.addMarker(markerOptions)
+            val marker = mMap.addMarker(markerOptions)
+            marker?.tag = i
+//            mMap.setOnInfoWindowClickListener {
+//                Toast.makeText(requireContext(), "${i.lat},${i.longi}", Toast.LENGTH_SHORT).show()
+////                val googleMapsUrl = "google.navigation:q=${i.lat},${i.longi}"
+//                val googleMapsUrl = "https://www.google.com/maps?q=${latLong.latitude},${latLong.longitude}"
+//                println("$googleMapsUrl adsaads")
+//                val uri = Uri.parse(googleMapsUrl)
+//                val googleMapsPackage = "com.google.android.apps.maps"
+//                val intent = Intent(Intent.ACTION_VIEW, uri).apply {
+//                    setPackage(googleMapsPackage)
+//                }
+//                startActivity(intent)
+//            }
         }
+
 
     }
 
@@ -251,9 +273,25 @@ class MapsFragment : Fragment(), GoogleMap.OnMarkerClickListener {
         requestDevicesLocationSettings()
     }
 
-    override fun onMarkerClick(p0: Marker) = false
 
-
+    override fun onMarkerClick(marker: Marker): Boolean {
+        val markerName = marker.position
+        Toast.makeText(requireContext(), "Clicked location is $markerName", Toast.LENGTH_SHORT)
+            .show()
+        mMap.setOnInfoWindowClickListener {
+            val googleMapsUrl =
+                "google.navigation:q=${marker.position.latitude},${marker.position.longitude}"
+//            val googleMapsUrl = "https://www.google.com/maps?q=${marker.position.latitude},${marker.position.longitude}"
+            println("$googleMapsUrl adsaads")
+            val uri = Uri.parse(googleMapsUrl)
+            val googleMapsPackage = "com.google.android.apps.maps"
+            val intent = Intent(Intent.ACTION_VIEW, uri).apply {
+                setPackage(googleMapsPackage)
+            }
+            startActivity(intent)
+        }
+        return false
+    }
 
 
     @SuppressLint("MissingPermission")
