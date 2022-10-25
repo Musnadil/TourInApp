@@ -8,6 +8,8 @@ data class ResponseTourList(
     val idWisata: String,
     @SerializedName("wisata")
     val wisata: String,
+    @SerializedName("alamat")
+    val alamat: String,
     @SerializedName("deskripsi")
     val deskripsi: String,
     @SerializedName("lat")
