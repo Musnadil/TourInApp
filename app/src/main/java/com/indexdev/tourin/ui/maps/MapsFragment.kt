@@ -1,10 +1,8 @@
 package com.indexdev.tourin.ui.maps
 
 import android.annotation.SuppressLint
-import android.content.Intent
 import android.content.IntentSender
 import android.location.Location
-import android.net.Uri
 import android.os.Bundle
 import android.os.Looper
 import android.view.LayoutInflater
@@ -31,6 +29,7 @@ import com.indexdev.tourin.data.api.Status.*
 import com.indexdev.tourin.data.model.response.ResponsePOI
 import com.indexdev.tourin.databinding.FragmentMapsBinding
 import com.indexdev.tourin.ui.calculateDistanceInKM
+import com.indexdev.tourin.ui.choosevehicle.ChooseVehicleFragment
 import com.indexdev.tourin.ui.getBitmapFromVectorDrawable
 import com.indexdev.tourin.ui.home.HomeFragment.Companion.ID_TOUR
 import com.indexdev.tourin.ui.home.HomeFragment.Companion.LAT
@@ -141,15 +140,26 @@ class MapsFragment : Fragment(), GoogleMap.OnMarkerClickListener {
         binding.btnBack.setOnClickListener {
             findNavController().popBackStack()
         }
+
+        val lat = arguments?.getString(LAT)
+        val long = arguments?.getString(LONG)
+        val touristSites = LatLng(lat.toString().toDouble(), long.toString().toDouble())
+        binding.btnRoute.setOnClickListener {
+            val dialogFragment =
+                ChooseVehicleFragment(touristSites, arguments?.getString(TOUR_NAME).toString())
+            activity?.let { dialogFragment.show(it.supportFragmentManager, null) }
+        }
     }
 
     private fun setupFab() {
         binding.apply {
             fabMyLocation.setOnClickListener {
                 fabMenu.close(true)
-                val location = locationList.last()
-                val userLocation = LatLng(location.latitude, location.longitude)
-                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 12f))
+                if (!locationList.isNullOrEmpty()){
+                    val location = locationList.last()
+                    val userLocation = LatLng(location.latitude, location.longitude)
+                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 13f))
+                }
             }
             fabTourLocation.setOnClickListener {
                 fabMenu.close(true)
@@ -251,18 +261,6 @@ class MapsFragment : Fragment(), GoogleMap.OnMarkerClickListener {
             }
             val marker = mMap.addMarker(markerOptions)
             marker?.tag = i
-//            mMap.setOnInfoWindowClickListener {
-//                Toast.makeText(requireContext(), "${i.lat},${i.longi}", Toast.LENGTH_SHORT).show()
-////                val googleMapsUrl = "google.navigation:q=${i.lat},${i.longi}"
-//                val googleMapsUrl = "https://www.google.com/maps?q=${latLong.latitude},${latLong.longitude}"
-//                println("$googleMapsUrl adsaads")
-//                val uri = Uri.parse(googleMapsUrl)
-//                val googleMapsPackage = "com.google.android.apps.maps"
-//                val intent = Intent(Intent.ACTION_VIEW, uri).apply {
-//                    setPackage(googleMapsPackage)
-//                }
-//                startActivity(intent)
-//            }
         }
 
 
@@ -275,20 +273,10 @@ class MapsFragment : Fragment(), GoogleMap.OnMarkerClickListener {
 
 
     override fun onMarkerClick(marker: Marker): Boolean {
-        val markerName = marker.position
-        Toast.makeText(requireContext(), "Clicked location is $markerName", Toast.LENGTH_SHORT)
-            .show()
         mMap.setOnInfoWindowClickListener {
-            val googleMapsUrl =
-                "google.navigation:q=${marker.position.latitude},${marker.position.longitude}"
 //            val googleMapsUrl = "https://www.google.com/maps?q=${marker.position.latitude},${marker.position.longitude}"
-            println("$googleMapsUrl adsaads")
-            val uri = Uri.parse(googleMapsUrl)
-            val googleMapsPackage = "com.google.android.apps.maps"
-            val intent = Intent(Intent.ACTION_VIEW, uri).apply {
-                setPackage(googleMapsPackage)
-            }
-            startActivity(intent)
+            val dialogFragment = ChooseVehicleFragment(marker.position, marker.title.toString())
+            activity?.let { dialogFragment.show(it.supportFragmentManager, null) }
         }
         return false
     }
