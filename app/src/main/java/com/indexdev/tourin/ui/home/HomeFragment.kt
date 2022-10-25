@@ -38,6 +38,7 @@ class HomeFragment : Fragment() {
         const val TOUR_NAME = "TOUR_NAME"
         const val LAT = "LAT"
         const val LONG = "LONG"
+        const val ADDRESS = "ADDRESS"
     }
 
     override fun onCreateView(
@@ -150,6 +151,7 @@ class HomeFragment : Fragment() {
                 POIBundle.putString(TOUR_NAME, data.wisata)
                 POIBundle.putString(LAT, data.lat)
                 POIBundle.putString(LONG, data.longi)
+                POIBundle.putString(ADDRESS, data.alamat)
                 findNavController().navigate(R.id.action_homeFragment_to_mapsFragment, POIBundle)
             }
 
@@ -163,6 +165,7 @@ class HomeFragment : Fragment() {
                 POIBundle.putString(TOUR_NAME, data.wisata)
                 POIBundle.putString(LAT, data.lat)
                 POIBundle.putString(LONG, data.longi)
+                POIBundle.putString(ADDRESS, data.alamat)
                 findNavController().navigate(R.id.action_homeFragment_to_mapsFragment, POIBundle)
             }
         })

@@ -31,6 +31,7 @@ import com.indexdev.tourin.databinding.FragmentMapsBinding
 import com.indexdev.tourin.ui.calculateDistanceInKM
 import com.indexdev.tourin.ui.choosevehicle.ChooseVehicleFragment
 import com.indexdev.tourin.ui.getBitmapFromVectorDrawable
+import com.indexdev.tourin.ui.home.HomeFragment.Companion.ADDRESS
 import com.indexdev.tourin.ui.home.HomeFragment.Companion.ID_TOUR
 import com.indexdev.tourin.ui.home.HomeFragment.Companion.LAT
 import com.indexdev.tourin.ui.home.HomeFragment.Companion.LONG
@@ -110,6 +111,7 @@ class MapsFragment : Fragment(), GoogleMap.OnMarkerClickListener {
 
         //set tour name
         binding.tvTourName.text = arguments?.getString(TOUR_NAME)
+        binding.tvAddress.text = arguments?.getString(ADDRESS)
 
         //get navBar Height
         val navBarHeight = resources.getIdentifier("navigation_bar_height", "dimen", "android")
