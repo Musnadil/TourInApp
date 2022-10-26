@@ -36,7 +36,6 @@ import com.indexdev.tourin.ui.home.HomeFragment.Companion.ID_TOUR
 import com.indexdev.tourin.ui.home.HomeFragment.Companion.LAT
 import com.indexdev.tourin.ui.home.HomeFragment.Companion.LONG
 import com.indexdev.tourin.ui.home.HomeFragment.Companion.TOUR_NAME
-import com.indexdev.tourin.ui.rating.RatingFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -191,7 +190,38 @@ class MapsFragment : Fragment(), GoogleMap.OnMarkerClickListener {
             val long = arguments?.getString(LONG)
             val touristSites = LatLng(lat.toString().toDouble(), long.toString().toDouble())
             markerTour(touristSites)
-            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(touristSites, 12f))
+            when (arguments?.getString(ID_TOUR)?.toInt()) {
+                101 -> {
+                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(touristSites, 10f))
+                }
+                102 -> {
+                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(touristSites, 15f))
+                }
+                103 -> {
+                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(touristSites, 15f))
+                }
+                104 -> {
+                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(touristSites, 14f))
+                }
+                105 -> {
+                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(touristSites, 16f))
+                }
+                106 -> {
+                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(touristSites, 15f))
+                }
+                107 -> {
+                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(touristSites, 15f))
+                }
+                108 -> {
+                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(touristSites, 14f))
+                }
+                109 -> {
+                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(touristSites, 15f))
+                }
+                110 -> {
+                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(touristSites, 15f))
+                }
+            }
         }
         // always request to turn on gps
         task.addOnFailureListener { exception ->
@@ -239,13 +269,13 @@ class MapsFragment : Fragment(), GoogleMap.OnMarkerClickListener {
         for (i in facility) {
             val latLong = LatLng(i.lat.toDouble(), i.longi.toDouble())
             val iconWorship =
-                getBitmapFromVectorDrawable(requireActivity(), R.drawable.worship_place_poi)
-            val iconToilet = getBitmapFromVectorDrawable(requireActivity(), R.drawable.toilet_poi)
+                getBitmapFromVectorDrawable(requireActivity(), R.drawable.ic_poi_worship_place)
+            val iconToilet = getBitmapFromVectorDrawable(requireActivity(), R.drawable.ic_poi_toilet)
             val iconFoodPlace =
-                getBitmapFromVectorDrawable(requireActivity(), R.drawable.food_place_poi)
+                getBitmapFromVectorDrawable(requireActivity(), R.drawable.ic_poi_food_place)
             val iconEvacuation =
-                getBitmapFromVectorDrawable(requireActivity(), R.drawable.evacuation_place_poi)
-            val iconParking = getBitmapFromVectorDrawable(requireActivity(), R.drawable.parking_poi)
+                getBitmapFromVectorDrawable(requireActivity(), R.drawable.ic_poi_evacuation_place)
+            val iconParking = getBitmapFromVectorDrawable(requireActivity(), R.drawable.ic_poi_parking)
             val markerOptions = MarkerOptions().title(i.namaFasilitas).position(latLong)
             when (i.kodeFasilitas) {
                 "F01" -> {
