@@ -36,6 +36,7 @@ import com.indexdev.tourin.ui.home.HomeFragment.Companion.ID_TOUR
 import com.indexdev.tourin.ui.home.HomeFragment.Companion.LAT
 import com.indexdev.tourin.ui.home.HomeFragment.Companion.LONG
 import com.indexdev.tourin.ui.home.HomeFragment.Companion.TOUR_NAME
+import com.indexdev.tourin.ui.rating.RatingFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -141,6 +142,8 @@ class MapsFragment : Fragment(), GoogleMap.OnMarkerClickListener {
 
         binding.btnBack.setOnClickListener {
             findNavController().popBackStack()
+//            val dialogRating = RatingFragment()
+//            activity?.let { dialogRating.show(it.supportFragmentManager,null) }
         }
 
         val lat = arguments?.getString(LAT)

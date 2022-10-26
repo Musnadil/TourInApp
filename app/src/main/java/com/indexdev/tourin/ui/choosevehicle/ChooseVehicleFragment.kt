@@ -11,7 +11,6 @@ import com.google.android.gms.maps.model.LatLng
 import com.indexdev.tourin.R
 import com.indexdev.tourin.databinding.FragmentChooseVehicleBinding
 
-
 class ChooseVehicleFragment() : DialogFragment() {
     private var _binding: FragmentChooseVehicleBinding? = null
     private val binding get() = _binding!!

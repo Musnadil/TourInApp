@@ -41,4 +41,6 @@
     <string name="my_location">My Location</string>
     <string name="tour_location">Tour Location</string>
     <string name="place_name">Place Name</string>
+    <string name="rate_the_place">Have visited the place? Please rate the place</string>
+    <string name="send">Send</string>
 </resources>

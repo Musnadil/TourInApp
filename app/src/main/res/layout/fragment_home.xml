@@ -115,6 +115,7 @@
                 android:text="@string/recommended_for_you"
                 android:textColor="@color/black"
                 android:textFontWeight="600"
+                android:visibility="gone"
                 android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_popular_tour"
@@ -126,6 +127,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:orientation="horizontal"
+                android:visibility="gone"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintTop_toBottomOf="@id/tv_recommendation"
                 tools:listitem="@layout/item_tour" />
@@ -204,8 +206,6 @@
                 </LinearLayout>
             </com.facebook.shimmer.ShimmerFrameLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
-
     </ScrollView>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
