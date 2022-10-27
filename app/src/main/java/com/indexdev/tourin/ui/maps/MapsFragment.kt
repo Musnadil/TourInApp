@@ -1,8 +1,10 @@
 package com.indexdev.tourin.ui.maps
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.content.IntentSender
 import android.location.Location
+import android.net.Uri
 import android.os.Bundle
 import android.os.Looper
 import android.view.LayoutInflater
@@ -147,11 +149,17 @@ class MapsFragment : Fragment(), GoogleMap.OnMarkerClickListener {
 
         val lat = arguments?.getString(LAT)
         val long = arguments?.getString(LONG)
-        val touristSites = LatLng(lat.toString().toDouble(), long.toString().toDouble())
         binding.btnRoute.setOnClickListener {
-            val dialogFragment =
-                ChooseVehicleFragment(touristSites, arguments?.getString(TOUR_NAME).toString())
-            activity?.let { dialogFragment.show(it.supportFragmentManager, null) }
+            val googleMapsUrl =
+                "https://www.google.com/maps?q=${lat.toString().toDouble()},${
+                    long.toString().toDouble()
+                }"
+            val uri = Uri.parse(googleMapsUrl)
+            val googleMapsPackage = "com.google.android.apps.maps"
+            val intent = Intent(Intent.ACTION_VIEW, uri).apply {
+                setPackage(googleMapsPackage)
+            }
+            startActivity(intent)
         }
     }
 
@@ -159,7 +167,7 @@ class MapsFragment : Fragment(), GoogleMap.OnMarkerClickListener {
         binding.apply {
             fabMyLocation.setOnClickListener {
                 fabMenu.close(true)
-                if (!locationList.isNullOrEmpty()){
+                if (!locationList.isNullOrEmpty()) {
                     val location = locationList.last()
                     val userLocation = LatLng(location.latitude, location.longitude)
                     mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 13f))
@@ -270,12 +278,14 @@ class MapsFragment : Fragment(), GoogleMap.OnMarkerClickListener {
             val latLong = LatLng(i.lat.toDouble(), i.longi.toDouble())
             val iconWorship =
                 getBitmapFromVectorDrawable(requireActivity(), R.drawable.ic_poi_worship_place)
-            val iconToilet = getBitmapFromVectorDrawable(requireActivity(), R.drawable.ic_poi_toilet)
+            val iconToilet =
+                getBitmapFromVectorDrawable(requireActivity(), R.drawable.ic_poi_toilet)
             val iconFoodPlace =
                 getBitmapFromVectorDrawable(requireActivity(), R.drawable.ic_poi_food_place)
             val iconEvacuation =
                 getBitmapFromVectorDrawable(requireActivity(), R.drawable.ic_poi_evacuation_place)
-            val iconParking = getBitmapFromVectorDrawable(requireActivity(), R.drawable.ic_poi_parking)
+            val iconParking =
+                getBitmapFromVectorDrawable(requireActivity(), R.drawable.ic_poi_parking)
             val markerOptions = MarkerOptions().title(i.namaFasilitas).position(latLong)
             when (i.kodeFasilitas) {
                 "F01" -> {
