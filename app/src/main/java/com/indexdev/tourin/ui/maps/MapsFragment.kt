@@ -53,6 +53,7 @@ import com.indexdev.tourin.ui.home.HomeFragment.Companion.IMG_URL
 import com.indexdev.tourin.ui.home.HomeFragment.Companion.LAT
 import com.indexdev.tourin.ui.home.HomeFragment.Companion.LONG
 import com.indexdev.tourin.ui.home.HomeFragment.Companion.TOUR_NAME
+import com.indexdev.tourin.ui.splashscreen.SplashScreenFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @Suppress("DEPRECATION")
@@ -157,19 +158,15 @@ class MapsFragment : Fragment(), GoogleMap.OnMarkerClickListener {
             val distance = intent.getDoubleExtra(UPDATE_DISTANCE,0.0)
             Toast.makeText(requireContext(), "distance is : $distance", Toast.LENGTH_SHORT).show()
 
-            val bundle = Bundle()
-            bundle.putString(ID_TOUR,arguments?.getString(ID_TOUR))
-            bundle.putString(TOUR_NAME,arguments?.getString(TOUR_NAME))
-            bundle.putString(IMG_URL,arguments?.getString(IMG_URL))
-
             val pendingIntent = NavDeepLinkBuilder(requireContext())
                 .setComponentName(MainActivity::class.java)
                 .setGraph(R.navigation.main_navigation)
-                .setDestination(R.id.ratingFragment,bundle)
+                .setDestination(R.id.splashScreenFragment)
                 .createPendingIntent()
 
             val notif = NotificationCompat.Builder(requireContext(), CHANNEL_ID)
                 .setOngoing(true)
+                .setAutoCancel(false)
                 .setContentTitle("Rate your visit")
                 .setContentText("Give a rating for ${arguments?.getString(TOUR_NAME)}")
                 .setSmallIcon(R.drawable.logo_tourin)
@@ -180,13 +177,23 @@ class MapsFragment : Fragment(), GoogleMap.OnMarkerClickListener {
             val notifManager = NotificationManagerCompat.from(requireContext())
 
             if (distance >=410){
+                val preference = requireContext().getSharedPreferences(SplashScreenFragment.SHARED_PREF,Context.MODE_PRIVATE)
+                val ratingEdit = preference.edit()
+                ratingEdit.putString(SplashScreenFragment.ID_TOUR,arguments?.getString(ID_TOUR))
+                ratingEdit.putString(SplashScreenFragment.IMG_URL,arguments?.getString(IMG_URL))
+                ratingEdit.putString(SplashScreenFragment.TOUR_NAME,arguments?.getString(TOUR_NAME))
+                ratingEdit.apply()
                 stopServiceFunc()
                 distanceLocation = 0.0
-                initiateNotify = true
                 notifManager.notify(NOTIF_ID,notif)
             }
         }
 
+    }
+
+    override fun onPause() {
+        super.onPause()
+        stopServiceFunc()
     }
 
     // create notification
@@ -326,15 +333,12 @@ class MapsFragment : Fragment(), GoogleMap.OnMarkerClickListener {
             val marker = mMap.addMarker(markerOptions)
             marker?.tag = i
         }
-
-
     }
 
     override fun onResume() {
         super.onResume()
         requestDevicesLocationSettings()
     }
-
 
     override fun onMarkerClick(marker: Marker): Boolean {
         mMap.setOnInfoWindowClickListener {
@@ -390,8 +394,6 @@ fun permissionLocation(){
         }
     }
     private fun starServiceFunc(){
-//        mLocationService = LocationService()
-//        mServiceIntent = Intent(requireActivity(), mLocationService.javaClass)
         if (!Util.isMyServiceRunning(mLocationService.javaClass, requireActivity())) {
             context?.startService(mServiceIntent)
 //            Toast.makeText(requireContext(), getString(R.string.service_start_successfully), Toast.LENGTH_SHORT).show()
