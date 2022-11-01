@@ -5,15 +5,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.app.NotificationManagerCompat
-import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.indexdev.tourin.R
 import com.indexdev.tourin.databinding.FragmentRatingBinding
+import com.indexdev.tourin.ui.home.HomeFragment
 import com.indexdev.tourin.ui.home.HomeFragment.Companion.TOUR_NAME
 import com.indexdev.tourin.ui.initiateNotify
 import com.indexdev.tourin.ui.maps.MapsFragment.Companion.NOTIF_ID
 
-class RatingFragment : DialogFragment() {
+class RatingFragment : Fragment() {
     private var _binding: FragmentRatingBinding? = null
     private val binding get() = _binding!!
 
@@ -21,10 +24,6 @@ class RatingFragment : DialogFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        dialog?.window?.setBackgroundDrawableResource(R.drawable.bg_rounded_dialog)
-        dialog?.window?.attributes?.windowAnimations = R.style.DialogAnimation
-        dialog?.setCancelable(false)
-        dialog?.setCanceledOnTouchOutside(false)
         _binding = FragmentRatingBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
@@ -33,24 +32,18 @@ class RatingFragment : DialogFragment() {
         super.onViewCreated(view, savedInstanceState)
         val manager = NotificationManagerCompat.from(requireContext())
         manager.cancel(NOTIF_ID)
+        Glide.with(binding.root)
+            .load(arguments?.getString(HomeFragment.IMG_URL))
+            .transform(CenterCrop())
+            .into(binding.ivTour)
 
         binding.btnSend.setOnClickListener {
-            dialog?.dismiss()
             initiateNotify = false
-            findNavController().clearBackStack(R.id.homeFragment)
-
+            findNavController().navigate(R.id.action_ratingFragment_to_homeFragment)
         }
         binding.tv.text = "Give a rating for ${arguments?.getString(TOUR_NAME)}"
-
     }
 
-    override fun onResume() {
-        super.onResume()
-        dialog?.window?.setLayout(
-            ViewGroup.LayoutParams.WRAP_CONTENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT
-        )
-    }
 
     override fun onDestroy() {
         super.onDestroy()

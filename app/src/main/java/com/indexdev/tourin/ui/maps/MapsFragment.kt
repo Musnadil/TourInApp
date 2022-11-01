@@ -49,6 +49,7 @@ import com.indexdev.tourin.ui.*
 import com.indexdev.tourin.ui.choosevehicle.ChooseVehicleFragment
 import com.indexdev.tourin.ui.home.HomeFragment.Companion.ADDRESS
 import com.indexdev.tourin.ui.home.HomeFragment.Companion.ID_TOUR
+import com.indexdev.tourin.ui.home.HomeFragment.Companion.IMG_URL
 import com.indexdev.tourin.ui.home.HomeFragment.Companion.LAT
 import com.indexdev.tourin.ui.home.HomeFragment.Companion.LONG
 import com.indexdev.tourin.ui.home.HomeFragment.Companion.TOUR_NAME
@@ -159,6 +160,7 @@ class MapsFragment : Fragment(), GoogleMap.OnMarkerClickListener {
             val bundle = Bundle()
             bundle.putString(ID_TOUR,arguments?.getString(ID_TOUR))
             bundle.putString(TOUR_NAME,arguments?.getString(TOUR_NAME))
+            bundle.putString(IMG_URL,arguments?.getString(IMG_URL))
 
             val pendingIntent = NavDeepLinkBuilder(requireContext())
                 .setComponentName(MainActivity::class.java)

@@ -36,6 +36,7 @@ class HomeFragment : Fragment() {
         private const val LOCATION_REQUEST_CODE = 1
         const val ID_TOUR = "ID_TOUR"
         const val TOUR_NAME = "TOUR_NAME"
+        const val IMG_URL = "IMG_URL"
         const val LAT = "LAT"
         const val LONG = "LONG"
         const val ADDRESS = "ADDRESS"
@@ -53,6 +54,7 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val preference = requireContext().getSharedPreferences(SHARED_PREF, Context.MODE_PRIVATE)
         val username = preference.getString(USERNAME, DEFAULT_VALUE)
+
 
         greeting(username ?: "Username")
         fetchPopularTourList()
@@ -152,6 +154,7 @@ class HomeFragment : Fragment() {
                 POIBundle.putString(LAT, data.lat)
                 POIBundle.putString(LONG, data.longi)
                 POIBundle.putString(ADDRESS, data.alamat)
+                POIBundle.putString(IMG_URL, data.urlImage)
                 findNavController().navigate(R.id.action_homeFragment_to_mapsFragment, POIBundle)
             }
 
@@ -166,6 +169,7 @@ class HomeFragment : Fragment() {
                 POIBundle.putString(LAT, data.lat)
                 POIBundle.putString(LONG, data.longi)
                 POIBundle.putString(ADDRESS, data.alamat)
+                POIBundle.putString(IMG_URL, data.urlImage)
                 findNavController().navigate(R.id.action_homeFragment_to_mapsFragment, POIBundle)
             }
         })
