@@ -4,9 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.app.NotificationManagerCompat
 import androidx.fragment.app.DialogFragment
+import androidx.navigation.fragment.findNavController
 import com.indexdev.tourin.R
 import com.indexdev.tourin.databinding.FragmentRatingBinding
+import com.indexdev.tourin.ui.home.HomeFragment.Companion.TOUR_NAME
+import com.indexdev.tourin.ui.initiateNotify
+import com.indexdev.tourin.ui.maps.MapsFragment.Companion.NOTIF_ID
 
 class RatingFragment : DialogFragment() {
     private var _binding: FragmentRatingBinding? = null
@@ -26,9 +31,16 @@ class RatingFragment : DialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val manager = NotificationManagerCompat.from(requireContext())
+        manager.cancel(NOTIF_ID)
+
         binding.btnSend.setOnClickListener {
             dialog?.dismiss()
+            initiateNotify = false
+            findNavController().clearBackStack(R.id.homeFragment)
+
         }
+        binding.tv.text = "Give a rating for ${arguments?.getString(TOUR_NAME)}"
 
     }
 

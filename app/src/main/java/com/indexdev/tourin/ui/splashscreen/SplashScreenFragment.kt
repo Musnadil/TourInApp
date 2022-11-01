@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.indexdev.tourin.R
 import com.indexdev.tourin.databinding.FragmentSplashScreenBinding
+import com.indexdev.tourin.ui.initiateNotify
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -42,13 +43,17 @@ class SplashScreenFragment : Fragment() {
         val showOnBoarding = preference.getBoolean(ON_BOARDING,true)
         val login = preference.getString(TOKEN, DEFAULT_VALUE)
         Handler(Looper.getMainLooper()).postDelayed({
-            if (login != DEFAULT_VALUE){
-                findNavController().navigate(R.id.action_splashScreenFragment_to_homeFragment)
-            }else{
-                if (showOnBoarding){
-                    findNavController().navigate(R.id.action_splashScreenFragment_to_firstOnBoardingFragment)
-                }else{
-                    findNavController().navigate(R.id.action_splashScreenFragment_to_loginFragment)
+            if (findNavController().currentDestination?.id == R.id.splashScreenFragment) {
+                if (initiateNotify) {
+                    findNavController().navigate(R.id.action_splashScreenFragment_to_ratingFragment2)
+                } else if (login != DEFAULT_VALUE) {
+                    findNavController().navigate(R.id.action_splashScreenFragment_to_homeFragment)
+                } else {
+                    if (showOnBoarding) {
+                        findNavController().navigate(R.id.action_splashScreenFragment_to_firstOnBoardingFragment)
+                    } else {
+                        findNavController().navigate(R.id.action_splashScreenFragment_to_loginFragment)
+                    }
                 }
             }
         },3000)

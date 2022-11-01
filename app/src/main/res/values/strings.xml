@@ -43,4 +43,12 @@
     <string name="place_name">Place Name</string>
     <string name="rate_the_place">Have visited the place? Please rate the place</string>
     <string name="send">Send</string>
+    <string name="background_location_permission_message">
+       Enable location background access to get a better experience with the TourIn app
+    </string>
+<!--    <string name="service_already_running">Service is already running</string>-->
+<!--    <string name="service_start_successfully">Service started successfully</string>-->
+    <string name="gps_enable">GPS enable</string>
+    <string name="please_turn_on_gps">Please turn on GPS</string>
+    <string name="ok">Ok</string>
 </resources>

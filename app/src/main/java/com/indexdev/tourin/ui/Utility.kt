@@ -4,13 +4,19 @@ import android.app.AlertDialog
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Canvas
+import android.location.Location
 import android.view.Window
 import androidx.core.content.ContextCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsControllerCompat
+import com.google.android.gms.maps.model.LatLng
 import kotlin.math.acos
 import kotlin.math.sin
 
+var locationList: MutableList<Location> = ArrayList()
+var latLngTour : LatLng? =null
+var distanceLocation : Double? = null
+var initiateNotify = false
 fun setFullScreen(window: Window) {
     WindowCompat.setDecorFitsSystemWindows(window, false)
 }
