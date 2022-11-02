@@ -8,18 +8,24 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.app.NotificationManagerCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.indexdev.tourin.R
+import com.indexdev.tourin.data.model.request.RateRequest
 import com.indexdev.tourin.databinding.FragmentRatingBinding
 import com.indexdev.tourin.ui.maps.MapsFragment.Companion.NOTIF_ID
 import com.indexdev.tourin.ui.splashscreen.SplashScreenFragment
 import com.indexdev.tourin.ui.splashscreen.SplashScreenFragment.Companion.DEFAULT_VALUE
+import dagger.hilt.android.AndroidEntryPoint
 
-class RatingFragment : Fragment() {
+@AndroidEntryPoint
+class RateFragment : Fragment() {
     private var _binding: FragmentRatingBinding? = null
     private val binding get() = _binding!!
+    private val rateViewModel: RateViewModel by viewModels()
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,7 +51,17 @@ class RatingFragment : Fragment() {
             .into(binding.ivTour)
 
         binding.btnSend.setOnClickListener {
-//            get rating binding.ratingBar.rating
+            val preference = requireContext().getSharedPreferences(SplashScreenFragment.SHARED_PREF,Context.MODE_PRIVATE)
+            val idUser = preference.getString(SplashScreenFragment.ID_USER, DEFAULT_VALUE)
+            if (idUser != DEFAULT_VALUE){
+                val rateRequest = RateRequest(
+                    null,
+                    idUser.toString(),
+                    tourID.toString(),
+                    binding.ratingBar.rating.toString(),
+                    null)
+                rateViewModel.postRate(rateRequest)
+            }
             manager.cancel(NOTIF_ID)
             ratingEdit.putString(SplashScreenFragment.IMG_URL, DEFAULT_VALUE)
             ratingEdit.putString(SplashScreenFragment.TOUR_NAME, DEFAULT_VALUE)

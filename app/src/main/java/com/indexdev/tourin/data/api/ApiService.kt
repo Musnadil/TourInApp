@@ -2,10 +2,8 @@ package com.indexdev.tourin.data.api
 
 import com.indexdev.tourin.data.model.request.LoginRequest
 import com.indexdev.tourin.data.model.request.RegisterRequest
-import com.indexdev.tourin.data.model.response.ResponseLogin
-import com.indexdev.tourin.data.model.response.ResponsePOI
-import com.indexdev.tourin.data.model.response.ResponseRegister
-import com.indexdev.tourin.data.model.response.ResponseTourList
+import com.indexdev.tourin.data.model.request.RateRequest
+import com.indexdev.tourin.data.model.response.*
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
@@ -23,4 +21,7 @@ interface ApiService {
 
     @GET("poi/{id}")
     suspend fun getPoiById(@Path("id") id: Int): List<ResponsePOI>
+
+    @POST("rate")
+    suspend fun postRate(@Body rateRequest: RateRequest): ResponseRate
 }

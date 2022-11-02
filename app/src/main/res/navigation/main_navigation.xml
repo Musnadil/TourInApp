@@ -124,7 +124,7 @@
     </fragment>
     <fragment
         android:id="@+id/ratingFragment"
-        android:name="com.indexdev.tourin.ui.rating.RatingFragment"
+        android:name="com.indexdev.tourin.ui.rating.RateFragment"
         android:label="fragment_rating"
         tools:layout="@layout/fragment_rating" >
         <action

@@ -176,6 +176,7 @@ class MapsFragment : Fragment(), GoogleMap.OnMarkerClickListener {
 
             val notifManager = NotificationManagerCompat.from(requireContext())
 
+//            range in 5 10
             if (distance >=410){
                 val preference = requireContext().getSharedPreferences(SplashScreenFragment.SHARED_PREF,Context.MODE_PRIVATE)
                 val ratingEdit = preference.edit()

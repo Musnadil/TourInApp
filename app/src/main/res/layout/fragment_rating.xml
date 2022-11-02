@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.rating.RatingFragment">
+    tools:context=".ui.rating.RateFragment">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/gl_40"
@@ -60,7 +60,7 @@
         android:layout_marginTop="8dp"
         android:numStars="5"
         android:progressTint="@color/teal_theme"
-        android:rating="0"
+        android:rating="4.5"
         android:stepSize="0.5"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
