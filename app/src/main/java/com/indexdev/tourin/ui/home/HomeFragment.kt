@@ -8,15 +8,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.snackbar.Snackbar
 import com.indexdev.tourin.R
 import com.indexdev.tourin.data.api.Status.*
 import com.indexdev.tourin.data.model.response.ResponseTourList
 import com.indexdev.tourin.databinding.FragmentHomeBinding
+import com.indexdev.tourin.ui.edit.EditAccountDialogFragment
 import com.indexdev.tourin.ui.splashscreen.SplashScreenFragment.Companion.DEFAULT_VALUE
 import com.indexdev.tourin.ui.splashscreen.SplashScreenFragment.Companion.SHARED_PREF
 import com.indexdev.tourin.ui.splashscreen.SplashScreenFragment.Companion.USERNAME
@@ -72,6 +73,10 @@ class HomeFragment : Fragment() {
             )
             return
         }
+        binding.cardUser.setOnClickListener {
+            val dialogFragment = EditAccountDialogFragment()
+            activity?.let { dialogFragment.show(it.supportFragmentManager, null) }
+        }
     }
 
     @SuppressLint("SetTextI18n")
@@ -104,6 +109,7 @@ class HomeFragment : Fragment() {
             when (popularTourList.status) {
                 SUCCESS -> {
                     binding.shimmerPopularTour.visibility = View.GONE
+                    binding.rvPopularTour.visibility = View.VISIBLE
                     if (!popularTourList.data.isNullOrEmpty()) {
                         listPopularTour.clear()
                         val sortedList =
@@ -115,10 +121,18 @@ class HomeFragment : Fragment() {
                     popularTourAdapter.submitData(listPopularTour)
                 }
                 ERROR -> {
-                    Toast.makeText(requireContext(), popularTourList.message, Toast.LENGTH_SHORT)
-                        .show()
+                    val snackbar = Snackbar.make(
+                        binding.root, "${popularTourList.message}",
+                        Snackbar.LENGTH_LONG
+                    )
+                    snackbar.setAction("Oke"){
+                        snackbar.dismiss()
+                    }
+                    snackbar.show()
+                    binding.shimmerPopularTour.visibility = View.VISIBLE
                 }
                 LOADING -> {
+                    binding.rvPopularTour.visibility = View.GONE
                     binding.shimmerPopularTour.visibility = View.VISIBLE
                 }
             }
@@ -130,14 +144,16 @@ class HomeFragment : Fragment() {
         homeViewModel.allListTour.observe(viewLifecycleOwner) { allTourList ->
             when (allTourList.status) {
                 SUCCESS -> {
+                    binding.rvAllTour.visibility = View.VISIBLE
                     binding.shimmerAllTour.visibility = View.GONE
                     allListTourAdapter.submitData(allTourList.data)
                 }
                 ERROR -> {
-                    Toast.makeText(requireContext(), allTourList.message, Toast.LENGTH_SHORT)
-                        .show()
+                    binding.shimmerAllTour.visibility = View.VISIBLE
+
                 }
                 LOADING -> {
+                    binding.rvAllTour.visibility = View.GONE
                     binding.shimmerAllTour.visibility = View.VISIBLE
                 }
             }

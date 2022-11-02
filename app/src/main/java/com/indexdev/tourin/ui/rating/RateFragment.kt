@@ -89,7 +89,7 @@ class RateFragment : Fragment() {
                     binding.btnSend.isEnabled = false
                     val snackbar = Snackbar.make(
                         binding.root, "an error occurred",
-                        Snackbar.LENGTH_LONG
+                        Snackbar.LENGTH_INDEFINITE
                     )
                     snackbar.setAction("Oke"){
                         manager.cancel(NOTIF_ID)

@@ -18,47 +18,50 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <ImageView
-                android:id="@+id/iv_profile"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
+            <LinearLayout
+                android:id="@+id/card_user"
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
-                android:background="@drawable/circle"
-                android:backgroundTint="@color/light_grey"
-                android:contentDescription="@string/image_profiles"
-                android:src="@drawable/ic_person"
+                android:background="@drawable/bg_start"
+                android:backgroundTint="@color/white_theme"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:orientation="vertical"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
-                android:id="@+id/tv_greating"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:fontFamily="@font/poppins_regular"
-                android:text="@string/greeting"
-                android:textColor="@color/black"
-                android:textSize="16sp"
-                app:layout_constraintStart_toEndOf="@id/iv_profile"
-                app:layout_constraintTop_toTopOf="@id/iv_profile" />
+                <TextView
+                    android:id="@+id/tv_greating"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginTop="8dp"
+                    android:fontFamily="@font/poppins_regular"
+                    android:text="@string/greeting"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/tv_username"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:ellipsize="end"
-                android:fontFamily="@font/poppins_regular"
-                android:text="@string/john_doe"
-                android:textColor="@color/black"
-                android:textFontWeight="900"
-                android:textSize="16sp"
-                app:layout_constraintBottom_toBottomOf="@id/iv_profile"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/iv_profile"
-                tools:targetApi="p" />
+                <TextView
+                    android:id="@+id/tv_username"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginBottom="8dp"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/poppins_regular"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:text="@string/john_doe"
+                    android:textColor="@color/black"
+                    android:textFontWeight="900"
+                    android:textSize="16sp"
+                    tools:targetApi="p" />
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/tv_popular_tour"
@@ -72,7 +75,7 @@
                 android:textFontWeight="600"
                 android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_username"
+                app:layout_constraintTop_toBottomOf="@id/card_user"
                 tools:targetApi="p" />
 
             <androidx.recyclerview.widget.RecyclerView
