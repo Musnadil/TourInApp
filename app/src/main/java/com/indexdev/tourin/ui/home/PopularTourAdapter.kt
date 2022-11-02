@@ -58,7 +58,7 @@ class PopularTourAdapter(private val onClickItem: OnClickListener) :
                 binding.icStar.visibility = View.GONE
                 binding.tvRate.visibility = View.GONE
             } else {
-                binding.tvRate.text = data.rating
+                binding.tvRate.text = data.rating.take(3)
             }
             binding.root.setOnClickListener {
                 onClickItem.onClickItem(data)

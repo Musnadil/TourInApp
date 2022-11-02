@@ -48,20 +48,16 @@ class SplashScreenFragment : Fragment() {
         val login = preference.getString(TOKEN, DEFAULT_VALUE)
         if(idTour != DEFAULT_VALUE){
             findNavController().navigate(R.id.action_splashScreenFragment_to_ratingFragment)
-            Toast.makeText(requireContext(), "run1", Toast.LENGTH_SHORT).show()
         }
         else{
             Handler(Looper.getMainLooper()).postDelayed({
                 if (findNavController().currentDestination?.id == R.id.splashScreenFragment) {
                     if (login != DEFAULT_VALUE) {
-                        Toast.makeText(requireContext(), "run2", Toast.LENGTH_SHORT).show()
                         findNavController().navigate(R.id.action_splashScreenFragment_to_homeFragment)
                     } else {
                         if (showOnBoarding) {
-                            Toast.makeText(requireContext(), "run3", Toast.LENGTH_SHORT).show()
                             findNavController().navigate(R.id.action_splashScreenFragment_to_firstOnBoardingFragment)
                         } else {
-                            Toast.makeText(requireContext(), "run4", Toast.LENGTH_SHORT).show()
                             findNavController().navigate(R.id.action_splashScreenFragment_to_loginFragment)
                         }
                     }
