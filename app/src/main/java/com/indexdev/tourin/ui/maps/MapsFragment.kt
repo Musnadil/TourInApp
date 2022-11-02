@@ -191,11 +191,6 @@ class MapsFragment : Fragment(), GoogleMap.OnMarkerClickListener {
 
     }
 
-    override fun onPause() {
-        super.onPause()
-        stopServiceFunc()
-    }
-
     // create notification
     private fun createNotificationChannel(){
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){

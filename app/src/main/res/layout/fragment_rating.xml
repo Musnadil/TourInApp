@@ -24,6 +24,21 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:id="@+id/tv_tour_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginBottom="16dp"
+        android:ellipsize="end"
+        android:fontFamily="@font/poppins_semibold"
+        android:maxLines="2"
+        android:text="@string/candi_borobudur"
+        android:textColor="@color/grey_theme"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@id/gl_40"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/tv"
@@ -32,6 +47,7 @@
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="16dp"
         android:fontFamily="@font/poppins_regular"
+        android:gravity="center"
         android:text="@string/rate_the_place"
         android:textColor="@color/grey_theme"
         android:textSize="16sp"
@@ -56,13 +72,13 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="32dp"
         android:layout_marginTop="8dp"
-        app:cornerRadius="15dp"
         android:fontFamily="@font/poppins_semibold"
         android:paddingHorizontal="50dp"
         android:text="@string/send"
         android:textAllCaps="false"
         android:textColor="@color/white_theme"
         android:textSize="16sp"
+        app:cornerRadius="15dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/rating_bar" />

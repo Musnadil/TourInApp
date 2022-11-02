@@ -52,6 +52,7 @@ class RatingFragment : Fragment() {
             findNavController().navigate(R.id.action_ratingFragment_to_homeFragment)
         }
         binding.tv.text = "Give a rating for $tourName"
+        binding.tvTourName.text = "$tourName"
     }
 
 
