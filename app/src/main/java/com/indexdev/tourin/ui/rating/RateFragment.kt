@@ -12,7 +12,10 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.google.android.material.snackbar.Snackbar
 import com.indexdev.tourin.R
+import com.indexdev.tourin.data.api.Status
+import com.indexdev.tourin.data.api.Status.*
 import com.indexdev.tourin.data.model.request.RateRequest
 import com.indexdev.tourin.databinding.FragmentRatingBinding
 import com.indexdev.tourin.ui.maps.MapsFragment.Companion.NOTIF_ID
@@ -62,12 +65,44 @@ class RateFragment : Fragment() {
                     null)
                 rateViewModel.postRate(rateRequest)
             }
-            manager.cancel(NOTIF_ID)
-            ratingEdit.putString(SplashScreenFragment.IMG_URL, DEFAULT_VALUE)
-            ratingEdit.putString(SplashScreenFragment.TOUR_NAME, DEFAULT_VALUE)
-            ratingEdit.putString(SplashScreenFragment.ID_TOUR, DEFAULT_VALUE)
-            ratingEdit.apply()
-            findNavController().navigate(R.id.action_ratingFragment_to_homeFragment)
+        }
+        rateViewModel.rate.observe(viewLifecycleOwner){ resources ->
+            when(resources.status){
+                SUCCESS ->{
+                    binding.btnSend.isEnabled = false
+                    val snackbar = Snackbar.make(
+                        binding.root, "Thank you for rating",
+                        Snackbar.LENGTH_INDEFINITE
+                    )
+                    snackbar.setAction("Oke"){
+                        snackbar.dismiss()
+                        manager.cancel(NOTIF_ID)
+                        ratingEdit.putString(SplashScreenFragment.IMG_URL, DEFAULT_VALUE)
+                        ratingEdit.putString(SplashScreenFragment.TOUR_NAME, DEFAULT_VALUE)
+                        ratingEdit.putString(SplashScreenFragment.ID_TOUR, DEFAULT_VALUE)
+                        ratingEdit.apply()
+                        findNavController().navigate(R.id.action_ratingFragment_to_homeFragment)
+                    }
+                    snackbar.show()
+                }
+                ERROR -> {
+                    binding.btnSend.isEnabled = false
+                    val snackbar = Snackbar.make(
+                        binding.root, "an error occurred",
+                        Snackbar.LENGTH_LONG
+                    )
+                    snackbar.setAction("Oke"){
+                        manager.cancel(NOTIF_ID)
+                        ratingEdit.putString(SplashScreenFragment.IMG_URL, DEFAULT_VALUE)
+                        ratingEdit.putString(SplashScreenFragment.TOUR_NAME, DEFAULT_VALUE)
+                        ratingEdit.putString(SplashScreenFragment.ID_TOUR, DEFAULT_VALUE)
+                        ratingEdit.apply()
+                        snackbar.dismiss()
+                    }
+                    snackbar.show()
+                }
+                LOADING -> {}
+            }
         }
         binding.tv.text = "Give a rating for $tourName"
         binding.tvTourName.text = "$tourName"
