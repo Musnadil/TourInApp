@@ -133,7 +133,6 @@ class MapsFragment : Fragment(), GoogleMap.OnMarkerClickListener {
 
         binding.btnBack.setOnClickListener {
             findNavController().popBackStack()
-            stopServiceFunc()
         }
 
         val lat = arguments?.getString(LAT)
@@ -176,17 +175,32 @@ class MapsFragment : Fragment(), GoogleMap.OnMarkerClickListener {
 
             val notifManager = NotificationManagerCompat.from(requireContext())
 
-//            range in 5 10
-            if (distance >=410){
-                val preference = requireContext().getSharedPreferences(SplashScreenFragment.SHARED_PREF,Context.MODE_PRIVATE)
+            if(distance<=5) {
+                inArea = true
+            }
+            if (inArea && distance >= 10) {
+                inArea = false
+                val preference = requireContext().getSharedPreferences(
+                    SplashScreenFragment.SHARED_PREF,
+                    Context.MODE_PRIVATE
+                )
                 val ratingEdit = preference.edit()
-                ratingEdit.putString(SplashScreenFragment.ID_TOUR,arguments?.getString(ID_TOUR))
-                ratingEdit.putString(SplashScreenFragment.IMG_URL,arguments?.getString(IMG_URL))
-                ratingEdit.putString(SplashScreenFragment.TOUR_NAME,arguments?.getString(TOUR_NAME))
+                ratingEdit.putString(
+                    SplashScreenFragment.ID_TOUR,
+                    arguments?.getString(ID_TOUR)
+                )
+                ratingEdit.putString(
+                    SplashScreenFragment.IMG_URL,
+                    arguments?.getString(IMG_URL)
+                )
+                ratingEdit.putString(
+                    SplashScreenFragment.TOUR_NAME,
+                    arguments?.getString(TOUR_NAME)
+                )
                 ratingEdit.apply()
                 stopServiceFunc()
                 distanceLocation = 0.0
-                notifManager.notify(NOTIF_ID,notif)
+                notifManager.notify(NOTIF_ID, notif)
             }
         }
 

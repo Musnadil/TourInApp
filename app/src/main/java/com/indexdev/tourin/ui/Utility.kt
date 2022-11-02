@@ -16,6 +16,7 @@ import kotlin.math.sin
 var locationList: MutableList<Location> = ArrayList()
 var latLngTour : LatLng? =null
 var distanceLocation : Double? = null
+var inArea = false
 fun setFullScreen(window: Window) {
     WindowCompat.setDecorFitsSystemWindows(window, false)
 }
