@@ -15,5 +15,6 @@
     <color name="teal_theme_pressed">#A3FBFF</color>
     <color name="yellow_theme">#FFB800</color>
     <color name="grey">#dddddd</color>
+    <color name="red">#E80000</color>
 
 </resources>

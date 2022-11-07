@@ -1,17 +1,23 @@
 package com.indexdev.tourin.ui.edit
 
+import android.app.AlertDialog
 import android.content.Context
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.indexdev.tourin.R
 import com.indexdev.tourin.data.api.Status.*
 import com.indexdev.tourin.data.model.request.UpdateUserRequest
 import com.indexdev.tourin.databinding.FragmentEditAccountDialogBinding
+import com.indexdev.tourin.ui.splashscreen.SplashScreenFragment
 import com.indexdev.tourin.ui.splashscreen.SplashScreenFragment.Companion.DEFAULT_VALUE
 import com.indexdev.tourin.ui.splashscreen.SplashScreenFragment.Companion.ID_USER
 import com.indexdev.tourin.ui.splashscreen.SplashScreenFragment.Companion.SHARED_PREF
@@ -73,6 +79,26 @@ class EditAccountDialogFragment(private val usernameUpdate:() ->Unit) : DialogFr
                 }
                 LOADING ->{}
             }
+        }
+        binding.btnLogout.setOnClickListener {
+            val alertDialog = AlertDialog.Builder(requireContext())
+            alertDialog.apply {
+                setTitle("Logout")
+                setMessage("Are you sure you want to log out?")
+                setNegativeButton("cancel"){dialog,_ ->
+                    dialog.dismiss()
+                }
+                setPositiveButton("Yes"){dialogY,_ ->
+                    dialogY.dismiss()
+                    preference.edit().clear().apply()
+                    preference.edit().putBoolean(SplashScreenFragment.ON_BOARDING,false).apply()
+                    dialog?.dismiss()
+                    if(findNavController().currentDestination?.id == R.id.homeFragment){
+                        findNavController().navigate(R.id.action_homeFragment_to_loginFragment)
+                    }
+                }
+            }
+            alertDialog.show()
         }
 
     }
