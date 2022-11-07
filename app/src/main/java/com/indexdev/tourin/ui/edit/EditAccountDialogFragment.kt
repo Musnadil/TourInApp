@@ -19,7 +19,7 @@ import com.indexdev.tourin.ui.splashscreen.SplashScreenFragment.Companion.USERNA
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class EditAccountDialogFragment : DialogFragment() {
+class EditAccountDialogFragment(private val usernameUpdate:() ->Unit) : DialogFragment() {
     private var _binding: FragmentEditAccountDialogBinding? = null
     private val binding get() = _binding!!
     private val editViewModel: EditViewModel by viewModels()
@@ -63,10 +63,10 @@ class EditAccountDialogFragment : DialogFragment() {
         editViewModel.username.observe(viewLifecycleOwner){username ->
             when(username.status){
                 SUCCESS -> {
-                    dialog?.dismiss()
-                    Toast.makeText(requireContext(), "Success update username", Toast.LENGTH_SHORT).show()
                     editPrefUsername.putString(USERNAME, binding.etUsername.text.toString())
                     editPrefUsername.apply()
+                    usernameUpdate.invoke()
+                    dialog?.dismiss()
                 }
                 ERROR -> {
                     Toast.makeText(requireContext(), "${username.message}", Toast.LENGTH_SHORT).show()

@@ -79,8 +79,13 @@ class HomeFragment : Fragment() {
             )
             return
         }
+
         binding.cardUser.setOnClickListener {
-            val dialogFragment = EditAccountDialogFragment()
+            val dialogFragment = EditAccountDialogFragment(usernameUpdate = {
+                val preference = requireContext().getSharedPreferences(SHARED_PREF, Context.MODE_PRIVATE)
+                val newUsername = preference.getString(USERNAME, DEFAULT_VALUE)
+                binding.tvUsername.text = newUsername
+            })
             activity?.let { dialogFragment.show(it.supportFragmentManager, null) }
         }
     }
