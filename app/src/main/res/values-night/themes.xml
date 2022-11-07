@@ -15,4 +15,13 @@
         <item name="android:navigationBarColor">@color/white_theme</item>
         <item name="android:windowLightNavigationBar" tools:ignore="NewApi">true</item>
     </style>
+
+    <style name="DialogAnimation">
+        <item name="android:windowEnterAnimation">@anim/zoom_in_card</item>
+        <item name="android:windowExitAnimation">@anim/zoom_out_card</item>
+    </style>
+    <style name="NewDialogAnimation">
+        <item name="android:windowEnterAnimation">@anim/zoom_in_card</item>
+        <item name="android:windowExitAnimation">@anim/zoom_out_card</item>
+    </style>
 </resources>

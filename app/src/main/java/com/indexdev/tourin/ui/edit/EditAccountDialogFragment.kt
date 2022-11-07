@@ -35,7 +35,7 @@ class EditAccountDialogFragment(private val usernameUpdate:() ->Unit) : DialogFr
         savedInstanceState: Bundle?
     ): View {
         dialog?.window?.setBackgroundDrawableResource(R.drawable.bg_rounded_dialog)
-        dialog?.window?.attributes?.windowAnimations = R.style.DialogAnimation
+        dialog?.window?.attributes?.windowAnimations = R.style.NewDialogAnimation
         dialog?.setCanceledOnTouchOutside(false)
         _binding = FragmentEditAccountDialogBinding.inflate(layoutInflater, container, false)
         return binding.root
