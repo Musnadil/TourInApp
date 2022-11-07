@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.indexdev.tourin.data.Repository
 import com.indexdev.tourin.data.api.Resource
+import com.indexdev.tourin.data.model.response.ResponseRecommendation
 import com.indexdev.tourin.data.model.response.ResponseTourList
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -37,6 +38,20 @@ class HomeViewModel @Inject constructor(private val repository: Repository): Vie
                 _allListTour.postValue(Resource.success(repository.getTourList()))
             }catch (e:Exception){
                 _allListTour.postValue(Resource.error(e.localizedMessage?:"error occurred"))
+            }
+        }
+    }
+
+    private val _recommendationList : MutableLiveData<Resource<List<ResponseRecommendation>>> = MutableLiveData()
+    val recommendationList : LiveData<Resource<List<ResponseRecommendation>>> get() =  _recommendationList
+
+    fun getRecommendationList(){
+        viewModelScope.launch {
+            _recommendationList.postValue(Resource.loading())
+            try {
+                _recommendationList.postValue(Resource.success(repository.getRecommendationList()))
+            }catch (e:Exception){
+                _recommendationList.postValue(Resource.error(e.message?:"error occurred"))
             }
         }
     }

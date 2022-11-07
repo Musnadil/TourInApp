@@ -161,7 +161,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="201dp"
+                android:layout_marginTop="214dp"
                 android:fontFamily="@font/poppins_regular"
                 android:text="@string/all_new_bali_tours"
                 android:textColor="@color/black"
