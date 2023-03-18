@@ -1,5 +1,6 @@
 package com.indexdev.tourin.ui.auth
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -84,15 +85,18 @@ class RegisterFragment : Fragment() {
                     binding.loading.root.visibility = View.GONE
                     when (resources.data?.code) {
                         200 -> {
-                            alertDialog(
-                                requireContext(),
-                                getString(R.string.successful_registration),
-                                resources.data.message,
-                                findNavController().navigate(
-                                    R.id.action_registerFragment_to_loginFragment,
-                                    bundle
-                                )
-                            )
+                            AlertDialog.Builder(context)
+                                .setTitle(getString(R.string.successful_registration))
+                                .setMessage(resources.data.message)
+                                .setCancelable(false)
+                                .setPositiveButton("OK") { positive, _ ->
+                                    positive.dismiss()
+                                    findNavController().navigate(
+                                        R.id.action_registerFragment_to_loginFragment,
+                                        bundle
+                                    )
+                                }
+                                .show()
                         }
                         401 -> {
                             alertDialog(
@@ -114,7 +118,11 @@ class RegisterFragment : Fragment() {
                 }
                 ERROR -> {
                     binding.loading.root.visibility = View.GONE
-                    alertDialog(requireContext(), getString(R.string.message), resources.message ?: getString(R.string.error))
+                    alertDialog(
+                        requireContext(),
+                        getString(R.string.message),
+                        resources.message ?: getString(R.string.error)
+                    )
                 }
             }
         }

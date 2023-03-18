@@ -61,10 +61,18 @@ class HomeFragment : Fragment() {
         val preference = requireContext().getSharedPreferences(SHARED_PREF, Context.MODE_PRIVATE)
         val username = preference.getString(USERNAME, DEFAULT_VALUE)
 
+        binding.cardUser.setOnClickListener {
+            val dialogFragment = EditAccountDialogFragment(usernameUpdate = {
+                val preference = requireContext().getSharedPreferences(SHARED_PREF, Context.MODE_PRIVATE)
+                val newUsername = preference.getString(USERNAME, DEFAULT_VALUE)
+                binding.tvUsername.text = newUsername
+            })
+            activity?.let { dialogFragment.show(it.supportFragmentManager, null) }
+        }
 
         greeting(username ?: "Username")
         fetchPopularTourList()
-        fetchRecommendationList()
+//        fetchRecommendationList()
         fetchAllListTour()
         detailTour()
 
@@ -78,15 +86,6 @@ class HomeFragment : Fragment() {
                 LOCATION_REQUEST_CODE
             )
             return
-        }
-
-        binding.cardUser.setOnClickListener {
-            val dialogFragment = EditAccountDialogFragment(usernameUpdate = {
-                val preference = requireContext().getSharedPreferences(SHARED_PREF, Context.MODE_PRIVATE)
-                val newUsername = preference.getString(USERNAME, DEFAULT_VALUE)
-                binding.tvUsername.text = newUsername
-            })
-            activity?.let { dialogFragment.show(it.supportFragmentManager, null) }
         }
     }
 
@@ -133,7 +132,7 @@ class HomeFragment : Fragment() {
                 }
                 ERROR -> {
                     val snackbar = Snackbar.make(
-                        binding.root, "${popularTourList.message}",
+                        binding.root, "Unable connect to server",
                         Snackbar.LENGTH_LONG
                     )
                     snackbar.setAction("Oke") {
@@ -168,8 +167,8 @@ class HomeFragment : Fragment() {
                     }
                     if (!userRecommendationList.isNullOrEmpty()) {
                         recommendationAdapter.submitData(userRecommendationList)
-                        binding.tvRecommendation.visibility = View.VISIBLE
-                        binding.rvRecommendation.visibility = View.VISIBLE
+//                        binding.tvRecommendation.visibility = View.VISIBLE
+//                        binding.rvRecommendation.visibility = View.VISIBLE
                         binding.shimmerRecommendationTour.visibility = View.GONE
 
                     } else {

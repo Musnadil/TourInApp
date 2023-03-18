@@ -36,13 +36,6 @@ class LoginUITest {
         val appCompatImageView = onView(
             allOf(
                 withId(R.id.btn_next),
-//                childAtPosition(
-//                    childAtPosition(
-//                        withId(R.id.fragment_container),
-//                        0
-//                    ),
-//                    2
-//                ),
                 isDisplayed()
             )
         )
@@ -51,13 +44,6 @@ class LoginUITest {
         val appCompatImageView2 = onView(
             allOf(
                 withId(R.id.btn_next),
-//                childAtPosition(
-//                    childAtPosition(
-//                        withId(R.id.fragment_container),
-//                        0
-//                    ),
-//                    2
-//                ),
                 isDisplayed()
             )
         )
@@ -66,13 +52,6 @@ class LoginUITest {
         val materialButton = onView(
             allOf(
                 withId(R.id.btn_next), withText("Get Started"),
-//                childAtPosition(
-//                    childAtPosition(
-//                        withId(R.id.fragment_container),
-//                        0
-//                    ),
-//                    2
-//                ),
                 isDisplayed()
             )
         )
@@ -81,13 +60,6 @@ class LoginUITest {
         val textInputEditText = onView(
             allOf(
                 withId(R.id.et_email),
-//                childAtPosition(
-//                    childAtPosition(
-//                        withId(R.id.email_container),
-//                        0
-//                    ),
-//                    0
-//                ),
                 isDisplayed()
             )
         )
@@ -96,13 +68,6 @@ class LoginUITest {
         val textInputEditText2 = onView(
             allOf(
                 withId(R.id.et_password),
-//                childAtPosition(
-//                    childAtPosition(
-//                        withId(R.id.password_container),
-//                        0
-//                    ),
-//                    0
-//                ),
                 isDisplayed()
             )
         )
@@ -111,13 +76,6 @@ class LoginUITest {
         val textInputEditText3 = onView(
             allOf(
                 withId(R.id.et_password), withText("1234567"),
-//                childAtPosition(
-//                    childAtPosition(
-//                        withId(R.id.password_container),
-//                        0
-//                    ),
-//                    0
-//                ),
                 isDisplayed()
             )
         )
@@ -126,34 +84,10 @@ class LoginUITest {
         val materialButton2 = onView(
             allOf(
                 withId(R.id.btn_login), withText("Log In"),
-//                childAtPosition(
-//                    childAtPosition(
-//                        withId(R.id.fragment_container),
-//                        0
-//                    ),
-//                    6
-//                ),
                 isDisplayed()
             )
         )
         materialButton2.perform(click())
     }
 
-//    private fun childAtPosition(
-//        parentMatcher: Matcher<View>, position: Int
-//    ): Matcher<View> {
-//
-//        return object : TypeSafeMatcher<View>() {
-//            override fun describeTo(description: Description) {
-//                description.appendText("Child at position $position in parent ")
-//                parentMatcher.describeTo(description)
-//            }
-//
-//            public override fun matchesSafely(view: View): Boolean {
-//                val parent = view.parent
-//                return parent is ViewGroup && parentMatcher.matches(parent)
-//                        && view == parent.getChildAt(position)
-//            }
-//        }
-//    }
 }
