@@ -41,6 +41,7 @@ import com.indexdev.tourin.MainActivity
 import com.indexdev.tourin.R
 import com.indexdev.tourin.data.api.Status.*
 import com.indexdev.tourin.data.model.response.ResponsePOI
+import com.indexdev.tourin.data.model.response.UserMitra
 import com.indexdev.tourin.databinding.FragmentMapsBinding
 import com.indexdev.tourin.services.LocationService
 import com.indexdev.tourin.services.LocationService.Companion.DISTANCE
@@ -78,6 +79,7 @@ class MapsFragment : Fragment(), GoogleMap.OnMarkerClickListener {
         mMap.setInfoWindowAdapter(customInfoWindow)
         permissionLocation()
         getPOI()
+        getPOIUser()
         mMap.isMyLocationEnabled = true
     }
 
@@ -284,7 +286,9 @@ class MapsFragment : Fragment(), GoogleMap.OnMarkerClickListener {
 
     private fun markerTour(latLong: LatLng) {
         val markerOptions = MarkerOptions().position(latLong)
-        mMap.addMarker(markerOptions)
+//        mMap.addMarker(markerOptions)
+        val marker = mMap.addMarker(markerOptions)
+        marker?.tag = "i"
     }
 
     private fun getPOI() {
@@ -345,15 +349,78 @@ class MapsFragment : Fragment(), GoogleMap.OnMarkerClickListener {
         }
     }
 
+    private fun getPOIUser() {
+        mapsViewModel.getPoiListMitra()
+        mapsViewModel.poiListMitra.observe(viewLifecycleOwner) { poiListMitra->
+            when (poiListMitra.status) {
+                SUCCESS -> {
+                    if (!poiListMitra.data.isNullOrEmpty()) {
+                        poiMitra(poiListMitra.data)
+                    } else {
+                        Toast.makeText(requireContext(), "Can't get POI List", Toast.LENGTH_SHORT)
+                            .show()
+                    }
+                }
+                ERROR -> {
+                    Toast.makeText(requireContext(), poiListMitra.message, Toast.LENGTH_SHORT).show()
+                }
+                LOADING -> {}
+            }
+        }
+
+    }
+
+    private fun poiMitra(facility: List<UserMitra>) {
+        for (i in facility) {
+            val latLong = LatLng(i.lat.toDouble(), i.longi.toDouble())
+            val iconWorship =
+                getBitmapFromVectorDrawable(requireActivity(), R.drawable.ic_poi_worship_place)
+            val iconToilet =
+                getBitmapFromVectorDrawable(requireActivity(), R.drawable.ic_poi_toilet)
+            val iconFoodPlace =
+                getBitmapFromVectorDrawable(requireActivity(), R.drawable.ic_poi_food_place)
+            val iconEvacuation =
+                getBitmapFromVectorDrawable(requireActivity(), R.drawable.ic_poi_evacuation_place)
+            val iconParking =
+                getBitmapFromVectorDrawable(requireActivity(), R.drawable.ic_poi_parking)
+            val markerOptions = MarkerOptions().title(i.idMitra).position(latLong)
+//            when (i.kodeFasilitas) {
+//                "F01" -> {
+//                    markerOptions.icon(BitmapDescriptorFactory.fromBitmap(iconWorship))
+//                }
+//                "F02" -> {
+//                    markerOptions.icon(BitmapDescriptorFactory.fromBitmap(iconToilet))
+//                }
+//                "F03" -> {
+//                    markerOptions.icon(BitmapDescriptorFactory.fromBitmap(iconFoodPlace))
+//                }
+//                "F04" -> {
+//                    markerOptions.icon(BitmapDescriptorFactory.fromBitmap(iconEvacuation))
+//                }
+//                "F05" -> {
+//                    markerOptions.icon(BitmapDescriptorFactory.fromBitmap(iconParking))
+//                }
+//            }
+            val marker = mMap.addMarker(markerOptions)
+            marker?.tag = i
+        }
+    }
+
+
     override fun onResume() {
         super.onResume()
         requestDevicesLocationSettings()
     }
 
     override fun onMarkerClick(marker: Marker): Boolean {
+        val facility = arrayOf("Tempat Ibadah","Toilet","Food Court","Titik Evakuasi","Tempat Parkir")
         mMap.setOnInfoWindowClickListener {
-            val dialogFragment = ChooseVehicleFragment(marker.position, marker.title.toString())
-            activity?.let { dialogFragment.show(it.supportFragmentManager, null) }
+            if(marker.title in facility){
+                val dialogFragment = ChooseVehicleFragment(marker.position, marker.title.toString())
+                activity?.let { dialogFragment.show(it.supportFragmentManager, null) }
+            }else{
+                Toast.makeText(requireContext(), "${marker.title}", Toast.LENGTH_SHORT).show()
+            }
         }
         return false
     }

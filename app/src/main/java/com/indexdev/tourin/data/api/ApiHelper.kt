@@ -14,5 +14,6 @@ class ApiHelper(private val apiService: ApiService) {
     suspend fun postRate(rateRequest: RateRequest) = apiService.postRate(rateRequest)
     suspend fun editUsername(id:Int, updateUserRequest: UpdateUserRequest) = apiService.editUsername(id, updateUserRequest)
     suspend fun getRecommendationList() = apiService.getRecommendationList()
+    suspend fun getAllUserMitra() = apiService.getAllUserMitra()
 
 }

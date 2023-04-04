@@ -32,4 +32,7 @@ interface ApiService {
 
     @GET("rekomendasi")
     suspend fun getRecommendationList() : List<ResponseRecommendation>
+
+    @GET("usermitra")
+    suspend fun getAllUserMitra() : List<UserMitra>
 }
