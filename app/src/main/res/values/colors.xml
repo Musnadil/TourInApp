@@ -16,5 +16,8 @@
     <color name="yellow_theme">#FFB800</color>
     <color name="grey">#dddddd</color>
     <color name="red">#E80000</color>
+    <color name="shadow">#26525457</color>
+    <color name="shadow_darker">#A1525457</color>
+
 
 </resources>
