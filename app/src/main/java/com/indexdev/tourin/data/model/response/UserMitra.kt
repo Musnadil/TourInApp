@@ -6,6 +6,8 @@ import com.google.gson.annotations.SerializedName
 data class UserMitra(
     @SerializedName("id_mitra")
     val idMitra: String,
+    @SerializedName("kode_wisata")
+    val kodeWisata: String,
     @SerializedName("nama_pemilik")
     val namaPemilik: String,
     @SerializedName("nama_usaha")
@@ -16,16 +18,18 @@ data class UserMitra(
     val noPonsel: String,
     @SerializedName("jenis_usaha")
     val jenisUsaha: String,
+    @SerializedName("gambar")
+    val gambar: String,
     @SerializedName("password")
     val password: String,
     @SerializedName("alamat")
-    val alamat: Any?,
+    val alamat: String?,
     @SerializedName("hari_buka")
-    val hariBuka: Any?,
+    val hariBuka: String?,
     @SerializedName("jam_buka")
-    val jamBuka: Any?,
+    val jamBuka: String?,
     @SerializedName("jam_tutup")
-    val jamTutup: Any?,
+    val jamTutup: String?,
     @SerializedName("lat")
     val lat: String,
     @SerializedName("longi")

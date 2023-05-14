@@ -8,6 +8,7 @@ import android.app.NotificationManager
 import android.content.*
 import android.content.Context.NOTIFICATION_SERVICE
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.graphics.Color
 import android.net.Uri
 import android.os.Build
@@ -68,6 +69,20 @@ class MapsFragment : Fragment(), GoogleMap.OnMarkerClickListener {
     private lateinit var mServiceIntent: Intent
     private val mapsViewModel: MapsViewModel by viewModels()
 
+    private lateinit var iconWorship: Bitmap
+    private lateinit var iconToilet: Bitmap
+    private lateinit var iconFoodPlace: Bitmap
+    private lateinit var iconEvacuation: Bitmap
+    private lateinit var iconParking: Bitmap
+    private lateinit var iconMosque: Bitmap
+    private lateinit var iconChurches: Bitmap
+    private lateinit var iconTemples: Bitmap
+    private lateinit var iconMonasteries: Bitmap
+    private lateinit var iconKlenteng: Bitmap
+    private lateinit var iconHomeStay: Bitmap
+    private lateinit var iconRestaurant: Bitmap
+    private lateinit var iconRentVehicle: Bitmap
+
 
     @SuppressLint("MissingPermission")
     private val callback = OnMapReadyCallback { googleMap ->
@@ -95,6 +110,34 @@ class MapsFragment : Fragment(), GoogleMap.OnMarkerClickListener {
     @SuppressLint("MissingPermission")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        iconWorship =
+            getBitmapFromVectorDrawable(requireActivity(), R.drawable.ic_poi_worship_place)
+        iconToilet =
+            getBitmapFromVectorDrawable(requireActivity(), R.drawable.ic_poi_toilet_new)
+        iconFoodPlace =
+            getBitmapFromVectorDrawable(requireActivity(), R.drawable.ic_marker__toilet)
+        iconEvacuation =
+            getBitmapFromVectorDrawable(requireActivity(), R.drawable.ic_marker__evacuation)
+        iconParking =
+            getBitmapFromVectorDrawable(requireActivity(), R.drawable.ic_marker__parking)
+        iconMosque =
+            getBitmapFromVectorDrawable(requireActivity(), R.drawable.ic_marker__masjid)
+        iconChurches =
+            getBitmapFromVectorDrawable(requireActivity(), R.drawable.ic_marker__gereja)
+        iconTemples =
+            getBitmapFromVectorDrawable(requireActivity(), R.drawable.ic_marker__pura)
+        iconMonasteries =
+            getBitmapFromVectorDrawable(requireActivity(), R.drawable.ic_marker__vihara)
+        iconKlenteng =
+            getBitmapFromVectorDrawable(requireActivity(), R.drawable.ic_marker__klenteng)
+        iconHomeStay =
+            getBitmapFromVectorDrawable(requireActivity(), R.drawable.ic_marker_home_stay)
+        iconRestaurant =
+            getBitmapFromVectorDrawable(requireActivity(), R.drawable.ic_marker_restaurant)
+        iconRentVehicle =
+            getBitmapFromVectorDrawable(requireActivity(), R.drawable.ic_marker_rent_vehicle)
+
+
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync(callback)
 
@@ -104,8 +147,10 @@ class MapsFragment : Fragment(), GoogleMap.OnMarkerClickListener {
         setupFab()
         createNotificationChannel()
 
-        latLngTour = LatLng(arguments?.getString(LAT).toString().toDouble(),
-            arguments?.getString(LONG).toString().toDouble())
+        latLngTour = LatLng(
+            arguments?.getString(LAT).toString().toDouble(),
+            arguments?.getString(LONG).toString().toDouble()
+        )
 
         //set tour name
         binding.tvTourName.text = arguments?.getString(TOUR_NAME)
@@ -154,9 +199,10 @@ class MapsFragment : Fragment(), GoogleMap.OnMarkerClickListener {
         requireActivity().registerReceiver(updateDistance, IntentFilter(DISTANCE))
 
     }
-    private val updateDistance: BroadcastReceiver = object :BroadcastReceiver(){
+
+    private val updateDistance: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent) {
-            val distance = intent.getDoubleExtra(UPDATE_DISTANCE,0.0)
+            val distance = intent.getDoubleExtra(UPDATE_DISTANCE, 0.0)
             Toast.makeText(requireContext(), "distance is : $distance", Toast.LENGTH_SHORT).show()
 
             val pendingIntent = NavDeepLinkBuilder(requireContext())
@@ -177,7 +223,7 @@ class MapsFragment : Fragment(), GoogleMap.OnMarkerClickListener {
 
             val notifManager = NotificationManagerCompat.from(requireContext())
 
-            if(distance<=5) {
+            if (distance <= 5) {
                 inArea = true
             }
             if (inArea && distance >= 10) {
@@ -209,13 +255,18 @@ class MapsFragment : Fragment(), GoogleMap.OnMarkerClickListener {
     }
 
     // create notification
-    private fun createNotificationChannel(){
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-            val channel = NotificationChannel(CHANNEL_ID, CHANNEL_NAME,NotificationManager.IMPORTANCE_HIGH).apply {
+    private fun createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val channel = NotificationChannel(
+                CHANNEL_ID,
+                CHANNEL_NAME,
+                NotificationManager.IMPORTANCE_HIGH
+            ).apply {
                 lightColor = Color.BLUE
                 enableLights(true)
             }
-            val manager = requireActivity().getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+            val manager =
+                requireActivity().getSystemService(NOTIFICATION_SERVICE) as NotificationManager
             manager.createNotificationChannel(channel)
         }
     }
@@ -236,6 +287,7 @@ class MapsFragment : Fragment(), GoogleMap.OnMarkerClickListener {
             }
         }
     }
+
     // ask for turn on gps
     private fun requestDevicesLocationSettings() {
         val locationReq = LocationRequest.create().apply {
@@ -257,10 +309,10 @@ class MapsFragment : Fragment(), GoogleMap.OnMarkerClickListener {
                 101 -> {
                     mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(touristSites, 10f))
                 }
-                102,103,106,107,109,110 -> {
+                102, 103, 106, 107, 109, 110 -> {
                     mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(touristSites, 15f))
                 }
-                104,108 -> {
+                104, 108 -> {
                     mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(touristSites, 14f))
                 }
                 105 -> {
@@ -316,16 +368,6 @@ class MapsFragment : Fragment(), GoogleMap.OnMarkerClickListener {
     private fun poiFacility(facility: List<ResponsePOI>) {
         for (i in facility) {
             val latLong = LatLng(i.lat.toDouble(), i.longi.toDouble())
-            val iconWorship =
-                getBitmapFromVectorDrawable(requireActivity(), R.drawable.ic_poi_worship_place)
-            val iconToilet =
-                getBitmapFromVectorDrawable(requireActivity(), R.drawable.ic_poi_toilet)
-            val iconFoodPlace =
-                getBitmapFromVectorDrawable(requireActivity(), R.drawable.ic_poi_food_place)
-            val iconEvacuation =
-                getBitmapFromVectorDrawable(requireActivity(), R.drawable.ic_poi_evacuation_place)
-            val iconParking =
-                getBitmapFromVectorDrawable(requireActivity(), R.drawable.ic_poi_parking)
             val markerOptions = MarkerOptions().title(i.namaFasilitas).position(latLong)
             when (i.kodeFasilitas) {
                 "F01" -> {
@@ -343,6 +385,21 @@ class MapsFragment : Fragment(), GoogleMap.OnMarkerClickListener {
                 "F05" -> {
                     markerOptions.icon(BitmapDescriptorFactory.fromBitmap(iconParking))
                 }
+                "F06" -> {
+                    markerOptions.icon(BitmapDescriptorFactory.fromBitmap(iconMosque))
+                }
+                "F07" -> {
+                    markerOptions.icon(BitmapDescriptorFactory.fromBitmap(iconChurches))
+                }
+                "F08" -> {
+                    markerOptions.icon(BitmapDescriptorFactory.fromBitmap(iconTemples))
+                }
+                "F09" -> {
+                    markerOptions.icon(BitmapDescriptorFactory.fromBitmap(iconMonasteries))
+                }
+                "F10" -> {
+                    markerOptions.icon(BitmapDescriptorFactory.fromBitmap(iconKlenteng))
+                }
             }
             val marker = mMap.addMarker(markerOptions)
             marker?.tag = i
@@ -351,7 +408,7 @@ class MapsFragment : Fragment(), GoogleMap.OnMarkerClickListener {
 
     private fun getPOIUser() {
         mapsViewModel.getPoiListMitra()
-        mapsViewModel.poiListMitra.observe(viewLifecycleOwner) { poiListMitra->
+        mapsViewModel.poiListMitra.observe(viewLifecycleOwner) { poiListMitra ->
             when (poiListMitra.status) {
                 SUCCESS -> {
                     if (!poiListMitra.data.isNullOrEmpty()) {
@@ -362,7 +419,8 @@ class MapsFragment : Fragment(), GoogleMap.OnMarkerClickListener {
                     }
                 }
                 ERROR -> {
-                    Toast.makeText(requireContext(), poiListMitra.message, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), poiListMitra.message, Toast.LENGTH_SHORT)
+                        .show()
                 }
                 LOADING -> {}
             }
@@ -373,36 +431,22 @@ class MapsFragment : Fragment(), GoogleMap.OnMarkerClickListener {
     private fun poiMitra(facility: List<UserMitra>) {
         for (i in facility) {
             val latLong = LatLng(i.lat.toDouble(), i.longi.toDouble())
-            val iconWorship =
-                getBitmapFromVectorDrawable(requireActivity(), R.drawable.ic_poi_worship_place)
-            val iconToilet =
-                getBitmapFromVectorDrawable(requireActivity(), R.drawable.ic_poi_toilet)
-            val iconFoodPlace =
-                getBitmapFromVectorDrawable(requireActivity(), R.drawable.ic_poi_food_place)
-            val iconEvacuation =
-                getBitmapFromVectorDrawable(requireActivity(), R.drawable.ic_poi_evacuation_place)
-            val iconParking =
-                getBitmapFromVectorDrawable(requireActivity(), R.drawable.ic_poi_parking)
-            val markerOptions = MarkerOptions().title(i.idMitra).position(latLong)
-//            when (i.kodeFasilitas) {
-//                "F01" -> {
-//                    markerOptions.icon(BitmapDescriptorFactory.fromBitmap(iconWorship))
-//                }
-//                "F02" -> {
-//                    markerOptions.icon(BitmapDescriptorFactory.fromBitmap(iconToilet))
-//                }
-//                "F03" -> {
-//                    markerOptions.icon(BitmapDescriptorFactory.fromBitmap(iconFoodPlace))
-//                }
-//                "F04" -> {
-//                    markerOptions.icon(BitmapDescriptorFactory.fromBitmap(iconEvacuation))
-//                }
-//                "F05" -> {
-//                    markerOptions.icon(BitmapDescriptorFactory.fromBitmap(iconParking))
-//                }
-//            }
-            val marker = mMap.addMarker(markerOptions)
-            marker?.tag = i
+            if (i.kodeWisata == arguments?.getString(ID_TOUR) && i.status == "active") {
+                val markerOptions = MarkerOptions().title(i.idMitra).position(latLong)
+                when (i.jenisUsaha) {
+                    "Penginapan" -> {
+                        markerOptions.icon(BitmapDescriptorFactory.fromBitmap(iconHomeStay))
+                    }
+                    "Rental Kendaraan" -> {
+                        markerOptions.icon(BitmapDescriptorFactory.fromBitmap(iconRentVehicle))
+                    }
+                    "Rumah Makan" -> {
+                        markerOptions.icon(BitmapDescriptorFactory.fromBitmap(iconRestaurant))
+                    }
+                }
+                val marker = mMap.addMarker(markerOptions)
+                marker?.tag = i
+            }
         }
     }
 
@@ -413,12 +457,13 @@ class MapsFragment : Fragment(), GoogleMap.OnMarkerClickListener {
     }
 
     override fun onMarkerClick(marker: Marker): Boolean {
-        val facility = arrayOf("Tempat Ibadah","Toilet","Food Court","Titik Evakuasi","Tempat Parkir")
+        val facility =
+            arrayOf("Tempat Ibadah", "Toilet", "Food Court", "Titik Evakuasi", "Tempat Parkir")
         mMap.setOnInfoWindowClickListener {
-            if(marker.title in facility){
+            if (marker.title in facility) {
                 val dialogFragment = ChooseVehicleFragment(marker.position, marker.title.toString())
                 activity?.let { dialogFragment.show(it.supportFragmentManager, null) }
-            }else{
+            } else {
                 Toast.makeText(requireContext(), "${marker.title}", Toast.LENGTH_SHORT).show()
             }
         }
@@ -426,35 +471,55 @@ class MapsFragment : Fragment(), GoogleMap.OnMarkerClickListener {
     }
 
 
-@SuppressLint("MissingPermission")
-fun permissionLocation(){
-        if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION)
-            == PackageManager.PERMISSION_GRANTED) {
+    @SuppressLint("MissingPermission")
+    fun permissionLocation() {
+        if (ActivityCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_FINE_LOCATION
+            )
+            == PackageManager.PERMISSION_GRANTED
+        ) {
             mMap.isMyLocationEnabled = true
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
 
-                if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_BACKGROUND_LOCATION)
-                    != PackageManager.PERMISSION_GRANTED) {
+                if (ActivityCompat.checkSelfPermission(
+                        requireContext(),
+                        Manifest.permission.ACCESS_BACKGROUND_LOCATION
+                    )
+                    != PackageManager.PERMISSION_GRANTED
+                ) {
 
                     AlertDialog.Builder(requireContext()).apply {
                         setTitle("Background permission")
                         setMessage(R.string.background_location_permission_message)
-                        setPositiveButton("Grant background Permission"){ _, _ ->
-                                requestBackgroundLocationPermission()
-                            }
+                        setPositiveButton("Grant background Permission") { _, _ ->
+                            requestBackgroundLocationPermission()
+                        }
                     }.create().show()
 
-                }else if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_BACKGROUND_LOCATION)
-                    == PackageManager.PERMISSION_GRANTED){
+                } else if (ActivityCompat.checkSelfPermission(
+                        requireContext(),
+                        Manifest.permission.ACCESS_BACKGROUND_LOCATION
+                    )
+                    == PackageManager.PERMISSION_GRANTED
+                ) {
                     starServiceFunc()
                 }
-            }else{
+            } else {
                 starServiceFunc()
             }
 
-        }else if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION)
-            != PackageManager.PERMISSION_GRANTED){
-            if (ActivityCompat.shouldShowRequestPermissionRationale(requireActivity(), Manifest.permission.ACCESS_FINE_LOCATION)) {
+        } else if (ActivityCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_FINE_LOCATION
+            )
+            != PackageManager.PERMISSION_GRANTED
+        ) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(
+                    requireActivity(),
+                    Manifest.permission.ACCESS_FINE_LOCATION
+                )
+            ) {
                 AlertDialog.Builder(requireContext())
                     .setTitle("ACCESS_FINE_LOCATION")
                     .setMessage("Location permission required")
@@ -470,7 +535,8 @@ fun permissionLocation(){
             }
         }
     }
-    private fun starServiceFunc(){
+
+    private fun starServiceFunc() {
         if (!Util.isMyServiceRunning(mLocationService.javaClass, requireActivity())) {
             context?.startService(mServiceIntent)
 //            Toast.makeText(requireContext(), getString(R.string.service_start_successfully), Toast.LENGTH_SHORT).show()
@@ -480,9 +546,9 @@ fun permissionLocation(){
 
     }
 
-     private fun stopServiceFunc(){
-         context?.stopService(mServiceIntent)
-         mLocationService.stopSelf()
+    private fun stopServiceFunc() {
+        context?.stopService(mServiceIntent)
+        mLocationService.stopSelf()
 //        if (Util.isMyServiceRunning(mLocationService.javaClass, requireActivity())) {
 
 //            Toast.makeText(requireContext(), "Service stopped!!", Toast.LENGTH_SHORT).show()
@@ -490,35 +556,65 @@ fun permissionLocation(){
 //            Toast.makeText(requireContext(), "Service is already stopped!!", Toast.LENGTH_SHORT).show()
 //        }
     }
+
     private fun requestBackgroundLocationPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            ActivityCompat.requestPermissions(requireActivity(),
-                arrayOf(Manifest.permission.ACCESS_BACKGROUND_LOCATION), MY_BACKGROUND_LOCATION_REQUEST)
+            ActivityCompat.requestPermissions(
+                requireActivity(),
+                arrayOf(Manifest.permission.ACCESS_BACKGROUND_LOCATION),
+                MY_BACKGROUND_LOCATION_REQUEST
+            )
         }
         starServiceFunc()
     }
 
     @SuppressLint("MissingPermission")
     private fun requestFineLocationPermission() {
-        ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), MY_FINE_LOCATION_REQUEST)
+        ActivityCompat.requestPermissions(
+            requireActivity(),
+            arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+            MY_FINE_LOCATION_REQUEST
+        )
     }
+
     @Deprecated("Deprecated in Java")
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         Toast.makeText(requireContext(), requestCode.toString(), Toast.LENGTH_LONG).show()
         when (requestCode) {
             MY_FINE_LOCATION_REQUEST -> {
 
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION)
-                        == PackageManager.PERMISSION_GRANTED) {
+                    if (ContextCompat.checkSelfPermission(
+                            requireContext(),
+                            Manifest.permission.ACCESS_FINE_LOCATION
+                        )
+                        == PackageManager.PERMISSION_GRANTED
+                    ) {
                         requestBackgroundLocationPermission()
                     }
 
                 } else {
-                    Toast.makeText(requireContext(), "ACCESS_FINE_LOCATION permission denied", Toast.LENGTH_LONG).show()
-                    if (!ActivityCompat.shouldShowRequestPermissionRationale(requireActivity(), Manifest.permission.ACCESS_FINE_LOCATION)) {
-                        startActivity(Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.fromParts("package", requireActivity().packageName, null)))
+                    Toast.makeText(
+                        requireContext(),
+                        "ACCESS_FINE_LOCATION permission denied",
+                        Toast.LENGTH_LONG
+                    ).show()
+                    if (!ActivityCompat.shouldShowRequestPermissionRationale(
+                            requireActivity(),
+                            Manifest.permission.ACCESS_FINE_LOCATION
+                        )
+                    ) {
+                        startActivity(
+                            Intent(
+                                Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+                                Uri.fromParts("package", requireActivity().packageName, null)
+                            )
+                        )
                     }
                 }
                 return
@@ -526,12 +622,24 @@ fun permissionLocation(){
             MY_BACKGROUND_LOCATION_REQUEST -> {
 
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION)
-                        == PackageManager.PERMISSION_GRANTED) {
-                        Toast.makeText(requireContext(), "Background location Permission Granted", Toast.LENGTH_LONG).show()
+                    if (ContextCompat.checkSelfPermission(
+                            requireContext(),
+                            Manifest.permission.ACCESS_FINE_LOCATION
+                        )
+                        == PackageManager.PERMISSION_GRANTED
+                    ) {
+                        Toast.makeText(
+                            requireContext(),
+                            "Background location Permission Granted",
+                            Toast.LENGTH_LONG
+                        ).show()
                     }
                 } else {
-                    Toast.makeText(requireContext(), "Background location permission denied", Toast.LENGTH_LONG).show()
+                    Toast.makeText(
+                        requireContext(),
+                        "Background location permission denied",
+                        Toast.LENGTH_LONG
+                    ).show()
                 }
                 return
             }
