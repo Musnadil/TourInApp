@@ -3,7 +3,7 @@ package com.indexdev.tourin.data.model.response
 
 import com.google.gson.annotations.SerializedName
 
-data class UserMitra(
+data class ResponseUserMitra(
     @SerializedName("id_mitra")
     val idMitra: String,
     @SerializedName("kode_wisata")

@@ -16,5 +16,6 @@ class Repository(private val apiHelper: ApiHelper) {
     suspend fun editUsername(id:Int, updateUserRequest: UpdateUserRequest) = apiHelper.editUsername(id, updateUserRequest)
     suspend fun getRecommendationList() = apiHelper.getRecommendationList()
     suspend fun getAllUserMitra() = apiHelper.getAllUserMitra()
+    suspend fun getUserPartnerById(id: Int) = apiHelper.getUserPartnerById(id)
 
 }

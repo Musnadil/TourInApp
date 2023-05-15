@@ -8,7 +8,7 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.Marker
 import com.indexdev.tourin.R
 import com.indexdev.tourin.data.model.response.ResponsePOI
-import com.indexdev.tourin.data.model.response.UserMitra
+import com.indexdev.tourin.data.model.response.ResponseUserMitra
 
 class CustomInfoWindow(private val context: Context) : GoogleMap.InfoWindowAdapter {
     override fun getInfoContents(p0: Marker): View? {
@@ -27,8 +27,8 @@ class CustomInfoWindow(private val context: Context) : GoogleMap.InfoWindowAdapt
                 tvPlaceName.text = infoWindowData?.namaFasilitas
                 view
             }
-            is UserMitra? -> {
-                val infoWindowData = marker.tag as UserMitra?
+            is ResponseUserMitra? -> {
+                val infoWindowData = marker.tag as ResponseUserMitra?
                 tvPlaceName.text = infoWindowData?.namaUsaha
                 view
             }

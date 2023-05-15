@@ -5,7 +5,6 @@ import com.indexdev.tourin.data.model.request.RateRequest
 import com.indexdev.tourin.data.model.request.RegisterRequest
 import com.indexdev.tourin.data.model.request.UpdateUserRequest
 import com.indexdev.tourin.data.model.response.*
-import okhttp3.RequestBody
 import retrofit2.http.*
 
 interface ApiService {
@@ -34,5 +33,8 @@ interface ApiService {
     suspend fun getRecommendationList() : List<ResponseRecommendation>
 
     @GET("usermitra")
-    suspend fun getAllUserMitra() : List<UserMitra>
+    suspend fun getAllUserMitra() : List<ResponseUserMitra>
+
+    @GET("usermitra/{id}")
+    suspend fun getUserPartnerById(@Path("id") id: Int): ResponseUserMitraById
 }

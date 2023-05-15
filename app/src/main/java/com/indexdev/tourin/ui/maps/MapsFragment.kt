@@ -42,7 +42,7 @@ import com.indexdev.tourin.MainActivity
 import com.indexdev.tourin.R
 import com.indexdev.tourin.data.api.Status.*
 import com.indexdev.tourin.data.model.response.ResponsePOI
-import com.indexdev.tourin.data.model.response.UserMitra
+import com.indexdev.tourin.data.model.response.ResponseUserMitra
 import com.indexdev.tourin.databinding.FragmentMapsBinding
 import com.indexdev.tourin.services.LocationService
 import com.indexdev.tourin.services.LocationService.Companion.DISTANCE
@@ -428,7 +428,7 @@ class MapsFragment : Fragment(), GoogleMap.OnMarkerClickListener {
 
     }
 
-    private fun poiMitra(facility: List<UserMitra>) {
+    private fun poiMitra(facility: List<ResponseUserMitra>) {
         for (i in facility) {
             val latLong = LatLng(i.lat.toDouble(), i.longi.toDouble())
             if (i.kodeWisata == arguments?.getString(ID_TOUR) && i.status == "active") {
@@ -464,7 +464,9 @@ class MapsFragment : Fragment(), GoogleMap.OnMarkerClickListener {
                 val dialogFragment = ChooseVehicleFragment(marker.position, marker.title.toString())
                 activity?.let { dialogFragment.show(it.supportFragmentManager, null) }
             } else {
-                Toast.makeText(requireContext(), "${marker.title}", Toast.LENGTH_SHORT).show()
+                val bundle = Bundle()
+                bundle.putString(PARTNER_ID, marker.title)
+                findNavController().navigate(R.id.action_mapsFragment_to_productPartnerFragment,bundle)
             }
         }
         return false
@@ -652,6 +654,7 @@ class MapsFragment : Fragment(), GoogleMap.OnMarkerClickListener {
         const val CHANNEL_ID = "channelID"
         const val CHANNEL_NAME = "channelName"
         const val NOTIF_ID = 0
+        const val PARTNER_ID = "PARTNER_ID"
 
     }
 }

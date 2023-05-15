@@ -1,4 +1,4 @@
 package com.indexdev.tourin.data.model.response
 
 
-class ResponseAllUserMitra : ArrayList<UserMitra>()
+class ResponseAllUserMitra : ArrayList<ResponseUserMitra>()
