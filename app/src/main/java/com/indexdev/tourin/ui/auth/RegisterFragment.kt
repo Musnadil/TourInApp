@@ -114,6 +114,14 @@ class RegisterFragment : Fragment() {
                                 binding.etEmail.requestFocus()
                             )
                         }
+                        403 -> {
+                            alertDialog(
+                                requireContext(),
+                                getString(R.string.registration_failed),
+                                resources.data.message,
+                                binding.etEmail.requestFocus()
+                            )
+                        }
                     }
                 }
                 ERROR -> {
