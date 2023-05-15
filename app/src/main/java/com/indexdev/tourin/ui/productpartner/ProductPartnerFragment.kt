@@ -14,6 +14,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.indexdev.tourin.R
 import com.indexdev.tourin.data.api.Status.*
+import com.indexdev.tourin.data.model.response.ResponseProductByIdMitra
 import com.indexdev.tourin.databinding.FragmentProductPartnerBinding
 import com.indexdev.tourin.ui.maps.MapsFragment
 import dagger.hilt.android.AndroidEntryPoint
@@ -27,6 +28,10 @@ class ProductPartnerFragment : Fragment() {
     private var partnerId: Int = 0
     private lateinit var progressDialog: ProgressDialog
     private val bundle = Bundle()
+    private val listProduct: MutableList<ResponseProductByIdMitra> = ArrayList()
+    private lateinit var productAdapter: ProductAdapter
+
+
 
     companion object {
         const val IMAGE_STORE = "IMAGE_STORE"
@@ -67,9 +72,86 @@ class ProductPartnerFragment : Fragment() {
         }
         partnerId = arguments?.getString(MapsFragment.PARTNER_ID).toString().toInt()
         getDetailPartnerProfile()
+        getProductByIdPartner()
+        detailProduct()
         binding.cardProfile.setOnClickListener {
-            findNavController().navigate(R.id.action_productPartnerFragment_to_profilePartnerFragment,bundle)
+            findNavController().navigate(
+                R.id.action_productPartnerFragment_to_profilePartnerFragment,
+                bundle
+            )
         }
+    }
+
+    private fun getProductByIdPartner() {
+        binding.rvProduct.visibility = View.GONE
+        viewModel.responseProductByIdMitra.removeObservers(viewLifecycleOwner)
+        Handler(Looper.getMainLooper()).postDelayed({
+            viewModel.responseProductByIdMitra.observe(viewLifecycleOwner) {
+                when (it.status) {
+                    SUCCESS -> {
+                        when (it.data?.code()) {
+                            200 -> {
+                                if (it.data.body() != null) {
+                                    listProduct.clear()
+                                    listProduct.addAll(it.data.body()!!)
+                                    Handler(Looper.getMainLooper()).postDelayed({
+                                        productAdapter.submitData(listProduct)
+                                        progressDialog.dismiss()
+                                        binding.rvProduct.visibility = View.VISIBLE
+                                    }, 1000)
+                                    viewModel.responseProductByIdMitra.removeObservers(
+                                        viewLifecycleOwner
+                                    )
+                                }
+                            }
+                            404 -> {
+                                viewModel.responseProductByIdMitra.removeObservers(
+                                    viewLifecycleOwner
+                                )
+                                progressDialog.dismiss()
+                                binding.rvProduct.visibility = View.VISIBLE
+                                AlertDialog.Builder(requireContext())
+                                    .setTitle("Pesan")
+                                    .setMessage("Toko ini belum memiliki produk")
+                                    .setPositiveButton("Ok") { positiveButton, _ ->
+                                        positiveButton.dismiss()
+                                    }
+                                    .show()
+                            }
+                        }
+                    }
+
+                    ERROR -> {
+                        viewModel.responseProductByIdMitra.removeObservers(viewLifecycleOwner)
+                        progressDialog.dismiss()
+                        binding.rvProduct.visibility = View.VISIBLE
+                        AlertDialog.Builder(requireContext())
+                            .setTitle("Pesan")
+                            .setMessage(it.message ?: "Error")
+                            .setPositiveButton("Ok") { positiveButton, _ ->
+                                positiveButton.dismiss()
+                            }
+                            .show()
+                    }
+
+                    LOADING -> {
+                        progressDialog.show()
+                        binding.rvProduct.visibility = View.GONE
+                    }
+                }
+            }
+        }, 1000)
+    }
+
+    private fun detailProduct() {
+        productAdapter = ProductAdapter(object : ProductAdapter.OnClickListener {
+            override fun onClickItem(data: ResponseProductByIdMitra) {
+                val bundle = Bundle()
+//                bundle.putString(ID_PRODUK,data.idProduk)
+//                findNavController().navigate(R.id.action_homeFragment_to_editProductFragment,bundle)
+            }
+        })
+        binding.rvProduct.adapter = productAdapter
     }
 
     private fun getDetailPartnerProfile() {
@@ -79,7 +161,7 @@ class ProductPartnerFragment : Fragment() {
             viewModel.responseUserPartnerById.observe(viewLifecycleOwner) {
                 when (it.status) {
                     SUCCESS -> {
-                        progressDialog.dismiss()
+//                        progressDialog.dismiss()
                         when (it.data?.code) {
                             200 -> {
                                 bundle.putString(IMAGE_STORE, it.data.userMitraById.gambar)
@@ -91,6 +173,7 @@ class ProductPartnerFragment : Fragment() {
                                 bundle.putString(LONG, it.data.userMitraById.longi)
                                 binding.tvBusinessName.text = it.data.userMitraById.namaUsaha
                                 binding.tvBusinessNameCard.text = it.data.userMitraById.namaUsaha
+                                viewModel.getProductByPartnerId(partnerId)
                             }
                             404 -> {
                                 Toast.makeText(

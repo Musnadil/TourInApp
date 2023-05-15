@@ -5,7 +5,6 @@ import com.indexdev.tourin.data.model.request.LoginRequest
 import com.indexdev.tourin.data.model.request.RateRequest
 import com.indexdev.tourin.data.model.request.RegisterRequest
 import com.indexdev.tourin.data.model.request.UpdateUserRequest
-import okhttp3.RequestBody
 
 class Repository(private val apiHelper: ApiHelper) {
     suspend fun authRegister(registerRequest: RegisterRequest) = apiHelper.authRegister(registerRequest)
@@ -17,5 +16,6 @@ class Repository(private val apiHelper: ApiHelper) {
     suspend fun getRecommendationList() = apiHelper.getRecommendationList()
     suspend fun getAllUserMitra() = apiHelper.getAllUserMitra()
     suspend fun getUserPartnerById(id: Int) = apiHelper.getUserPartnerById(id)
+    suspend fun getProductByPartnerId(id: Int) = apiHelper.getProductByPartnerId(id)
 
 }

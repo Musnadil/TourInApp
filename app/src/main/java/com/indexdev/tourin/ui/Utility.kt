@@ -10,6 +10,8 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import com.google.android.gms.maps.model.LatLng
+import java.text.DecimalFormat
+import java.text.DecimalFormatSymbols
 import kotlin.math.acos
 import kotlin.math.sin
 
@@ -98,4 +100,16 @@ private fun deg2rad(deg: Double): Double {
 
 private fun rad2deg(rad: Double): Double {
     return rad * 180.0 / Math.PI
+}
+
+fun currency(angka: Int): String {
+    val kursIndonesia = DecimalFormat.getCurrencyInstance() as DecimalFormat
+    val formatRp = DecimalFormatSymbols()
+
+    formatRp.currencySymbol = "Rp "
+    formatRp.monetaryDecimalSeparator = ','
+    formatRp.groupingSeparator = '.'
+
+    kursIndonesia.decimalFormatSymbols = formatRp
+    return kursIndonesia.format(angka).dropLast(3)
 }

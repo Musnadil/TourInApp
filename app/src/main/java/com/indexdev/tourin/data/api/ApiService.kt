@@ -5,6 +5,7 @@ import com.indexdev.tourin.data.model.request.RateRequest
 import com.indexdev.tourin.data.model.request.RegisterRequest
 import com.indexdev.tourin.data.model.request.UpdateUserRequest
 import com.indexdev.tourin.data.model.response.*
+import retrofit2.Response
 import retrofit2.http.*
 
 interface ApiService {
@@ -37,4 +38,7 @@ interface ApiService {
 
     @GET("usermitra/{id}")
     suspend fun getUserPartnerById(@Path("id") id: Int): ResponseUserMitraById
+
+    @GET("produkByIdMitra/{id}")
+    suspend fun getProductByPartnerId(@Path("id") id: Int): Response<List<ResponseProductByIdMitra>>
 }
