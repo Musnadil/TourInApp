@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.indexdev.tourin.R
 import com.indexdev.tourin.data.api.Status.*
 import com.indexdev.tourin.databinding.FragmentProductPartnerBinding
 import com.indexdev.tourin.ui.maps.MapsFragment
@@ -67,11 +68,7 @@ class ProductPartnerFragment : Fragment() {
         partnerId = arguments?.getString(MapsFragment.PARTNER_ID).toString().toInt()
         getDetailPartnerProfile()
         binding.cardProfile.setOnClickListener {
-            //ke screen lalu bawa bundle
-            /*
-            * findnavcontroller navigate product detail profile, bundle
-            * */
-            bundle
+            findNavController().navigate(R.id.action_productPartnerFragment_to_profilePartnerFragment,bundle)
         }
     }
 

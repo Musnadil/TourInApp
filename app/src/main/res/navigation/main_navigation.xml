@@ -146,5 +146,16 @@
         android:id="@+id/productPartnerFragment"
         android:name="com.indexdev.tourin.ui.productpartner.ProductPartnerFragment"
         android:label="fragment_product_partner"
-        tools:layout="@layout/fragment_product_partner" />
+        tools:layout="@layout/fragment_product_partner" >
+        <action
+            android:id="@+id/action_productPartnerFragment_to_profilePartnerFragment"
+            app:destination="@id/profilePartnerFragment"
+            app:exitAnim="@anim/slide_out"
+            app:enterAnim="@anim/slide_in"/>
+    </fragment>
+    <fragment
+        android:id="@+id/profilePartnerFragment"
+        android:name="com.indexdev.tourin.ui.profilepartner.ProfilePartnerFragment"
+        android:label="fragment_profile_partner"
+        tools:layout="@layout/fragment_profile_partner" />
 </navigation>

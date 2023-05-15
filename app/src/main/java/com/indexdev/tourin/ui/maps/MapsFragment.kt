@@ -431,7 +431,7 @@ class MapsFragment : Fragment(), GoogleMap.OnMarkerClickListener {
     private fun poiMitra(facility: List<ResponseUserMitra>) {
         for (i in facility) {
             val latLong = LatLng(i.lat.toDouble(), i.longi.toDouble())
-            if (i.kodeWisata == arguments?.getString(ID_TOUR) && i.status == "active") {
+            if (i.kodeWisata == arguments?.getString(ID_TOUR) && i.status == "active" && !i.alamat.isNullOrEmpty()) {
                 val markerOptions = MarkerOptions().title(i.idMitra).position(latLong)
                 when (i.jenisUsaha) {
                     "Penginapan" -> {

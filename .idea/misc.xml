@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/KULIAH/SMT7(Magang)/Android Studio/TourIn/app/src/main/res/drawable-v24/ic_partnerin_fill.xml" value="0.154" />
         <entry key="..\:/KULIAH/SMT7(Magang)/Android Studio/TourIn/app/src/main/res/drawable/background_start.xml" value="0.1575" />
         <entry key="..\:/KULIAH/SMT7(Magang)/Android Studio/TourIn/app/src/main/res/drawable/bg_outlined_rounded_16.xml" value="0.154" />
         <entry key="..\:/KULIAH/SMT7(Magang)/Android Studio/TourIn/app/src/main/res/drawable/bg_rounded_dialog.xml" value="0.143" />
@@ -16,6 +17,8 @@
         <entry key="..\:/KULIAH/SMT7(Magang)/Android Studio/TourIn/app/src/main/res/drawable/foreground_black.xml" value="0.1575" />
         <entry key="..\:/KULIAH/SMT7(Magang)/Android Studio/TourIn/app/src/main/res/drawable/foreground_white.xml" value="0.1575" />
         <entry key="..\:/KULIAH/SMT7(Magang)/Android Studio/TourIn/app/src/main/res/drawable/ic_arrow_back.xml" value="0.154" />
+        <entry key="..\:/KULIAH/SMT7(Magang)/Android Studio/TourIn/app/src/main/res/drawable/ic_baseline_location_on_24.xml" value="0.154" />
+        <entry key="..\:/KULIAH/SMT7(Magang)/Android Studio/TourIn/app/src/main/res/drawable/ic_call.xml" value="0.154" />
         <entry key="..\:/KULIAH/SMT7(Magang)/Android Studio/TourIn/app/src/main/res/drawable/ic_close.xml" value="0.148" />
         <entry key="..\:/KULIAH/SMT7(Magang)/Android Studio/TourIn/app/src/main/res/drawable/ic_directions.xml" value="0.143" />
         <entry key="..\:/KULIAH/SMT7(Magang)/Android Studio/TourIn/app/src/main/res/drawable/ic_location.xml" value="0.143" />
@@ -43,6 +46,7 @@
         <entry key="..\:/KULIAH/SMT7(Magang)/Android Studio/TourIn/app/src/main/res/layout/fragment_login.xml" value="0.1742671009771987" />
         <entry key="..\:/KULIAH/SMT7(Magang)/Android Studio/TourIn/app/src/main/res/layout/fragment_maps.xml" value="0.16126042632066728" />
         <entry key="..\:/KULIAH/SMT7(Magang)/Android Studio/TourIn/app/src/main/res/layout/fragment_product_partner.xml" value="0.22245673279864922" />
+        <entry key="..\:/KULIAH/SMT7(Magang)/Android Studio/TourIn/app/src/main/res/layout/fragment_profile_partner.xml" value="0.264" />
         <entry key="..\:/KULIAH/SMT7(Magang)/Android Studio/TourIn/app/src/main/res/layout/fragment_rating.xml" value="0.22242817423540315" />
         <entry key="..\:/KULIAH/SMT7(Magang)/Android Studio/TourIn/app/src/main/res/layout/fragment_register.xml" value="0.20296570898980537" />
         <entry key="..\:/KULIAH/SMT7(Magang)/Android Studio/TourIn/app/src/main/res/layout/fragment_response_dialog.xml" value="0.22530996152201796" />
