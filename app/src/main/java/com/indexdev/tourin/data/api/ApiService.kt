@@ -41,4 +41,7 @@ interface ApiService {
 
     @GET("produkByIdMitra/{id}")
     suspend fun getProductByPartnerId(@Path("id") id: Int): Response<List<ResponseProductByIdMitra>>
+
+    @GET("produkById/{id}")
+    suspend fun getProductById(@Path("id") id: Int): ResponseProdukById
 }

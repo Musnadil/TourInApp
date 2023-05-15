@@ -17,5 +17,7 @@ class Repository(private val apiHelper: ApiHelper) {
     suspend fun getAllUserMitra() = apiHelper.getAllUserMitra()
     suspend fun getUserPartnerById(id: Int) = apiHelper.getUserPartnerById(id)
     suspend fun getProductByPartnerId(id: Int) = apiHelper.getProductByPartnerId(id)
+    suspend fun getProductById(id: Int) = apiHelper.getProductById(id)
+
 
 }

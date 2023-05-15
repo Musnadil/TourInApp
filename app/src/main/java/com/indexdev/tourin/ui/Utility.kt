@@ -16,8 +16,8 @@ import kotlin.math.acos
 import kotlin.math.sin
 
 var locationList: MutableList<Location> = ArrayList()
-var latLngTour : LatLng? =null
-var distanceLocation : Double? = null
+var latLngTour: LatLng? = null
+var distanceLocation: Double? = null
 var inArea = false
 fun setFullScreen(window: Window) {
     WindowCompat.setDecorFitsSystemWindows(window, false)
@@ -28,7 +28,8 @@ fun lightStatusBar(window: Window, isLight: Boolean = true) {
     wic.isAppearanceLightStatusBars = isLight
     wic.isAppearanceLightNavigationBars = isLight
 }
-fun alertDialog(context:Context, title:String, message:String ){
+
+fun alertDialog(context: Context, title: String, message: String) {
     AlertDialog.Builder(context)
         .setTitle(title)
         .setMessage(message)
@@ -38,7 +39,8 @@ fun alertDialog(context:Context, title:String, message:String ){
         }
         .show()
 }
-fun alertDialog(context:Context, title:String, message:String,action:Boolean ){
+
+fun alertDialog(context: Context, title: String, message: String, action: Boolean) {
     AlertDialog.Builder(context)
         .setTitle(title)
         .setMessage(message)
@@ -49,7 +51,8 @@ fun alertDialog(context:Context, title:String, message:String,action:Boolean ){
         }
         .show()
 }
-fun alertDialog(context:Context, title:String, message:String,navigate:Unit){
+
+fun alertDialog(context: Context, title: String, message: String, navigate: Unit) {
     AlertDialog.Builder(context)
         .setTitle(title)
         .setMessage(message)
@@ -112,4 +115,20 @@ fun currency(angka: Int): String {
 
     kursIndonesia.decimalFormatSymbols = formatRp
     return kursIndonesia.format(angka).dropLast(3)
+}
+
+fun number(nomorPembeli: String): String {
+    return when {
+        nomorPembeli.take(1) == "0" -> {
+            var number = nomorPembeli.drop(1)
+            number = "62$number"
+            number
+        }
+        nomorPembeli.take(2) == "62" -> {
+            nomorPembeli
+        }
+        else -> {
+            "62$nomorPembeli"
+        }
+    }
 }

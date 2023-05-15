@@ -152,10 +152,21 @@
             app:destination="@id/profilePartnerFragment"
             app:exitAnim="@anim/slide_out"
             app:enterAnim="@anim/slide_in"/>
+        <action
+            android:id="@+id/action_productPartnerFragment_to_detailProductFragment"
+            app:destination="@id/detailProductFragment"
+            app:exitAnim="@anim/slide_out"
+            app:enterAnim="@anim/slide_in"/>
     </fragment>
     <fragment
         android:id="@+id/profilePartnerFragment"
         android:name="com.indexdev.tourin.ui.profilepartner.ProfilePartnerFragment"
         android:label="fragment_profile_partner"
         tools:layout="@layout/fragment_profile_partner" />
+    <fragment
+        android:id="@+id/detailProductFragment"
+        android:name="com.indexdev.tourin.ui.detailproduct.DetailProductFragment"
+        android:label="fragment_detail_produk"
+        tools:layout="@layout/fragment_detail_produk" />
+
 </navigation>

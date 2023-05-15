@@ -41,6 +41,7 @@ class ProductPartnerFragment : Fragment() {
         const val ADDRESS = "ADDRESS"
         const val LAT = "LAT"
         const val LONG = "LONG"
+        const val ID_PRODUK = "ID_PRODUK"
     }
 
     override fun onCreateView(
@@ -146,9 +147,8 @@ class ProductPartnerFragment : Fragment() {
     private fun detailProduct() {
         productAdapter = ProductAdapter(object : ProductAdapter.OnClickListener {
             override fun onClickItem(data: ResponseProductByIdMitra) {
-                val bundle = Bundle()
-//                bundle.putString(ID_PRODUK,data.idProduk)
-//                findNavController().navigate(R.id.action_homeFragment_to_editProductFragment,bundle)
+                bundle.putString(ID_PRODUK,data.idProduk)
+                findNavController().navigate(R.id.action_productPartnerFragment_to_detailProductFragment,bundle)
             }
         })
         binding.rvProduct.adapter = productAdapter

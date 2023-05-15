@@ -16,6 +16,8 @@ class ApiHelper(private val apiService: ApiService) {
     suspend fun getAllUserMitra() = apiService.getAllUserMitra()
     suspend fun getUserPartnerById(id: Int) = apiService.getUserPartnerById(id)
     suspend fun getProductByPartnerId(id: Int) = apiService.getProductByPartnerId(id)
+    suspend fun getProductById(id: Int) = apiService.getProductById(id)
+
 
 
 
