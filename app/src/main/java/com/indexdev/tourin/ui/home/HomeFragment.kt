@@ -34,9 +34,7 @@ class HomeFragment : Fragment() {
     private val homeViewModel: HomeViewModel by viewModels()
     private lateinit var popularTourAdapter: PopularTourAdapter
     private lateinit var allListTourAdapter: AllListTourAdapter
-    private lateinit var recommendationAdapter: RecommendationAdapter
     private val listPopularTour: MutableList<ResponseTourList> = ArrayList()
-    private val userRecommendationList: MutableList<ResponseRecommendation> = ArrayList()
 
     companion object {
         private const val LOCATION_REQUEST_CODE = 1
@@ -72,7 +70,6 @@ class HomeFragment : Fragment() {
 
         greeting(username ?: "Username")
         fetchPopularTourList()
-//        fetchRecommendationList()
         fetchAllListTour()
         detailTour()
 
@@ -98,17 +95,17 @@ class HomeFragment : Fragment() {
         calendar.time = date
 
         when (calendar.get(Calendar.HOUR_OF_DAY)) {
-            in 12..16 -> {
-                binding.tvGreating.text = "Good Afternoon,"
+            in 12..14 -> {
+                binding.tvGreating.text = "Selamat siang,"
             }
-            in 17..20 -> {
-                binding.tvGreating.text = "Good Evening,"
+            in 15..18 -> {
+                binding.tvGreating.text = "Selamat sore,"
             }
-            in 21..23 -> {
-                binding.tvGreating.text = "Good Night,"
+            in 19..23 -> {
+                binding.tvGreating.text = "Selamat malam,"
             }
             else -> {
-                binding.tvGreating.text = "Good Morning,"
+                binding.tvGreating.text = "Selamat pagi,"
             }
         }
     }
@@ -132,7 +129,7 @@ class HomeFragment : Fragment() {
                 }
                 ERROR -> {
                     val snackbar = Snackbar.make(
-                        binding.root, "Unable connect to server",
+                        binding.root, "Tidak dapat terhubung ke server",
                         Snackbar.LENGTH_LONG
                     )
                     snackbar.setAction("Oke") {
@@ -146,46 +143,6 @@ class HomeFragment : Fragment() {
                     binding.shimmerPopularTour.visibility = View.VISIBLE
                 }
             }
-        }
-    }
-
-    private fun fetchRecommendationList() {
-        val preference = requireContext().getSharedPreferences(SHARED_PREF, Context.MODE_PRIVATE)
-        val idUser = preference.getString(SplashScreenFragment.ID_USER, DEFAULT_VALUE)
-
-        homeViewModel.getRecommendationList()
-        homeViewModel.recommendationList.observe(viewLifecycleOwner) { recommendationList ->
-            when (recommendationList.status) {
-                SUCCESS -> {
-                    if (!recommendationList.data.isNullOrEmpty()) {
-                        userRecommendationList.clear()
-                        for (i in 0 until recommendationList.data.size) {
-                            if (recommendationList.data[i].kodeUser == idUser) {
-                                userRecommendationList.add(recommendationList.data[i])
-                            }
-                        }
-                    }
-                    if (!userRecommendationList.isNullOrEmpty()) {
-                        recommendationAdapter.submitData(userRecommendationList)
-//                        binding.tvRecommendation.visibility = View.VISIBLE
-//                        binding.rvRecommendation.visibility = View.VISIBLE
-                        binding.shimmerRecommendationTour.visibility = View.GONE
-
-                    } else {
-                        binding.shimmerRecommendationTour.visibility = View.GONE
-                        binding.rvRecommendation.visibility = View.GONE
-                        binding.tvRecommendation.visibility = View.GONE
-                    }
-                }
-                ERROR -> {
-                    binding.shimmerAllTour.visibility = View.VISIBLE
-                }
-                LOADING -> {
-                    binding.rvRecommendation.visibility = View.GONE
-                    binding.shimmerRecommendationTour.visibility = View.VISIBLE
-                }
-            }
-
         }
     }
 
@@ -226,25 +183,6 @@ class HomeFragment : Fragment() {
 
         })
         binding.rvPopularTour.adapter = popularTourAdapter
-
-        recommendationAdapter =
-            RecommendationAdapter(object : RecommendationAdapter.OnclickListener {
-                override fun onClickItem(data: ResponseRecommendation) {
-                    val POIBundle = Bundle()
-                    POIBundle.putString(ID_TOUR, data.kodeWisata)
-                    POIBundle.putString(TOUR_NAME, data.wisata)
-                    POIBundle.putString(LAT, data.lat)
-                    POIBundle.putString(LONG, data.longi)
-                    POIBundle.putString(ADDRESS, data.wisata)
-                    POIBundle.putString(IMG_URL, data.urlImage)
-                    findNavController().navigate(
-                        R.id.action_homeFragment_to_mapsFragment,
-                        POIBundle
-                    )
-                }
-
-            })
-        binding.rvRecommendation.adapter = recommendationAdapter
 
         allListTourAdapter = AllListTourAdapter(object : AllListTourAdapter.OnclickListener {
             override fun onClickItem(data: ResponseTourList) {

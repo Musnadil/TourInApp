@@ -41,7 +41,7 @@
     <string name="my_location">My Location</string>
     <string name="tour_location">Tour Location</string>
     <string name="place_name">Place Name</string>
-    <string name="rate_the_place">Have visited the place? Please rate the place</string>
+    <string name="rate_the_place">Sudah mengunjungi tempat tersebut? Silakan menilai tempat itu</string>
     <string name="send">Send</string>
     <string name="background_location_permission_message">
        Enable location background access to get a better experience with the TourIn app

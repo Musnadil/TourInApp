@@ -36,7 +36,7 @@ class EditAccountDialogFragment(private val usernameUpdate:() ->Unit) : DialogFr
     ): View {
         dialog?.window?.setBackgroundDrawableResource(R.drawable.bg_rounded_dialog)
         dialog?.window?.attributes?.windowAnimations = R.style.NewDialogAnimation
-        dialog?.setCanceledOnTouchOutside(false)
+        dialog?.setCanceledOnTouchOutside(true)
         _binding = FragmentEditAccountDialogBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
@@ -62,7 +62,7 @@ class EditAccountDialogFragment(private val usernameUpdate:() ->Unit) : DialogFr
                     val newUsername = UpdateUserRequest(binding.etUsername.text.toString())
                     editViewModel.editUsername(idUser.toString().toInt(), newUsername)
                 }else{
-                    binding.usernameContainer.error ="Username cannot be empty"
+                    binding.usernameContainer.error ="Username tidak boleh kosong"
                 }
             }
         }
@@ -83,12 +83,12 @@ class EditAccountDialogFragment(private val usernameUpdate:() ->Unit) : DialogFr
         binding.btnLogout.setOnClickListener {
             val alertDialog = AlertDialog.Builder(requireContext())
             alertDialog.apply {
-                setTitle("Logout")
-                setMessage("Are you sure you want to log out?")
-                setNegativeButton("cancel"){dialog,_ ->
+                setTitle("Keluar")
+                setMessage("Apakah anda yakin ingin keluar?")
+                setNegativeButton("Batal"){dialog,_ ->
                     dialog.dismiss()
                 }
-                setPositiveButton("Yes"){dialogY,_ ->
+                setPositiveButton("Ya"){dialogY,_ ->
                     dialogY.dismiss()
                     preference.edit().clear().apply()
                     preference.edit().putBoolean(SplashScreenFragment.ON_BOARDING,false).apply()

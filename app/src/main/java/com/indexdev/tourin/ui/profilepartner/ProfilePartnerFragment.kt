@@ -49,6 +49,8 @@ class ProfilePartnerFragment : Fragment() {
         val address = arguments?.getString(ProductPartnerFragment.ADDRESS)
         val lat = arguments?.getString(ProductPartnerFragment.LAT)
         val longi = arguments?.getString(ProductPartnerFragment.LONG)
+        val openingHours = arguments?.getString(ProductPartnerFragment.OPENING_HOURS)
+        val closingHours = arguments?.getString(ProductPartnerFragment.CLOSING_HOURS)
 
         Glide.with(requireContext())
             .load("https://tourin.musnadil.my.id/gambar/$imageUrl")
@@ -61,6 +63,7 @@ class ProfilePartnerFragment : Fragment() {
         binding.tvBusinessOwner.text = businessOwner
         binding.tvNumberPhone.text = numberPhone
         binding.tvAddress.text = address
+        binding.tvOpengHours.text = "$openingHours - $closingHours"
 
         binding.btnVisit.setOnClickListener {
             val googleMapsUrl =

@@ -42,6 +42,8 @@ class ProductPartnerFragment : Fragment() {
         const val LAT = "LAT"
         const val LONG = "LONG"
         const val ID_PRODUK = "ID_PRODUK"
+        const val OPENING_HOURS = "OPENING_HOURS"
+        const val CLOSING_HOURS = "CLOSING_HOURS"
     }
 
     override fun onCreateView(
@@ -171,6 +173,8 @@ class ProductPartnerFragment : Fragment() {
                                 bundle.putString(ADDRESS, it.data.userMitraById.alamat)
                                 bundle.putString(LAT, it.data.userMitraById.lat)
                                 bundle.putString(LONG, it.data.userMitraById.longi)
+                                bundle.putString(OPENING_HOURS,it.data.userMitraById.jamBuka)
+                                bundle.putString(CLOSING_HOURS,it.data.userMitraById.jamTutup)
                                 binding.tvBusinessName.text = it.data.userMitraById.namaUsaha
                                 binding.tvBusinessNameCard.text = it.data.userMitraById.namaUsaha
                                 viewModel.getProductByPartnerId(partnerId)
@@ -178,7 +182,7 @@ class ProductPartnerFragment : Fragment() {
                             404 -> {
                                 Toast.makeText(
                                     requireContext(),
-                                    "User tidak ditemukan",
+                                    "Pengguna tidak ditemukan",
                                     Toast.LENGTH_SHORT
                                 ).show()
                             }

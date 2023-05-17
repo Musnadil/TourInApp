@@ -32,7 +32,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/poppins_semibold"
             android:gravity="center"
-            android:text="@string/enjoy_your_vacation"
+            android:text="Nikmati liburanmu"
             android:textAlignment="center"
             android:textColor="@color/black"
             android:textSize="24sp" />
@@ -42,7 +42,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/poppins_regular"
             android:gravity="center"
-            android:text="@string/we_will_guide_you_to_find_public_facilities"
+            android:text="TourIn akan membantu anda untuk menemukan fasilitas umum"
             android:textAlignment="center"
             android:textColor="@color/black"
             android:textSize="16sp" />

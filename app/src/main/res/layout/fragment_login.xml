@@ -31,7 +31,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:fontFamily="@font/poppins_semibold"
-        android:text="@string/login"
+        android:text="Masuk"
         android:textColor="@color/white_theme"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -42,7 +42,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/poppins_regular"
-        android:text="@string/please_log_in_to_continue"
+        android:text="Silahkan masuk untuk melanjutkan"
         android:textColor="@color/white_theme"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="@id/tv_login"
@@ -87,7 +87,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="32dp"
-        android:hint="@string/password"
+        android:hint="Kata Sandi"
         app:boxBackgroundColor="@color/white_theme"
         app:boxCornerRadiusBottomEnd="25dp"
         app:boxCornerRadiusBottomStart="25dp"
@@ -122,7 +122,7 @@
         android:layout_marginHorizontal="32dp"
         android:layout_marginTop="16dp"
         android:fontFamily="@font/poppins_semibold"
-        android:text="@string/log_in"
+        android:text="Masuk"
         android:textAllCaps="false"
         android:textColor="@color/white_theme"
         android:textSize="16sp"
@@ -141,7 +141,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/poppins_regular"
-            android:text="@string/don_t_have_an_account"
+            android:text="Belum punya akun?"
             android:textColor="@color/white_theme"
             android:textSize="16sp" />
 
@@ -151,7 +151,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/poppins_semibold"
             android:paddingStart="5dp"
-            android:text="@string/create"
+            android:text="Buat disini"
             android:textColor="@color/white_theme"
             android:textSize="16sp" />
     </LinearLayout>

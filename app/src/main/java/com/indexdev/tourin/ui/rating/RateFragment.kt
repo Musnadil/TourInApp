@@ -104,7 +104,7 @@ class RateFragment : Fragment() {
                 LOADING -> {}
             }
         }
-        binding.tv.text = "Give a rating for $tourName"
+        binding.tv.text = "Sudah mengunjungi $tourName? Silakan beri nilai untuk $tourName"
         binding.tvTourName.text = "$tourName"
     }
 

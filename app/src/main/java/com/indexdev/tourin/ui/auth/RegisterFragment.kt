@@ -51,17 +51,18 @@ class RegisterFragment : Fragment() {
             binding.confirmPasswordContainer.error = null
 
             if (binding.etUsername.text.isNullOrEmpty()) {
-                binding.usernameContainer.error = "You must fill in the username field!"
+                binding.usernameContainer.error = "Kolom nama pengguna tidak boleh kosong"
             } else if (binding.etEmail.text.isNullOrEmpty()) {
-                binding.etEmail.error = "You must fill in the email field!"
+                binding.etEmail.error = "Kolom Email tidak boleh kosong"
             } else if (binding.etPassword.text.isNullOrEmpty()) {
-                binding.etPassword.error = "You must fill in the password field!"
+                binding.etPassword.error = "Kolom password tidak boleh kosong"
             } else if (binding.etConfirmPassword.text.isNullOrEmpty()) {
-                binding.confirmPasswordContainer.error = "You have to confirm the password!"
+                binding.confirmPasswordContainer.error =
+                    "Kolom konfirmasi password tidak boleh kosong"
             } else if (binding.etPassword.text.toString().length <= 6) {
-                binding.passwordContainer.error = "Password must be more than 6 characters!"
+                binding.passwordContainer.error = "Kata sandi harus lebih dari 6 karakter"
             } else if (binding.etPassword.text.toString() != binding.etConfirmPassword.text.toString()) {
-                binding.confirmPasswordContainer.error = "Password confirmation failed!"
+                binding.confirmPasswordContainer.error = "Konfirmasi password tidak sama"
                 binding.etConfirmPassword.requestFocus()
             } else {
                 bundle.putString(EMAIL, binding.etEmail.text.toString())
@@ -86,8 +87,8 @@ class RegisterFragment : Fragment() {
                     when (resources.data?.code) {
                         200 -> {
                             AlertDialog.Builder(context)
-                                .setTitle(getString(R.string.successful_registration))
-                                .setMessage(resources.data.message)
+                                .setTitle("Berhasil daftar")
+                                .setMessage("Anda telah berhasil mendaftar")
                                 .setCancelable(false)
                                 .setPositiveButton("OK") { positive, _ ->
                                     positive.dismiss()
@@ -101,24 +102,24 @@ class RegisterFragment : Fragment() {
                         401 -> {
                             alertDialog(
                                 requireContext(),
-                                getString(R.string.registration_failed),
-                                resources.data.message,
+                                "Gagal mendaftar",
+                                "Email yang anda masukan sudah digunakan",
                                 binding.etEmail.requestFocus()
                             )
                         }
                         402 -> {
                             alertDialog(
                                 requireContext(),
-                                getString(R.string.registration_failed),
-                                resources.data.message,
+                                "Gagal mendaftar",
+                                "Email yang anda masukan tidak valid",
                                 binding.etEmail.requestFocus()
                             )
                         }
                         403 -> {
                             alertDialog(
                                 requireContext(),
-                                getString(R.string.registration_failed),
-                                resources.data.message,
+                                "Gagal mendaftar",
+                                "Domain email yang anda masukan tidak ditemukan",
                                 binding.etEmail.requestFocus()
                             )
                         }
@@ -128,7 +129,7 @@ class RegisterFragment : Fragment() {
                     binding.loading.root.visibility = View.GONE
                     alertDialog(
                         requireContext(),
-                        getString(R.string.message),
+                        "Pesan",
                         resources.message ?: getString(R.string.error)
                     )
                 }

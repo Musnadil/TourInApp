@@ -51,11 +51,11 @@ class LoginFragment : Fragment() {
             binding.emailContainer.error = null
             binding.passwordContainer.error = null
             if (binding.etEmail.text.isNullOrEmpty()) {
-                binding.emailContainer.error = "You must fill in the email field!"
+                binding.emailContainer.error = "Kolom Email tidak boleh kosong"
             } else if (binding.etPassword.text.isNullOrEmpty()) {
-                binding.passwordContainer.error = "You must fill in the password field!"
+                binding.passwordContainer.error = "Kolom Kata Sandi tidak boleh kosong"
             } else if (binding.etPassword.text.toString().length <= 6) {
-                binding.passwordContainer.error = "Password must be more than 6 characters!"
+                binding.passwordContainer.error = "Kata sandi harus lebih dari 6 karakter"
             } else {
                 val loginRequest = LoginRequest(
                     binding.etEmail.text.toString(),
@@ -87,22 +87,22 @@ class LoginFragment : Fragment() {
                         405 -> {
                             alertDialog(
                                 requireContext(),
-                                getString(R.string.failed_login),
-                                resources.data.message
+                                "Gagal masuk",
+                                "Password salah"
                             )
                         }
                         404 -> {
                             alertDialog(
                                 requireContext(),
-                                getString(R.string.failed_login),
-                                resources.data.message
+                                "Gagal masuk",
+                                "Email belum terdaftar"
                             )
                         }
                         402 -> {
                             alertDialog(
                                 requireContext(),
-                                getString(R.string.failed_login),
-                                resources.data.message
+                                "Gagal masuk",
+                                "Email yang anda masukan tidak ditemukan"
                             )
                         }
                     }
@@ -111,7 +111,7 @@ class LoginFragment : Fragment() {
                     binding.loading.root.visibility = View.GONE
                     alertDialog(
                         requireContext(),
-                        getString(R.string.message),
+                        "Pesan",
                         resources.message ?: getString(
                             R.string.error
                         )

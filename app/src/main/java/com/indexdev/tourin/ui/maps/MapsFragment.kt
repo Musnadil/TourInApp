@@ -203,7 +203,7 @@ class MapsFragment : Fragment(), GoogleMap.OnMarkerClickListener {
     private val updateDistance: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent) {
             val distance = intent.getDoubleExtra(UPDATE_DISTANCE, 0.0)
-            Toast.makeText(requireContext(), "distance is : $distance", Toast.LENGTH_SHORT).show()
+//            Toast.makeText(requireContext(), "distance is : $distance", Toast.LENGTH_SHORT).show()
 
             val pendingIntent = NavDeepLinkBuilder(requireContext())
                 .setComponentName(MainActivity::class.java)
@@ -214,8 +214,8 @@ class MapsFragment : Fragment(), GoogleMap.OnMarkerClickListener {
             val notif = NotificationCompat.Builder(requireContext(), CHANNEL_ID)
                 .setOngoing(true)
                 .setAutoCancel(false)
-                .setContentTitle("Rate your visit")
-                .setContentText("Give a rating for ${arguments?.getString(TOUR_NAME)}")
+                .setContentTitle("Beri nilai")
+                .setContentText("Beri nilai untuk wisata ${arguments?.getString(TOUR_NAME)}")
                 .setSmallIcon(R.drawable.logo_tourin)
                 .setContentIntent(pendingIntent)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
@@ -352,7 +352,7 @@ class MapsFragment : Fragment(), GoogleMap.OnMarkerClickListener {
                     if (!poiList.data.isNullOrEmpty()) {
                         poiFacility(poiList.data)
                     } else {
-                        Toast.makeText(requireContext(), "Can't get POI List", Toast.LENGTH_SHORT)
+                        Toast.makeText(requireContext(), "Marker masih kosong", Toast.LENGTH_SHORT)
                             .show()
                     }
                 }
@@ -414,7 +414,7 @@ class MapsFragment : Fragment(), GoogleMap.OnMarkerClickListener {
                     if (!poiListMitra.data.isNullOrEmpty()) {
                         poiMitra(poiListMitra.data)
                     } else {
-                        Toast.makeText(requireContext(), "Can't get POI List", Toast.LENGTH_SHORT)
+                        Toast.makeText(requireContext(), "Marker mitra masih kosong", Toast.LENGTH_SHORT)
                             .show()
                     }
                 }
@@ -492,9 +492,9 @@ class MapsFragment : Fragment(), GoogleMap.OnMarkerClickListener {
                 ) {
 
                     AlertDialog.Builder(requireContext()).apply {
-                        setTitle("Background permission")
-                        setMessage(R.string.background_location_permission_message)
-                        setPositiveButton("Grant background Permission") { _, _ ->
+                        setTitle("Izinkan aplikasi berjalan pada latar belakang")
+                        setMessage("Aktifkan akses latar belakang lokasi untuk mendapatkan pengalaman yang lebih baik dengan aplikasi TourIn")
+                        setPositiveButton("Izinkan") { _, _ ->
                             requestBackgroundLocationPermission()
                         }
                     }.create().show()
@@ -523,8 +523,8 @@ class MapsFragment : Fragment(), GoogleMap.OnMarkerClickListener {
                 )
             ) {
                 AlertDialog.Builder(requireContext())
-                    .setTitle("ACCESS_FINE_LOCATION")
-                    .setMessage("Location permission required")
+                    .setTitle("Izin akses")
+                    .setMessage("Izin lokasi diperlukan")
                     .setPositiveButton(
                         "OK"
                     ) { _, _ ->

@@ -31,7 +31,6 @@
             android:layout_marginStart="16dp"
             android:fontFamily="@font/poppins_semibold"
             android:paddingStart="16dp"
-            android:text="*******"
             android:textColor="@color/black"
             android:textSize="20sp" />
     </androidx.appcompat.widget.Toolbar>
@@ -108,6 +107,40 @@
         app:layout_constraintStart_toEndOf="@id/iv_person"
         app:layout_constraintTop_toBottomOf="@id/tv_business_name" />
 
+
+    <ImageView
+        android:id="@+id/iv_clock"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:adjustViewBounds="true"
+        android:maxWidth="24dp"
+        android:maxHeight="24dp"
+        android:src="@drawable/ic_watch"
+        app:layout_constraintBottom_toBottomOf="@id/tv_openg_hours"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tv_openg_hours"
+        app:tint="@color/black" />
+
+    <TextView
+        android:id="@+id/tv_openg_hours"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:ellipsize="end"
+        android:fontFamily="@font/poppins_regular"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:text=""
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/iv_person"
+        app:layout_constraintTop_toBottomOf="@id/tv_business_owner" />
+
     <ImageView
         android:id="@+id/iv_contact"
         android:layout_width="wrap_content"
@@ -139,7 +172,7 @@
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/iv_contact"
-        app:layout_constraintTop_toBottomOf="@id/tv_business_owner" />
+        app:layout_constraintTop_toBottomOf="@id/tv_openg_hours" />
 
     <ImageView
         android:id="@+id/iv_address"

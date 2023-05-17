@@ -42,7 +42,7 @@ class ChooseVehicleFragment() : DialogFragment() {
             longitude = latLong.longitude
             dest = destination
         }
-        binding.tvSelectVehicle.text = "Choose a vehicle to go to ${dest}"
+        binding.tvSelectVehicle.text = "Pilih kendaraan untuk pergi ke ${dest}"
         binding.btnCar.setOnClickListener {
             dialog?.dismiss()
             navigateGoogleMaps(latitude, longitude, "d")
