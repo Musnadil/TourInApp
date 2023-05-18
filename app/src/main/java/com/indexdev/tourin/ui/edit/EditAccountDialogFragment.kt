@@ -3,16 +3,12 @@ package com.indexdev.tourin.ui.edit
 import android.app.AlertDialog
 import android.content.Context
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
 import com.indexdev.tourin.R
 import com.indexdev.tourin.data.api.Status.*
 import com.indexdev.tourin.data.model.request.UpdateUserRequest
@@ -25,7 +21,7 @@ import com.indexdev.tourin.ui.splashscreen.SplashScreenFragment.Companion.USERNA
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class EditAccountDialogFragment(private val usernameUpdate:() ->Unit) : DialogFragment() {
+class EditAccountDialogFragment(private val usernameUpdate: () -> Unit) : DialogFragment() {
     private var _binding: FragmentEditAccountDialogBinding? = null
     private val binding get() = _binding!!
     private val editViewModel: EditViewModel by viewModels()
@@ -51,23 +47,23 @@ class EditAccountDialogFragment(private val usernameUpdate:() ->Unit) : DialogFr
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val preference = requireContext().getSharedPreferences(SHARED_PREF,Context.MODE_PRIVATE)
+        val preference = requireContext().getSharedPreferences(SHARED_PREF, Context.MODE_PRIVATE)
         val usernameOld = preference.getString(USERNAME, DEFAULT_VALUE)
         val idUser = preference.getString(ID_USER, DEFAULT_VALUE)
         val editPrefUsername = preference.edit()
         binding.etUsername.setText(usernameOld)
         binding.btnUpdate.setOnClickListener {
-            if (usernameOld != DEFAULT_VALUE && idUser != DEFAULT_VALUE){
-                if (!binding.etUsername.text.isNullOrEmpty()){
+            if (usernameOld != DEFAULT_VALUE && idUser != DEFAULT_VALUE) {
+                if (!binding.etUsername.text.isNullOrEmpty()) {
                     val newUsername = UpdateUserRequest(binding.etUsername.text.toString())
                     editViewModel.editUsername(idUser.toString().toInt(), newUsername)
-                }else{
-                    binding.usernameContainer.error ="Username tidak boleh kosong"
+                } else {
+                    binding.usernameContainer.error = "Username tidak boleh kosong"
                 }
             }
         }
-        editViewModel.username.observe(viewLifecycleOwner){username ->
-            when(username.status){
+        editViewModel.username.observe(viewLifecycleOwner) { username ->
+            when (username.status) {
                 SUCCESS -> {
                     editPrefUsername.putString(USERNAME, binding.etUsername.text.toString())
                     editPrefUsername.apply()
@@ -75,9 +71,10 @@ class EditAccountDialogFragment(private val usernameUpdate:() ->Unit) : DialogFr
                     dialog?.dismiss()
                 }
                 ERROR -> {
-                    Toast.makeText(requireContext(), "${username.message}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "${username.message}", Toast.LENGTH_SHORT)
+                        .show()
                 }
-                LOADING ->{}
+                LOADING -> {}
             }
         }
         binding.btnLogout.setOnClickListener {
@@ -85,17 +82,16 @@ class EditAccountDialogFragment(private val usernameUpdate:() ->Unit) : DialogFr
             alertDialog.apply {
                 setTitle("Keluar")
                 setMessage("Apakah anda yakin ingin keluar?")
-                setNegativeButton("Batal"){dialog,_ ->
+                setNegativeButton("Batal") { dialog, _ ->
                     dialog.dismiss()
                 }
-                setPositiveButton("Ya"){dialogY,_ ->
+                setPositiveButton("Ya") { dialogY, _ ->
                     dialogY.dismiss()
                     preference.edit().clear().apply()
-                    preference.edit().putBoolean(SplashScreenFragment.ON_BOARDING,false).apply()
+                    preference.edit().putBoolean(SplashScreenFragment.ON_BOARDING, false).apply()
                     dialog?.dismiss()
-                    if(findNavController().currentDestination?.id == R.id.homeFragment){
-                        findNavController().navigate(R.id.action_homeFragment_to_loginFragment)
-                    }
+                    activity?.finish()
+                    activity?.startActivity(activity?.intent)
                 }
             }
             alertDialog.show()
