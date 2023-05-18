@@ -61,8 +61,7 @@ class RateFragment : Fragment() {
                     null,
                     idUser.toString(),
                     tourID.toString(),
-                    binding.ratingBar.rating.toString(),
-                    null)
+                    binding.ratingBar.rating.toString())
                 rateViewModel.postRate(rateRequest)
             }
         }

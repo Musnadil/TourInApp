@@ -71,6 +71,13 @@
             app:popUpTo="@id/thirdOnBoardingFragment"
             app:exitAnim="@anim/slide_out"
             app:enterAnim="@anim/slide_in"/>
+        <action
+            android:id="@+id/action_thirdOnBoardingFragment_to_homeFragment2"
+            app:destination="@id/homeFragment"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/slide_out"
+            app:popUpTo="@id/thirdOnBoardingFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/homeFragment"

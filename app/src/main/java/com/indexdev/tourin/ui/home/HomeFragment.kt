@@ -2,6 +2,7 @@ package com.indexdev.tourin.ui.home
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Bundle
@@ -60,12 +61,17 @@ class HomeFragment : Fragment() {
         val username = preference.getString(USERNAME, DEFAULT_VALUE)
 
         binding.cardUser.setOnClickListener {
-            val dialogFragment = EditAccountDialogFragment(usernameUpdate = {
-                val preference = requireContext().getSharedPreferences(SHARED_PREF, Context.MODE_PRIVATE)
-                val newUsername = preference.getString(USERNAME, DEFAULT_VALUE)
-                binding.tvUsername.text = newUsername
-            })
-            activity?.let { dialogFragment.show(it.supportFragmentManager, null) }
+            if (username == DEFAULT_VALUE) {
+                findNavController().navigate(R.id.action_homeFragment_to_loginFragment)
+            } else {
+                val dialogFragment = EditAccountDialogFragment(usernameUpdate = {
+                    val preference =
+                        requireContext().getSharedPreferences(SHARED_PREF, Context.MODE_PRIVATE)
+                    val newUsername = preference.getString(USERNAME, DEFAULT_VALUE)
+                    binding.tvUsername.text = newUsername
+                })
+                activity?.let { dialogFragment.show(it.supportFragmentManager, null) }
+            }
         }
 
         greeting(username ?: "Username")
@@ -88,26 +94,31 @@ class HomeFragment : Fragment() {
 
     @SuppressLint("SetTextI18n")
     private fun greeting(username: String) {
-
-        binding.tvUsername.text = username
         val date = Date()
         val calendar = Calendar.getInstance()
         calendar.time = date
 
-        when (calendar.get(Calendar.HOUR_OF_DAY)) {
-            in 12..14 -> {
-                binding.tvGreating.text = "Selamat siang,"
-            }
-            in 15..18 -> {
-                binding.tvGreating.text = "Selamat sore,"
-            }
-            in 19..23 -> {
-                binding.tvGreating.text = "Selamat malam,"
-            }
-            else -> {
-                binding.tvGreating.text = "Selamat pagi,"
+        if (username == DEFAULT_VALUE){
+            binding.tvGreating.visibility = View.GONE
+            binding.tvUsername.text = "Masuk"
+        } else{
+            binding.tvUsername.text = username
+            when (calendar.get(Calendar.HOUR_OF_DAY)) {
+                in 12..14 -> {
+                    binding.tvGreating.text = "Selamat siang,"
+                }
+                in 15..18 -> {
+                    binding.tvGreating.text = "Selamat sore,"
+                }
+                in 19..23 -> {
+                    binding.tvGreating.text = "Selamat malam,"
+                }
+                else -> {
+                    binding.tvGreating.text = "Selamat pagi,"
+                }
             }
         }
+
     }
 
     private fun fetchPopularTourList() {
@@ -169,16 +180,33 @@ class HomeFragment : Fragment() {
     }
 
     private fun detailTour() {
+        val preference = requireContext().getSharedPreferences(SHARED_PREF, Context.MODE_PRIVATE)
+        val username = preference.getString(USERNAME, DEFAULT_VALUE)
         popularTourAdapter = PopularTourAdapter(object : PopularTourAdapter.OnClickListener {
             override fun onClickItem(data: ResponseTourList) {
                 val POIBundle = Bundle()
-                POIBundle.putString(ID_TOUR, data.idWisata)
-                POIBundle.putString(TOUR_NAME, data.wisata)
-                POIBundle.putString(LAT, data.lat)
-                POIBundle.putString(LONG, data.longi)
-                POIBundle.putString(ADDRESS, data.alamat)
-                POIBundle.putString(IMG_URL, data.urlImage)
-                findNavController().navigate(R.id.action_homeFragment_to_mapsFragment, POIBundle)
+                if (username == DEFAULT_VALUE){
+                    AlertDialog.Builder(requireContext())
+                        .setTitle("Pesan")
+                        .setMessage("Untuk melihat wisata anda harus login terlebih dahulu.")
+                        .setPositiveButton("Ok") { positiveButton, _ ->
+                            positiveButton.dismiss()
+                            findNavController().navigate(R.id.action_homeFragment_to_loginFragment)
+                        }
+                        .setNegativeButton("Batal") { negativeButton, _ ->
+                            negativeButton.dismiss()
+                        }
+                        .show()
+                } else {
+                    POIBundle.putString(ID_TOUR, data.idWisata)
+                    POIBundle.putString(TOUR_NAME, data.wisata)
+                    POIBundle.putString(LAT, data.lat)
+                    POIBundle.putString(LONG, data.longi)
+                    POIBundle.putString(ADDRESS, data.alamat)
+                    POIBundle.putString(IMG_URL, data.urlImage)
+                    findNavController().navigate(R.id.action_homeFragment_to_mapsFragment, POIBundle)
+                }
+
             }
 
         })
@@ -187,13 +215,30 @@ class HomeFragment : Fragment() {
         allListTourAdapter = AllListTourAdapter(object : AllListTourAdapter.OnclickListener {
             override fun onClickItem(data: ResponseTourList) {
                 val POIBundle = Bundle()
-                POIBundle.putString(ID_TOUR, data.idWisata)
-                POIBundle.putString(TOUR_NAME, data.wisata)
-                POIBundle.putString(LAT, data.lat)
-                POIBundle.putString(LONG, data.longi)
-                POIBundle.putString(ADDRESS, data.alamat)
-                POIBundle.putString(IMG_URL, data.urlImage)
-                findNavController().navigate(R.id.action_homeFragment_to_mapsFragment, POIBundle)
+                if (username == DEFAULT_VALUE) {
+                    AlertDialog.Builder(requireContext())
+                        .setTitle("Pesan")
+                        .setMessage("Untuk melihat wisata anda harus login terlebih dahulu.")
+                        .setPositiveButton("Ok") { positiveButton, _ ->
+                            positiveButton.dismiss()
+                            findNavController().navigate(R.id.action_homeFragment_to_loginFragment)
+                        }
+                        .setNegativeButton("Batal") { negativeButton, _ ->
+                            negativeButton.dismiss()
+                        }
+                        .show()
+                } else {
+                    POIBundle.putString(ID_TOUR, data.idWisata)
+                    POIBundle.putString(TOUR_NAME, data.wisata)
+                    POIBundle.putString(LAT, data.lat)
+                    POIBundle.putString(LONG, data.longi)
+                    POIBundle.putString(ADDRESS, data.alamat)
+                    POIBundle.putString(IMG_URL, data.urlImage)
+                    findNavController().navigate(
+                        R.id.action_homeFragment_to_mapsFragment,
+                        POIBundle
+                    )
+                }
             }
         })
         binding.rvAllTour.adapter = allListTourAdapter

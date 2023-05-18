@@ -32,7 +32,7 @@ class ThirdOnBoardingFragment : Fragment() {
         binding.btnNext.setOnClickListener {
             onBoardingEditor.putBoolean(ON_BOARDING,false)
             onBoardingEditor.apply()
-            findNavController().navigate(R.id.action_thirdOnBoardingFragment_to_loginFragment)
+            findNavController().navigate(R.id.action_thirdOnBoardingFragment_to_homeFragment2)
         }
     }
 }

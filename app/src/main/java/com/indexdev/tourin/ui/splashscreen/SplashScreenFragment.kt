@@ -50,18 +50,31 @@ class SplashScreenFragment : Fragment() {
             findNavController().navigate(R.id.action_splashScreenFragment_to_ratingFragment)
         }
         else{
+//            Handler(Looper.getMainLooper()).postDelayed({
+//                if (findNavController().currentDestination?.id == R.id.splashScreenFragment) {
+//                    if (login != DEFAULT_VALUE) {
+//                        findNavController().navigate(R.id.action_splashScreenFragment_to_homeFragment)
+//                    } else {
+//                        if (showOnBoarding) {
+//                            findNavController().navigate(R.id.action_splashScreenFragment_to_firstOnBoardingFragment)
+//                        } else {
+//                            findNavController().navigate(R.id.action_splashScreenFragment_to_loginFragment)
+//                        }
+//                    }
+//                }
+//            },3000)
             Handler(Looper.getMainLooper()).postDelayed({
                 if (findNavController().currentDestination?.id == R.id.splashScreenFragment) {
-                    if (login != DEFAULT_VALUE) {
-                        findNavController().navigate(R.id.action_splashScreenFragment_to_homeFragment)
-                    } else {
+//                    if (login != DEFAULT_VALUE) {
+//                        findNavController().navigate(R.id.action_splashScreenFragment_to_homeFragment)
+//                    } else {
                         if (showOnBoarding) {
                             findNavController().navigate(R.id.action_splashScreenFragment_to_firstOnBoardingFragment)
                         } else {
-                            findNavController().navigate(R.id.action_splashScreenFragment_to_loginFragment)
+                            findNavController().navigate(R.id.action_splashScreenFragment_to_homeFragment)
                         }
                     }
-                }
+//                }
             },3000)
         }
 
