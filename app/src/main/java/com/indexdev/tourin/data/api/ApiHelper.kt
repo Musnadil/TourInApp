@@ -1,9 +1,6 @@
 package com.indexdev.tourin.data.api
 
-import com.indexdev.tourin.data.model.request.LoginRequest
-import com.indexdev.tourin.data.model.request.RateRequest
-import com.indexdev.tourin.data.model.request.RegisterRequest
-import com.indexdev.tourin.data.model.request.UpdateUserRequest
+import com.indexdev.tourin.data.model.request.*
 
 class ApiHelper(private val apiService: ApiService) {
     suspend fun authRegister(registerRequest: RegisterRequest) = apiService.authRegister(registerRequest)
@@ -17,8 +14,7 @@ class ApiHelper(private val apiService: ApiService) {
     suspend fun getUserPartnerById(id: Int) = apiService.getUserPartnerById(id)
     suspend fun getProductByPartnerId(id: Int) = apiService.getProductByPartnerId(id)
     suspend fun getProductById(id: Int) = apiService.getProductById(id)
-
-
-
-
+    suspend fun forgotPassword(email: RequestEmailCheck) = apiService.forgotPassword(email)
+    suspend fun verifyOtp(requestVerifyOtp: RequestVerifyOtp) = apiService.verifyOtp(requestVerifyOtp)
+    suspend fun newPassword(requestNewPassword: RequestNewPassword) = apiService.newPassword(requestNewPassword)
 }

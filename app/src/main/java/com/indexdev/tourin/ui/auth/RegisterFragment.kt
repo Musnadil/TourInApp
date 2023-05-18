@@ -59,8 +59,8 @@ class RegisterFragment : Fragment() {
             } else if (binding.etConfirmPassword.text.isNullOrEmpty()) {
                 binding.confirmPasswordContainer.error =
                     "Kolom konfirmasi password tidak boleh kosong"
-            } else if (binding.etPassword.text.toString().length <= 6) {
-                binding.passwordContainer.error = "Kata sandi harus lebih dari 6 karakter"
+            } else if (binding.etPassword.text.toString().length <= 5) {
+                binding.passwordContainer.error = "Kata sandi minimal berisi 6 karakter"
             } else if (binding.etPassword.text.toString() != binding.etConfirmPassword.text.toString()) {
                 binding.confirmPasswordContainer.error = "Konfirmasi password tidak sama"
                 binding.etConfirmPassword.requestFocus()

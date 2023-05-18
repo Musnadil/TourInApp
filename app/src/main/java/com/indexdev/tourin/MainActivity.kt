@@ -1,9 +1,11 @@
 package com.indexdev.tourin
 
 import android.annotation.SuppressLint
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.navigation.findNavController
 import com.indexdev.tourin.databinding.ActivityMainBinding
 import com.indexdev.tourin.ui.lightStatusBar
@@ -20,8 +22,18 @@ class MainActivity : AppCompatActivity() {
         R.id.firstOnBoardingFragment,
         R.id.secondOnBoardingFragment,
         R.id.thirdOnBoardingFragment,
+    )
+    private val listTransparent = listOf(
         R.id.loginFragment,
-        R.id.registerFragment
+        R.id.registerFragment,
+        R.id.forgotPasswordFragment,
+        R.id.verifyOtpFragment,
+        R.id.newPasswordFragment
+    )
+
+    private val listWhiteTheme = listOf(
+        R.id.homeFragment,
+        R.id.mapsFragment
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,10 +43,24 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.fragment_container)
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
-            if (destination.id in listDestination) {
-                hideSystemUI()
-            } else {
-                showSystemUI()
+            when (destination.id) {
+                in listDestination -> {
+                    hideSystemUI()
+                }
+                in listTransparent -> {
+                    showSystemUI()
+                    lightStatusBar(window, false)
+                    window.navigationBarColor = Color.parseColor("#80000000")
+                }
+                in listWhiteTheme -> {
+                    showSystemUI()
+                    lightStatusBar(window)
+                    window.navigationBarColor = Color.parseColor("#EEEEEE")
+                }
+                else -> {
+                    showSystemUI()
+                    lightStatusBar(window)
+                }
             }
         }
 

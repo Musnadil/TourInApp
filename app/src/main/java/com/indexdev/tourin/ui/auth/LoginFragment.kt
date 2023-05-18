@@ -43,6 +43,9 @@ class LoginFragment : Fragment() {
         }
         login()
         resultLogin()
+        binding.btnForgotPassword.setOnClickListener {
+            findNavController().navigate(R.id.action_loginFragment_to_forgotPasswordFragment)
+        }
     }
 
 
@@ -54,8 +57,8 @@ class LoginFragment : Fragment() {
                 binding.emailContainer.error = "Kolom Email tidak boleh kosong"
             } else if (binding.etPassword.text.isNullOrEmpty()) {
                 binding.passwordContainer.error = "Kolom Kata Sandi tidak boleh kosong"
-            } else if (binding.etPassword.text.toString().length <= 6) {
-                binding.passwordContainer.error = "Kata sandi harus lebih dari 6 karakter"
+            } else if (binding.etPassword.text.toString().length <= 5) {
+                binding.passwordContainer.error = "Kata sandi minimal berisi 6 karakter"
             } else {
                 val loginRequest = LoginRequest(
                     binding.etEmail.text.toString(),

@@ -56,7 +56,6 @@ class ProfilePartnerFragment : Fragment() {
             .load("https://tourin.musnadil.my.id/gambar/$imageUrl")
             .transform(CenterCrop())
             .into(binding.ivBusiness)
-        Toast.makeText(requireContext(), "$imageUrl", Toast.LENGTH_SHORT).show()
 
         binding.tvBusinessNameTop.text = businessName
         binding.tvBusinessName.text = businessName

@@ -1,9 +1,6 @@
 package com.indexdev.tourin.data.api
 
-import com.indexdev.tourin.data.model.request.LoginRequest
-import com.indexdev.tourin.data.model.request.RateRequest
-import com.indexdev.tourin.data.model.request.RegisterRequest
-import com.indexdev.tourin.data.model.request.UpdateUserRequest
+import com.indexdev.tourin.data.model.request.*
 import com.indexdev.tourin.data.model.response.*
 import retrofit2.Response
 import retrofit2.http.*
@@ -44,4 +41,14 @@ interface ApiService {
 
     @GET("produkById/{id}")
     suspend fun getProductById(@Path("id") id: Int): ResponseProdukById
+
+    @POST("forgotpasswordtourin")
+    suspend fun forgotPassword(@Body email: RequestEmailCheck): ResponseForgotPassword
+
+    @POST("verifyotp")
+    suspend fun verifyOtp(@Body requestVerifyOtp: RequestVerifyOtp): ResponseVerifyOtp
+
+    @POST("tourinnewpassword")
+    suspend fun newPassword(@Body requestNewPassword: RequestNewPassword): ResponseNewPassword
+
 }

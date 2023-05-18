@@ -18,6 +18,9 @@
     <color name="red">#E80000</color>
     <color name="shadow">#26525457</color>
     <color name="shadow_darker">#A1525457</color>
+    <color name="dark_grey">#222831</color>
+    <color name="transparent">#00000000</color>
+
 
 
 </resources>
