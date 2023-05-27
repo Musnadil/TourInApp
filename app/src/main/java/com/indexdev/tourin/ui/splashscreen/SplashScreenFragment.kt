@@ -46,37 +46,15 @@ class SplashScreenFragment : Fragment() {
         val showOnBoarding = preference.getBoolean(ON_BOARDING,true)
         val idTour = preference.getString(ID_TOUR, DEFAULT_VALUE)
         val login = preference.getString(TOKEN, DEFAULT_VALUE)
-        if(idTour != DEFAULT_VALUE){
-            findNavController().navigate(R.id.action_splashScreenFragment_to_ratingFragment)
-        }
-        else{
-//            Handler(Looper.getMainLooper()).postDelayed({
-//                if (findNavController().currentDestination?.id == R.id.splashScreenFragment) {
-//                    if (login != DEFAULT_VALUE) {
-//                        findNavController().navigate(R.id.action_splashScreenFragment_to_homeFragment)
-//                    } else {
-//                        if (showOnBoarding) {
-//                            findNavController().navigate(R.id.action_splashScreenFragment_to_firstOnBoardingFragment)
-//                        } else {
-//                            findNavController().navigate(R.id.action_splashScreenFragment_to_loginFragment)
-//                        }
-//                    }
-//                }
-//            },3000)
-            Handler(Looper.getMainLooper()).postDelayed({
-                if (findNavController().currentDestination?.id == R.id.splashScreenFragment) {
-//                    if (login != DEFAULT_VALUE) {
-//                        findNavController().navigate(R.id.action_splashScreenFragment_to_homeFragment)
-//                    } else {
-                        if (showOnBoarding) {
-                            findNavController().navigate(R.id.action_splashScreenFragment_to_firstOnBoardingFragment)
-                        } else {
-                            findNavController().navigate(R.id.action_splashScreenFragment_to_homeFragment)
-                        }
-                    }
-//                }
-            },3000)
-        }
 
+        Handler(Looper.getMainLooper()).postDelayed({
+            if (findNavController().currentDestination?.id == R.id.splashScreenFragment) {
+                if (showOnBoarding) {
+                    findNavController().navigate(R.id.action_splashScreenFragment_to_firstOnBoardingFragment)
+                } else {
+                    findNavController().navigate(R.id.action_splashScreenFragment_to_homeFragment)
+                }
+            }
+        },3000)
     }
 }
