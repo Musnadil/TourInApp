@@ -22,10 +22,12 @@ import com.google.android.gms.location.LocationRequest.create
 import com.indexdev.tourin.ui.*
 
 class LocationService : Service() {
-    companion object{
+    companion object {
         const val DISTANCE = "distance"
         const val UPDATE_DISTANCE = "update_distance"
-
+        const val ID_MARKER = "ID_MARKER"
+        const val FACILITY_NAME = "FACILITY_NAME"
+        const val TOUR_NAME_FACILITY_RATE = "TOUR_NAME_FACILITY_RATE"
     }
 
     private lateinit var fusedLocationClient: FusedLocationProviderClient
@@ -49,18 +51,27 @@ class LocationService : Service() {
                         it.latitude, it.longitude
                     )
                 }
+
+                for (i in listPoi) {
+                    distanceMarker = calculateDistanceInKM(
+                        location.latitude, location.longitude, i.lat.toDouble(), i.longi.toDouble()
+                    )
+                    if (distanceMarker != null) {
+                        if (distanceMarker!!.toInt() <= 0.5) {
+                            idMarker = i.idPoi
+                            facilityName = i.namaFasilitas
+                            tourNameFacilityRate = i.kodeWisata
+                        }
+                    }
+                }
+
                 val intent = Intent(DISTANCE)
                 intent.putExtra(UPDATE_DISTANCE, distanceLocation)
+                intent.putExtra(ID_MARKER, idMarker)
+                intent.putExtra(FACILITY_NAME, facilityName)
+                intent.putExtra(TOUR_NAME_FACILITY_RATE, tourNameFacilityRate)
                 sendBroadcast(intent)
 
-//                if (distance != null) {
-//                    if (distance!! <= 2) {
-//                        if (distance!! >= 3) {
-//                        onDestroy()
-//                            //notifikasi untuk menampilkan user harus kasih rating, kemudian ketika di klik open dialog rating
-//                        }
-//                    }
-//                }
             }
         }
     }

@@ -6,6 +6,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.indexdev.tourin.data.Repository
 import com.indexdev.tourin.data.api.Resource
+import com.indexdev.tourin.data.model.request.AddFacilityRateRequest
+import com.indexdev.tourin.data.model.response.ResponseAddFacilityRate
 import com.indexdev.tourin.data.model.response.ResponsePOI
 import com.indexdev.tourin.data.model.response.ResponseUserMitra
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,7 +19,8 @@ class MapsViewModel @Inject constructor(private val repository: Repository) : Vi
     private val _poiList: MutableLiveData<Resource<List<ResponsePOI>>> = MutableLiveData()
     val poiList: LiveData<Resource<List<ResponsePOI>>> get() = _poiList
 
-    private val _poiListMitra: MutableLiveData<Resource<List<ResponseUserMitra>>> = MutableLiveData()
+    private val _poiListMitra: MutableLiveData<Resource<List<ResponseUserMitra>>> =
+        MutableLiveData()
     val poiListMitra: LiveData<Resource<List<ResponseUserMitra>>> get() = _poiListMitra
 
     fun getPoiList(id: Int) {
@@ -41,4 +44,32 @@ class MapsViewModel @Inject constructor(private val repository: Repository) : Vi
             }
         }
     }
+
+    private val _responseAddFacilityRate: MutableLiveData<Resource<ResponseAddFacilityRate>> =
+        MutableLiveData()
+    val responseAddFacilityRate: LiveData<Resource<ResponseAddFacilityRate>> get() = _responseAddFacilityRate
+
+    fun addFacilityRate(addFacilityRateRequest: AddFacilityRateRequest) {
+        viewModelScope.launch {
+            _responseAddFacilityRate.postValue(Resource.loading())
+            try {
+                _responseAddFacilityRate.postValue(
+                    Resource.success(
+                        repository.addFacilityRate(
+                            addFacilityRateRequest
+                        )
+                    )
+                )
+            } catch (e: Exception) {
+                _responseAddFacilityRate.postValue(
+                    Resource.error(
+                        e.localizedMessage ?: "Error Occurred"
+                    )
+                )
+            }
+        }
+
+    }
+
+
 }

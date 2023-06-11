@@ -221,5 +221,10 @@
             app:popUpTo="@id/newPasswordFragment"
             app:popUpToInclusive="true" />
     </fragment>
+    <fragment
+        android:id="@+id/listRateFacilityFragment"
+        android:name="com.indexdev.tourin.ui.listratefacility.ListRateFacilityFragment"
+        android:label="fragment_list_rate_facility"
+        tools:layout="@layout/fragment_list_rate_facility" />
 
 </navigation>

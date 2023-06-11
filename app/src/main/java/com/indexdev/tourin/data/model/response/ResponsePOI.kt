@@ -15,5 +15,7 @@ data class ResponsePOI(
     @SerializedName("longi")
     val longi: String,
     @SerializedName("nama_fasilitas")
-    val namaFasilitas: String
+    val namaFasilitas: String,
+    @SerializedName("rating")
+    val rating: String?
 )

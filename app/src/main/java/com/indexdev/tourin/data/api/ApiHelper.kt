@@ -1,6 +1,11 @@
 package com.indexdev.tourin.data.api
 
 import com.indexdev.tourin.data.model.request.*
+import com.indexdev.tourin.data.model.response.ResponseAddFacilityRate
+import com.indexdev.tourin.data.model.response.ResponseListRateFacility
+import com.indexdev.tourin.data.model.response.ResponseRateFacility
+import retrofit2.http.Body
+import retrofit2.http.Path
 
 class ApiHelper(private val apiService: ApiService) {
     suspend fun authRegister(registerRequest: RegisterRequest) = apiService.authRegister(registerRequest)
@@ -17,4 +22,8 @@ class ApiHelper(private val apiService: ApiService) {
     suspend fun forgotPassword(email: RequestEmailCheck) = apiService.forgotPassword(email)
     suspend fun verifyOtp(requestVerifyOtp: RequestVerifyOtp) = apiService.verifyOtp(requestVerifyOtp)
     suspend fun newPassword(requestNewPassword: RequestNewPassword) = apiService.newPassword(requestNewPassword)
+    suspend fun getListRateFacilityByUser(id: Int) = apiService.getListRateFacilityByUser(id)
+    suspend fun addFacilityRate(requestAddFacilityRateRequest: AddFacilityRateRequest) = apiService.addFacilityRate(requestAddFacilityRateRequest)
+    suspend fun sendRatingFacility(id: Int, requestRateFacility: RateFacilityRequest) = apiService.sendRatingFacility(id, requestRateFacility)
+
 }

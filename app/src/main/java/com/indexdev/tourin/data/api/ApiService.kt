@@ -28,10 +28,10 @@ interface ApiService {
     ): ResponseUpdateUsername
 
     @GET("rekomendasi")
-    suspend fun getRecommendationList() : List<ResponseRecommendation>
+    suspend fun getRecommendationList(): List<ResponseRecommendation>
 
     @GET("usermitra")
-    suspend fun getAllUserMitra() : List<ResponseUserMitra>
+    suspend fun getAllUserMitra(): List<ResponseUserMitra>
 
     @GET("usermitra/{id}")
     suspend fun getUserPartnerById(@Path("id") id: Int): ResponseUserMitraById
@@ -51,4 +51,15 @@ interface ApiService {
     @POST("tourinnewpassword")
     suspend fun newPassword(@Body requestNewPassword: RequestNewPassword): ResponseNewPassword
 
+    @GET("rateByUser/{id}")
+    suspend fun getListRateFacilityByUser(@Path("id") id: Int): ResponseListRateFacility
+
+    @POST("rateByUser")
+    suspend fun addFacilityRate(@Body requestAddFacilityRateRequest: AddFacilityRateRequest): ResponseAddFacilityRate
+
+    @PUT("rateByUser/{id}")
+    suspend fun sendRatingFacility(
+        @Path("id") id: Int,
+        @Body requestRateFacility: RateFacilityRequest
+    ): ResponseRateFacility
 }

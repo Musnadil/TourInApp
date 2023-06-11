@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_rounded_dialog"
+    tools:context=".ui.listratefacility.ratefacility.RateFacilityDialogFragment">
+
+    <ImageView
+        android:id="@+id/iv_icon"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/logo_tourin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_rate"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="32dp"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/poppins_medium"
+        android:gravity="center"
+        android:text="Beri Nilai Fasilitas"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/iv_icon" />
+
+    <TextView
+        android:id="@+id/tv_text_question"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="32dp"
+        android:fontFamily="@font/poppins_regular"
+        android:gravity="center"
+        android:text="Seberapa puaskah anda setelah menggunakan tempat parkir pada candi borobudur?"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_rate" />
+
+    <RatingBar
+        android:id="@+id/rating_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:numStars="5"
+        android:progressTint="@color/teal_theme"
+        android:rating="4.5"
+        android:stepSize="0.5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_text_question" />
+
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_send"
+        android:layout_width="0dp"
+        android:layout_height="52dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="48dp"
+        android:fontFamily="@font/poppins_semibold"
+        android:text="Kirim"
+        android:textAllCaps="false"
+        android:textColor="@color/white_theme"
+        android:textSize="14sp"
+        app:cornerRadius="25dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/btn_cancel"
+        app:layout_constraintTop_toBottomOf="@id/rating_bar" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_cancel"
+        android:layout_width="0dp"
+        android:layout_height="52dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginEnd="16dp"
+        android:backgroundTint="@color/red"
+        android:fontFamily="@font/poppins_semibold"
+        android:text="Batal"
+        android:textAllCaps="false"
+        android:textColor="@color/white_theme"
+        android:textSize="14sp"
+        app:cornerRadius="25dp"
+        app:layout_constraintEnd_toStartOf="@id/btn_send"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/btn_send" />
+
+    <View
+        android:layout_width="300dp"
+        android:layout_height="1dp"
+        android:layout_marginHorizontal="32dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btn_cancel" />
+</androidx.constraintlayout.widget.ConstraintLayout>

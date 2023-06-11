@@ -24,12 +24,15 @@
         <entry key="..\:/KULIAH/SMT7(Magang)/Android Studio/TourIn/app/src/main/res/drawable/ic_location.xml" value="0.143" />
         <entry key="..\:/KULIAH/SMT7(Magang)/Android Studio/TourIn/app/src/main/res/drawable/ic_logo_tourin.xml" value="0.139" />
         <entry key="..\:/KULIAH/SMT7(Magang)/Android Studio/TourIn/app/src/main/res/drawable/ic_mail.xml" value="0.157" />
+        <entry key="..\:/KULIAH/SMT7(Magang)/Android Studio/TourIn/app/src/main/res/drawable/ic_marker__food_court.xml" value="0.154" />
+        <entry key="..\:/KULIAH/SMT7(Magang)/Android Studio/TourIn/app/src/main/res/drawable/ic_marker__toilet.xml" value="0.154" />
         <entry key="..\:/KULIAH/SMT7(Magang)/Android Studio/TourIn/app/src/main/res/drawable/ic_padlock.xml" value="0.157" />
         <entry key="..\:/KULIAH/SMT7(Magang)/Android Studio/TourIn/app/src/main/res/drawable/ic_person.xml" value="0.157" />
         <entry key="..\:/KULIAH/SMT7(Magang)/Android Studio/TourIn/app/src/main/res/drawable/ic_poi_evacuation_place.xml" value="0.143" />
         <entry key="..\:/KULIAH/SMT7(Magang)/Android Studio/TourIn/app/src/main/res/drawable/ic_poi_food_place.xml" value="0.143" />
         <entry key="..\:/KULIAH/SMT7(Magang)/Android Studio/TourIn/app/src/main/res/drawable/ic_poi_parking.xml" value="0.143" />
         <entry key="..\:/KULIAH/SMT7(Magang)/Android Studio/TourIn/app/src/main/res/drawable/ic_poi_toilet.xml" value="0.143" />
+        <entry key="..\:/KULIAH/SMT7(Magang)/Android Studio/TourIn/app/src/main/res/drawable/ic_poi_toilet_new.xml" value="0.154" />
         <entry key="..\:/KULIAH/SMT7(Magang)/Android Studio/TourIn/app/src/main/res/drawable/ic_poi_worship_place.xml" value="0.143" />
         <entry key="..\:/KULIAH/SMT7(Magang)/Android Studio/TourIn/app/src/main/res/drawable/ic_star.xml" value="0.1925" />
         <entry key="..\:/KULIAH/SMT7(Magang)/Android Studio/TourIn/app/src/main/res/drawable/rounded_top.xml" value="0.148" />
@@ -41,16 +44,18 @@
         <entry key="..\:/KULIAH/SMT7(Magang)/Android Studio/TourIn/app/src/main/res/layout/activity_main.xml" value="0.1716612377850163" />
         <entry key="..\:/KULIAH/SMT7(Magang)/Android Studio/TourIn/app/src/main/res/layout/activity_maps.xml" value="0.1716612377850163" />
         <entry key="..\:/KULIAH/SMT7(Magang)/Android Studio/TourIn/app/src/main/res/layout/fragment_choose_vehicle.xml" value="0.22530996152201796" />
-        <entry key="..\:/KULIAH/SMT7(Magang)/Android Studio/TourIn/app/src/main/res/layout/fragment_detail_produk.xml" value="0.22245673279864922" />
+        <entry key="..\:/KULIAH/SMT7(Magang)/Android Studio/TourIn/app/src/main/res/layout/fragment_detail_produk.xml" value="0.21501390176088972" />
         <entry key="..\:/KULIAH/SMT7(Magang)/Android Studio/TourIn/app/src/main/res/layout/fragment_edit_account_dialog.xml" value="0.264" />
         <entry key="..\:/KULIAH/SMT7(Magang)/Android Studio/TourIn/app/src/main/res/layout/fragment_first_on_boarding.xml" value="0.264" />
         <entry key="..\:/KULIAH/SMT7(Magang)/Android Studio/TourIn/app/src/main/res/layout/fragment_forgot_password.xml" value="0.22245673279864922" />
         <entry key="..\:/KULIAH/SMT7(Magang)/Android Studio/TourIn/app/src/main/res/layout/fragment_home.xml" value="0.1936978683966636" />
+        <entry key="..\:/KULIAH/SMT7(Magang)/Android Studio/TourIn/app/src/main/res/layout/fragment_list_rate_facility.xml" value="0.22530996152201796" />
         <entry key="..\:/KULIAH/SMT7(Magang)/Android Studio/TourIn/app/src/main/res/layout/fragment_login.xml" value="0.22245673279864922" />
         <entry key="..\:/KULIAH/SMT7(Magang)/Android Studio/TourIn/app/src/main/res/layout/fragment_maps.xml" value="0.16126042632066728" />
         <entry key="..\:/KULIAH/SMT7(Magang)/Android Studio/TourIn/app/src/main/res/layout/fragment_new_password.xml" value="0.22530996152201796" />
         <entry key="..\:/KULIAH/SMT7(Magang)/Android Studio/TourIn/app/src/main/res/layout/fragment_product_partner.xml" value="0.22245673279864922" />
         <entry key="..\:/KULIAH/SMT7(Magang)/Android Studio/TourIn/app/src/main/res/layout/fragment_profile_partner.xml" value="0.264" />
+        <entry key="..\:/KULIAH/SMT7(Magang)/Android Studio/TourIn/app/src/main/res/layout/fragment_rate_facility_dialog.xml" value="0.22530996152201796" />
         <entry key="..\:/KULIAH/SMT7(Magang)/Android Studio/TourIn/app/src/main/res/layout/fragment_rating.xml" value="0.22242817423540315" />
         <entry key="..\:/KULIAH/SMT7(Magang)/Android Studio/TourIn/app/src/main/res/layout/fragment_register.xml" value="0.20296570898980537" />
         <entry key="..\:/KULIAH/SMT7(Magang)/Android Studio/TourIn/app/src/main/res/layout/fragment_response_dialog.xml" value="0.22530996152201796" />
@@ -59,6 +64,7 @@
         <entry key="..\:/KULIAH/SMT7(Magang)/Android Studio/TourIn/app/src/main/res/layout/fragment_third_on_boarding.xml" value="0.22530996152201796" />
         <entry key="..\:/KULIAH/SMT7(Magang)/Android Studio/TourIn/app/src/main/res/layout/fragment_verify_otp.xml" value="0.22530996152201796" />
         <entry key="..\:/KULIAH/SMT7(Magang)/Android Studio/TourIn/app/src/main/res/layout/item_all_tour.xml" value="0.264" />
+        <entry key="..\:/KULIAH/SMT7(Magang)/Android Studio/TourIn/app/src/main/res/layout/item_rate_facility.xml" value="0.1716612377850163" />
         <entry key="..\:/KULIAH/SMT7(Magang)/Android Studio/TourIn/app/src/main/res/layout/item_tour.xml" value="0.6" />
         <entry key="..\:/KULIAH/SMT7(Magang)/Android Studio/TourIn/app/src/main/res/layout/layout_tooltip_marker.xml" value="0.264" />
         <entry key="..\:/KULIAH/SMT7(Magang)/Android Studio/TourIn/app/src/main/res/layout/layout_tooltip_marker_null.xml" value="0.22530996152201796" />

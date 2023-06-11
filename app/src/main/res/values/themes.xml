@@ -19,13 +19,19 @@
     </style>
 
     <style name="DialogAnimation">
-        <item name="android:windowEnterAnimation">@anim/zoom_in_card</item>
-        <item name="android:windowExitAnimation">@anim/zoom_out_card</item>
+        <item name="android:windowEnterAnimation">@anim/zoom_in</item>
+        <item name="android:windowExitAnimation">@anim/zoom_out</item>
     </style>
     <style name="NewDialogAnimation">
         <item name="android:windowEnterAnimation">@anim/zoom_in_card</item>
         <item name="android:windowExitAnimation">@anim/zoom_out_card</item>
     </style>
+
+    <style name="RateDialogAnimation">
+        <item name="android:windowEnterAnimation">@anim/zoom_in</item>
+        <item name="android:windowExitAnimation">@anim/zoom_out</item>
+    </style>
+
 
     <style name="ShapeAppearanceOverlay.App.CornerSize10Percent" parent="">
         <item name="cornerSize">8dp</item>

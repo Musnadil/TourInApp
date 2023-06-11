@@ -18,6 +18,8 @@ class Repository(private val apiHelper: ApiHelper) {
     suspend fun forgotPassword(email: RequestEmailCheck) = apiHelper.forgotPassword(email)
     suspend fun verifyOtp(requestVerifyOtp: RequestVerifyOtp) = apiHelper.verifyOtp(requestVerifyOtp)
     suspend fun newPassword(requestNewPassword: RequestNewPassword) = apiHelper.newPassword(requestNewPassword)
-
+    suspend fun getListRateFacilityByUser(id: Int) = apiHelper.getListRateFacilityByUser(id)
+    suspend fun addFacilityRate(requestAddFacilityRateRequest: AddFacilityRateRequest) = apiHelper.addFacilityRate(requestAddFacilityRateRequest)
+    suspend fun sendRatingFacility(id: Int, requestRateFacility: RateFacilityRequest) = apiHelper.sendRatingFacility(id, requestRateFacility)
 
 }

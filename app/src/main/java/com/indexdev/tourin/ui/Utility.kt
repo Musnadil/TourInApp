@@ -10,6 +10,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import com.google.android.gms.maps.model.LatLng
+import com.indexdev.tourin.data.model.response.ResponsePOI
 import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
 import kotlin.math.acos
@@ -19,6 +20,13 @@ var locationList: MutableList<Location> = ArrayList()
 var latLngTour: LatLng? = null
 var distanceLocation: Double? = null
 var inArea = false
+var listPoi: MutableList<ResponsePOI> = ArrayList()
+var distanceMarker: Double? = null
+var idMarker: String? = null
+var facilityName: String? = null
+var tourNameFacilityRate: String? = null
+var listNotif : MutableList<String> = ArrayList()
+
 fun setFullScreen(window: Window) {
     WindowCompat.setDecorFitsSystemWindows(window, false)
 }

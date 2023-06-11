@@ -45,13 +45,23 @@ class RateFragment : Fragment() {
             SplashScreenFragment.SHARED_PREF,
             Context.MODE_PRIVATE)
         val ratingEdit = preference.edit()
+
         val imgUrl = preference.getString(SplashScreenFragment.IMG_URL,DEFAULT_VALUE)
         val tourName = preference.getString(SplashScreenFragment.TOUR_NAME,DEFAULT_VALUE)
         val tourID = preference.getString(SplashScreenFragment.ID_TOUR,DEFAULT_VALUE)
-        Glide.with(binding.root)
-            .load(imgUrl)
-            .transform(CenterCrop())
-            .into(binding.ivTour)
+
+        if(tourID != DEFAULT_VALUE){
+            binding.tv.text = "Sudah mengunjungi $tourName? Silakan beri nilai untuk $tourName"
+            binding.tvTourName.text = "$tourName"
+            Glide.with(binding.root)
+                .load(imgUrl)
+                .transform(CenterCrop())
+                .into(binding.ivTour)
+        }
+        else{
+            findNavController().navigate(R.id.splashScreenFragment)
+        }
+
 
         binding.btnSend.setOnClickListener {
             val preference = requireContext().getSharedPreferences(SplashScreenFragment.SHARED_PREF,Context.MODE_PRIVATE)
@@ -80,7 +90,9 @@ class RateFragment : Fragment() {
                         ratingEdit.putString(SplashScreenFragment.TOUR_NAME, DEFAULT_VALUE)
                         ratingEdit.putString(SplashScreenFragment.ID_TOUR, DEFAULT_VALUE)
                         ratingEdit.apply()
-                        findNavController().navigate(R.id.action_ratingFragment_to_homeFragment)
+                        activity?.finish()
+                        activity?.startActivity(activity?.intent)
+//                        findNavController().navigate(R.id.action_ratingFragment_to_homeFragment)
                     }
                     snackbar.show()
                 }
@@ -103,8 +115,6 @@ class RateFragment : Fragment() {
                 LOADING -> {}
             }
         }
-        binding.tv.text = "Sudah mengunjungi $tourName? Silakan beri nilai untuk $tourName"
-        binding.tvTourName.text = "$tourName"
     }
 
 

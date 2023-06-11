@@ -14,6 +14,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -41,11 +42,15 @@ import com.google.android.gms.tasks.Task
 import com.indexdev.tourin.MainActivity
 import com.indexdev.tourin.R
 import com.indexdev.tourin.data.api.Status.*
+import com.indexdev.tourin.data.model.request.AddFacilityRateRequest
 import com.indexdev.tourin.data.model.response.ResponsePOI
 import com.indexdev.tourin.data.model.response.ResponseUserMitra
 import com.indexdev.tourin.databinding.FragmentMapsBinding
 import com.indexdev.tourin.services.LocationService
 import com.indexdev.tourin.services.LocationService.Companion.DISTANCE
+import com.indexdev.tourin.services.LocationService.Companion.FACILITY_NAME
+import com.indexdev.tourin.services.LocationService.Companion.ID_MARKER
+import com.indexdev.tourin.services.LocationService.Companion.TOUR_NAME_FACILITY_RATE
 import com.indexdev.tourin.services.LocationService.Companion.UPDATE_DISTANCE
 import com.indexdev.tourin.ui.*
 import com.indexdev.tourin.ui.choosevehicle.ChooseVehicleFragment
@@ -68,6 +73,7 @@ class MapsFragment : Fragment(), GoogleMap.OnMarkerClickListener {
     private var mLocationService: LocationService = LocationService()
     private lateinit var mServiceIntent: Intent
     private val mapsViewModel: MapsViewModel by viewModels()
+    private var idUser: String? = ""
 
     private lateinit var iconWorship: Bitmap
     private lateinit var iconToilet: Bitmap
@@ -113,9 +119,9 @@ class MapsFragment : Fragment(), GoogleMap.OnMarkerClickListener {
         iconWorship =
             getBitmapFromVectorDrawable(requireActivity(), R.drawable.ic_poi_worship_place)
         iconToilet =
-            getBitmapFromVectorDrawable(requireActivity(), R.drawable.ic_poi_toilet_new)
-        iconFoodPlace =
             getBitmapFromVectorDrawable(requireActivity(), R.drawable.ic_marker__toilet)
+        iconFoodPlace =
+            getBitmapFromVectorDrawable(requireActivity(), R.drawable.ic_marker__food_court)
         iconEvacuation =
             getBitmapFromVectorDrawable(requireActivity(), R.drawable.ic_marker__evacuation)
         iconParking =
@@ -196,6 +202,14 @@ class MapsFragment : Fragment(), GoogleMap.OnMarkerClickListener {
             }
             startActivity(intent)
         }
+        val preference = requireContext().getSharedPreferences(
+            SplashScreenFragment.SHARED_PREF,
+            Context.MODE_PRIVATE
+        )
+        idUser = preference.getString(
+            SplashScreenFragment.ID_USER,
+            SplashScreenFragment.DEFAULT_VALUE
+        )
         requireActivity().registerReceiver(updateDistance, IntentFilter(DISTANCE))
 
     }
@@ -203,7 +217,40 @@ class MapsFragment : Fragment(), GoogleMap.OnMarkerClickListener {
     private val updateDistance: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent) {
             val distance = intent.getDoubleExtra(UPDATE_DISTANCE, 0.0)
-//            Toast.makeText(requireContext(), "distance is : $distance", Toast.LENGTH_SHORT).show()
+            val idMarker = intent.getStringExtra(ID_MARKER)
+            val facilityName = intent.getStringExtra(FACILITY_NAME)
+            val tourName = intent.getStringExtra(TOUR_NAME_FACILITY_RATE)
+            val notifManager = NotificationManagerCompat.from(requireContext())
+
+            val pendingIntentFacility = NavDeepLinkBuilder(requireContext())
+                .setComponentName(MainActivity::class.java)
+                .setGraph(R.navigation.main_navigation)
+                .setDestination(R.id.listRateFacilityFragment)
+                .createPendingIntent()
+
+            val notifFacility = NotificationCompat.Builder(requireContext(), CHANNEL_ID)
+                .setOngoing(false)
+                .setAutoCancel(true)
+                .setContentTitle("Telah menggunakan fasilitas ${facilityName}?")
+                .setContentText("Anda bisa beri rating untuk $facilityName")
+                .setSmallIcon(R.drawable.logo_tourin)
+                .setContentIntent(pendingIntentFacility)
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .build()
+
+            if (idMarker != null && idMarker !in listNotif) {
+                listNotif.add(idMarker.toString())
+                notifManager.notify(idMarker.toInt(), notifFacility)
+                val request = AddFacilityRateRequest(
+                    idUser.toString(),
+                    idMarker,
+                    facilityName.toString(),
+                    tourName.toString(),
+                    null
+                )
+                mapsViewModel.addFacilityRate(request)
+            }
+            Log.d("idpopo", listNotif.toString())
 
             val pendingIntent = NavDeepLinkBuilder(requireContext())
                 .setComponentName(MainActivity::class.java)
@@ -215,15 +262,14 @@ class MapsFragment : Fragment(), GoogleMap.OnMarkerClickListener {
                 .setOngoing(false)
                 .setAutoCancel(true)
                 .setContentTitle("Telah berkunjung ke ${arguments?.getString(TOUR_NAME)}?")
-                .setContentText("Anda bisa rating untuk wisata ${arguments?.getString(TOUR_NAME)}")
+                .setContentText("Anda bisa beri rating untuk wisata ${arguments?.getString(TOUR_NAME)}")
                 .setSmallIcon(R.drawable.logo_tourin)
                 .setContentIntent(pendingIntent)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .build()
 
-            val notifManager = NotificationManagerCompat.from(requireContext())
 
-            if (distance <= 5) {
+            if (distance <= 2 && arguments?.getString(ID_TOUR) !in listNotif) {
                 inArea = true
             }
             if (inArea && distance >= 10) {
@@ -246,9 +292,10 @@ class MapsFragment : Fragment(), GoogleMap.OnMarkerClickListener {
                     arguments?.getString(TOUR_NAME)
                 )
                 ratingEdit.apply()
-                stopServiceFunc()
+//                stopServiceFunc()
                 distanceLocation = 0.0
                 notifManager.notify(NOTIF_ID, notif)
+                listNotif.add(arguments?.getString(ID_TOUR).toString())
             }
         }
 
@@ -350,6 +397,7 @@ class MapsFragment : Fragment(), GoogleMap.OnMarkerClickListener {
             when (poiList.status) {
                 SUCCESS -> {
                     if (!poiList.data.isNullOrEmpty()) {
+                        listPoi.addAll(poiList.data)
                         poiFacility(poiList.data)
                     } else {
                         Toast.makeText(requireContext(), "Marker masih kosong", Toast.LENGTH_SHORT)
@@ -414,7 +462,11 @@ class MapsFragment : Fragment(), GoogleMap.OnMarkerClickListener {
                     if (!poiListMitra.data.isNullOrEmpty()) {
                         poiMitra(poiListMitra.data)
                     } else {
-                        Toast.makeText(requireContext(), "Marker mitra masih kosong", Toast.LENGTH_SHORT)
+                        Toast.makeText(
+                            requireContext(),
+                            "Marker mitra masih kosong",
+                            Toast.LENGTH_SHORT
+                        )
                             .show()
                     }
                 }
@@ -466,7 +518,10 @@ class MapsFragment : Fragment(), GoogleMap.OnMarkerClickListener {
             } else {
                 val bundle = Bundle()
                 bundle.putString(PARTNER_ID, marker.title)
-                findNavController().navigate(R.id.action_mapsFragment_to_productPartnerFragment,bundle)
+                findNavController().navigate(
+                    R.id.action_mapsFragment_to_productPartnerFragment,
+                    bundle
+                )
             }
         }
         return false
