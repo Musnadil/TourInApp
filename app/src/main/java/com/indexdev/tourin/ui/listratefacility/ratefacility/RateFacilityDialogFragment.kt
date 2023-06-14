@@ -24,6 +24,7 @@ class RateFacilityDialogFragment(
     private val facilityName: String,
     private val tourName: String,
     private val rateValue: String?,
+    private val desc: String?,
     private val refreshList: () -> Unit
 ) : DialogFragment() {
     private var _binding: FragmentRateFacilityDialogBinding? = null
@@ -66,12 +67,17 @@ class RateFacilityDialogFragment(
         if (rateValue != null) {
             binding.btnSend.isEnabled = false
             binding.ratingBar.rating = rateValue.toFloat()
+            binding.etDesc.isEnabled = false
+            binding.etDesc.setText(desc)
         }
     }
 
     private fun sendRate() {
         progressDialog.show()
-        val request = RateFacilityRequest(binding.ratingBar.rating.toFloat())
+        val request = RateFacilityRequest(
+            binding.ratingBar.rating.toFloat(),
+            binding.etDesc.text.toString()
+        )
         viewModel.responseRateFacility.removeObservers(viewLifecycleOwner)
         viewModel.rateFacility(idRateFacility, request)
         viewModel.responseRateFacility.observe(viewLifecycleOwner) {
@@ -89,7 +95,7 @@ class RateFacilityDialogFragment(
                                     Toast.LENGTH_SHORT
                                 ).show()
 
-                            }, 2000)
+                            }, 3000)
                             viewModel.responseRateFacility.removeObservers(viewLifecycleOwner)
                         }
                     }

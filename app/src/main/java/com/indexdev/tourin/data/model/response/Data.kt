@@ -17,5 +17,8 @@ data class Data(
     @SerializedName("rate_value")
     val rateValue: String?,
     @SerializedName("time")
-    val time: String
+    val time: String,
+    @SerializedName("keterangan")
+    val keterangan: String?,
+
 )

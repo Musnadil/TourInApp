@@ -5,5 +5,7 @@ import com.google.gson.annotations.SerializedName
 
 data class RateFacilityRequest(
     @SerializedName("rate_value")
-    val rateValue: Float
+    val rateValue: Float,
+    @SerializedName("keterangan")
+    val keterangan: String?
 )

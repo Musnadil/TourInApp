@@ -12,4 +12,6 @@ data class RateRequest(
     val kodeWisata: String,
     @SerializedName("rate_value")
     val rateValue: String,
+    @SerializedName("keterangan")
+    val keterangan: String?,
 )

@@ -221,6 +221,7 @@ class MapsFragment : Fragment(), GoogleMap.OnMarkerClickListener {
             val facilityName = intent.getStringExtra(FACILITY_NAME)
             val tourName = intent.getStringExtra(TOUR_NAME_FACILITY_RATE)
             val notifManager = NotificationManagerCompat.from(requireContext())
+            Log.d("distance_location",distance.toString())
 
             val pendingIntentFacility = NavDeepLinkBuilder(requireContext())
                 .setComponentName(MainActivity::class.java)

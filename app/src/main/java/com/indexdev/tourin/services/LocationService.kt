@@ -35,7 +35,7 @@ class LocationService : Service() {
     private val locationRequest: LocationRequest = create().apply {
         interval = 3000
         fastestInterval = 3000
-        priority = Priority.PRIORITY_BALANCED_POWER_ACCURACY
+        priority = Priority.PRIORITY_HIGH_ACCURACY
         maxWaitTime = 5000
     }
 

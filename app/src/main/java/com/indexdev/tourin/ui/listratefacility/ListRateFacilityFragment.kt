@@ -81,14 +81,16 @@ class ListRateFacilityFragment : Fragment() {
         listRateFacilityAdapter =
             ListRateFacilityAdapter(object : ListRateFacilityAdapter.OnClickListener {
                 override fun onClickItem(data: Data) {
-                    Toast.makeText(requireContext(), "${data.rateValue}", Toast.LENGTH_SHORT).show()
+//                    Toast.makeText(requireContext(), "${data.rateValue}", Toast.LENGTH_SHORT).show()
                     val dialogFragment = RateFacilityDialogFragment(
                         data.idRateFasilitas.toInt(),
                         data.namaFasilitas,
                         data.namaWisata,
                         data.rateValue,
+                        data.keterangan,
                         refreshList = {
                             getListFacilityRate(idUser.toString().toInt())
+                            binding.rvListRate.adapter?.notifyDataSetChanged()
                         }
                     )
                     activity?.let { dialogFragment.show(it.supportFragmentManager, null) }
