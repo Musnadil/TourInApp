@@ -184,6 +184,73 @@ class HomeFragment : Fragment() {
         val username = preference.getString(USERNAME, DEFAULT_VALUE)
         popularTourAdapter = PopularTourAdapter(object : PopularTourAdapter.OnClickListener {
             override fun onClickItem(data: ResponseTourList) {
+                findNavController().navigate(R.id.action_homeFragment_to_descFragment)
+//                val POIBundle = Bundle()
+//                if (username == DEFAULT_VALUE){
+//                    AlertDialog.Builder(requireContext())
+//                        .setTitle("Pesan")
+//                        .setMessage("Untuk melihat wisata anda harus login terlebih dahulu.")
+//                        .setPositiveButton("Ok") { positiveButton, _ ->
+//                            positiveButton.dismiss()
+//                            findNavController().navigate(R.id.action_homeFragment_to_loginFragment)
+//                        }
+//                        .setNegativeButton("Batal") { negativeButton, _ ->
+//                            negativeButton.dismiss()
+//                        }
+//                        .show()
+//                } else {
+//                    if (ActivityCompat.checkSelfPermission(
+//                            requireContext(),
+//                            Manifest.permission.ACCESS_FINE_LOCATION
+//                        ) != PackageManager.PERMISSION_GRANTED
+//                    ) {
+//                        AlertDialog.Builder(requireContext())
+//                            .setTitle("Pesan")
+//                            .setMessage("Akses lokasi belum diijinkan, beri ijin lokasi terlebih dahulu")
+//                            .setPositiveButton("Ok") { positiveButton, _ ->
+//                                positiveButton.dismiss()
+//                                ActivityCompat.requestPermissions(
+//                                    requireActivity(),
+//                                    arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+//                                    LOCATION_REQUEST_CODE
+//                                )
+//                            }
+//                            .show()
+//                    } else{
+//                        POIBundle.putString(ID_TOUR, data.idWisata)
+//                        POIBundle.putString(TOUR_NAME, data.wisata)
+//                        POIBundle.putString(LAT, data.lat)
+//                        POIBundle.putString(LONG, data.longi)
+//                        POIBundle.putString(ADDRESS, data.alamat)
+//                        POIBundle.putString(IMG_URL, data.urlImage)
+//                        val ratingEdit = preference.edit()
+//                        ratingEdit.putString(
+//                            SplashScreenFragment.ID_TOUR,
+//                            data.idWisata
+//                        )
+//                        ratingEdit.putString(
+//                            SplashScreenFragment.IMG_URL,
+//                            data.urlImage
+//                        )
+//                        ratingEdit.putString(
+//                            SplashScreenFragment.TOUR_NAME,
+//                            data.wisata
+//                        )
+//                        ratingEdit.apply()
+//                        findNavController().navigate(R.id.action_homeFragment_to_mapsFragment, POIBundle)
+//                    }
+//
+//                }
+
+            }
+
+        })
+        binding.rvPopularTour.adapter = popularTourAdapter
+
+        allListTourAdapter = AllListTourAdapter(object : AllListTourAdapter.OnclickListener {
+            override fun onClickItem(data: ResponseTourList) {
+//                findNavController().navigate(R.id.action_homeFragment_to_descFragment)
+
                 val POIBundle = Bundle()
                 if (username == DEFAULT_VALUE){
                     AlertDialog.Builder(requireContext())
@@ -198,46 +265,50 @@ class HomeFragment : Fragment() {
                         }
                         .show()
                 } else {
-                    POIBundle.putString(ID_TOUR, data.idWisata)
-                    POIBundle.putString(TOUR_NAME, data.wisata)
-                    POIBundle.putString(LAT, data.lat)
-                    POIBundle.putString(LONG, data.longi)
-                    POIBundle.putString(ADDRESS, data.alamat)
-                    POIBundle.putString(IMG_URL, data.urlImage)
-                    findNavController().navigate(R.id.action_homeFragment_to_mapsFragment, POIBundle)
-                }
+                    if (ActivityCompat.checkSelfPermission(
+                            requireContext(),
+                            Manifest.permission.ACCESS_FINE_LOCATION
+                        ) != PackageManager.PERMISSION_GRANTED
+                    ) {
+                        AlertDialog.Builder(requireContext())
+                            .setTitle("Pesan")
+                            .setMessage("Akses lokasi belum diijinkan, beri ijin lokasi terlebih dahulu")
+                            .setPositiveButton("Ok") { positiveButton, _ ->
+                                positiveButton.dismiss()
+                                ActivityCompat.requestPermissions(
+                                    requireActivity(),
+                                    arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                                    LOCATION_REQUEST_CODE
+                                )
+                            }
+                            .show()
+                    } else{
+                        POIBundle.putString(ID_TOUR, data.idWisata)
+                        POIBundle.putString(TOUR_NAME, data.wisata)
+                        POIBundle.putString(LAT, data.lat)
+                        POIBundle.putString(LONG, data.longi)
+                        POIBundle.putString(ADDRESS, data.alamat)
+                        POIBundle.putString(IMG_URL, data.urlImage)
+                        val ratingEdit = preference.edit()
+                        ratingEdit.putString(
+                            SplashScreenFragment.ID_TOUR,
+                            data.idWisata
+                        )
+                        ratingEdit.putString(
+                            SplashScreenFragment.IMG_URL,
+                            data.urlImage
+                        )
+                        ratingEdit.putString(
+                            SplashScreenFragment.TOUR_NAME,
+                            data.wisata
+                        )
+                        ratingEdit.apply()
+                        findNavController().navigate(R.id.action_homeFragment_to_descFragment,POIBundle)
 
-            }
 
-        })
-        binding.rvPopularTour.adapter = popularTourAdapter
+//                        findNavController().navigate(R.id.action_homeFragment_to_mapsFragment, POIBundle)
+                    }
 
-        allListTourAdapter = AllListTourAdapter(object : AllListTourAdapter.OnclickListener {
-            override fun onClickItem(data: ResponseTourList) {
-                val POIBundle = Bundle()
-                if (username == DEFAULT_VALUE) {
-                    AlertDialog.Builder(requireContext())
-                        .setTitle("Pesan")
-                        .setMessage("Untuk melihat wisata anda harus login terlebih dahulu.")
-                        .setPositiveButton("Ok") { positiveButton, _ ->
-                            positiveButton.dismiss()
-                            findNavController().navigate(R.id.action_homeFragment_to_loginFragment)
-                        }
-                        .setNegativeButton("Batal") { negativeButton, _ ->
-                            negativeButton.dismiss()
-                        }
-                        .show()
-                } else {
-                    POIBundle.putString(ID_TOUR, data.idWisata)
-                    POIBundle.putString(TOUR_NAME, data.wisata)
-                    POIBundle.putString(LAT, data.lat)
-                    POIBundle.putString(LONG, data.longi)
-                    POIBundle.putString(ADDRESS, data.alamat)
-                    POIBundle.putString(IMG_URL, data.urlImage)
-                    findNavController().navigate(
-                        R.id.action_homeFragment_to_mapsFragment,
-                        POIBundle
-                    )
                 }
             }
         })

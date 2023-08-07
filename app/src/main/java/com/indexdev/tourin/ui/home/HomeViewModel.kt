@@ -42,17 +42,4 @@ class HomeViewModel @Inject constructor(private val repository: Repository): Vie
         }
     }
 
-    private val _recommendationList : MutableLiveData<Resource<List<ResponseRecommendation>>> = MutableLiveData()
-    val recommendationList : LiveData<Resource<List<ResponseRecommendation>>> get() =  _recommendationList
-
-    fun getRecommendationList(){
-        viewModelScope.launch {
-            _recommendationList.postValue(Resource.loading())
-            try {
-                _recommendationList.postValue(Resource.success(repository.getRecommendationList()))
-            }catch (e:Exception){
-                _recommendationList.postValue(Resource.error(e.message?:"error occurred"))
-            }
-        }
-    }
 }
