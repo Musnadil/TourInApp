@@ -137,11 +137,11 @@ class MapsFragment : Fragment(), GoogleMap.OnMarkerClickListener {
         iconKlenteng =
             getBitmapFromVectorDrawable(requireActivity(), R.drawable.ic_marker__klenteng)
         iconHomeStay =
-            getBitmapFromVectorDrawable(requireActivity(), R.drawable.ic_marker_home_stay)
+            getBitmapFromVectorDrawable(requireActivity(), R.drawable.ic_partnerin_hotel)
         iconRestaurant =
-            getBitmapFromVectorDrawable(requireActivity(), R.drawable.ic_marker_restaurant)
+            getBitmapFromVectorDrawable(requireActivity(), R.drawable.ic_partnerin_restaurant)
         iconRentVehicle =
-            getBitmapFromVectorDrawable(requireActivity(), R.drawable.ic_marker_rent_vehicle)
+            getBitmapFromVectorDrawable(requireActivity(), R.drawable.ic_partnerin_vehicle)
 
 
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
@@ -192,7 +192,7 @@ class MapsFragment : Fragment(), GoogleMap.OnMarkerClickListener {
         val long = arguments?.getString(LONG)
         binding.btnRoute.setOnClickListener {
             val googleMapsUrl =
-                "https://www.google.com/maps?q=${lat.toString().toDouble()},${
+                "https://maps.google.com/maps?daddr=${lat.toString().toDouble()},${
                     long.toString().toDouble()
                 }"
             val uri = Uri.parse(googleMapsUrl)
@@ -259,11 +259,20 @@ class MapsFragment : Fragment(), GoogleMap.OnMarkerClickListener {
                 .setDestination(R.id.ratingFragment)
                 .createPendingIntent()
 
+            val preference = requireContext().getSharedPreferences(
+                SplashScreenFragment.SHARED_PREF,
+                Context.MODE_PRIVATE
+            )
+            val tourNameRate = preference.getString(
+                SplashScreenFragment.TOUR_NAME,
+                SplashScreenFragment.DEFAULT_VALUE
+            )
+
             val notif = NotificationCompat.Builder(requireContext(), CHANNEL_ID)
                 .setOngoing(false)
                 .setAutoCancel(true)
-                .setContentTitle("Telah berkunjung ke ${arguments?.getString(TOUR_NAME)}?")
-                .setContentText("Anda bisa beri rating untuk wisata ${arguments?.getString(TOUR_NAME)}")
+                .setContentTitle("Telah berkunjung ke $tourNameRate?")
+                .setContentText("Anda bisa beri rating untuk wisata $tourNameRate")
                 .setSmallIcon(R.drawable.logo_tourin)
                 .setContentIntent(pendingIntent)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
@@ -275,28 +284,29 @@ class MapsFragment : Fragment(), GoogleMap.OnMarkerClickListener {
             }
             if (inArea && distance >= 10) {
                 inArea = false
-                val preference = requireContext().getSharedPreferences(
-                    SplashScreenFragment.SHARED_PREF,
-                    Context.MODE_PRIVATE
-                )
-                val ratingEdit = preference.edit()
-                ratingEdit.putString(
+
+                val idTour = preference.getString(
                     SplashScreenFragment.ID_TOUR,
-                    arguments?.getString(ID_TOUR)
+                    SplashScreenFragment.DEFAULT_VALUE
                 )
-                ratingEdit.putString(
-                    SplashScreenFragment.IMG_URL,
-                    arguments?.getString(IMG_URL)
-                )
-                ratingEdit.putString(
-                    SplashScreenFragment.TOUR_NAME,
-                    arguments?.getString(TOUR_NAME)
-                )
-                ratingEdit.apply()
+//                val ratingEdit = preference.edit()
+//                ratingEdit.putString(
+//                    SplashScreenFragment.ID_TOUR,
+//                    idTour
+//                )
+//                ratingEdit.putString(
+//                    SplashScreenFragment.IMG_URL,
+//                    imgUrl
+//                )
+//                ratingEdit.putString(
+//                    SplashScreenFragment.TOUR_NAME,
+//                    tourName
+//                )
+//                ratingEdit.apply()
 //                stopServiceFunc()
                 distanceLocation = 0.0
                 notifManager.notify(NOTIF_ID, notif)
-                listNotif.add(arguments?.getString(ID_TOUR).toString())
+                listNotif.add(idTour.toString())
             }
         }
 
@@ -400,6 +410,9 @@ class MapsFragment : Fragment(), GoogleMap.OnMarkerClickListener {
                     if (!poiList.data.isNullOrEmpty()) {
                         listPoi.addAll(poiList.data)
                         poiFacility(poiList.data)
+                        for (i in poiList.data){
+                            listPoiName.add(i.namaFasilitas)
+                        }
                     } else {
                         Toast.makeText(requireContext(), "Marker masih kosong", Toast.LENGTH_SHORT)
                             .show()
@@ -484,7 +497,7 @@ class MapsFragment : Fragment(), GoogleMap.OnMarkerClickListener {
     private fun poiMitra(facility: List<ResponseUserMitra>) {
         for (i in facility) {
             val latLong = LatLng(i.lat.toDouble(), i.longi.toDouble())
-            if (i.kodeWisata == arguments?.getString(ID_TOUR) && i.status == "active" && !i.alamat.isNullOrEmpty()) {
+            if (i.kodeWisata == arguments?.getString(ID_TOUR) && i.status == "active" && !i.alamat.isNullOrEmpty() && !i.hariBuka.isNullOrEmpty()) {
                 val markerOptions = MarkerOptions().title(i.idMitra).position(latLong)
                 when (i.jenisUsaha) {
                     "Penginapan" -> {
@@ -510,8 +523,7 @@ class MapsFragment : Fragment(), GoogleMap.OnMarkerClickListener {
     }
 
     override fun onMarkerClick(marker: Marker): Boolean {
-        val facility =
-            arrayOf("Tempat Ibadah", "Toilet", "Food Court", "Titik Evakuasi", "Tempat Parkir")
+        val facility = listPoiName
         mMap.setOnInfoWindowClickListener {
             if (marker.title in facility) {
                 val dialogFragment = ChooseVehicleFragment(marker.position, marker.title.toString())
