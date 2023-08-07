@@ -52,6 +52,8 @@ class RegisterFragment : Fragment() {
 
             if (binding.etUsername.text.isNullOrEmpty()) {
                 binding.usernameContainer.error = "Kolom nama pengguna tidak boleh kosong"
+            } else if (!binding.etUsername.text.toString().matches("[a-zA-Z ]+".toRegex())) {
+                binding.usernameContainer.error = "Nama pengguna tidak boleh ada karakter selain huruf"
             } else if (binding.etEmail.text.isNullOrEmpty()) {
                 binding.etEmail.error = "Kolom Email tidak boleh kosong"
             } else if (binding.etPassword.text.isNullOrEmpty()) {
@@ -130,7 +132,8 @@ class RegisterFragment : Fragment() {
                     alertDialog(
                         requireContext(),
                         "Pesan",
-                        resources.message ?: getString(R.string.error)
+                        "Harap tunggu sebentar, dan coba lagi"
+//                                resources.message ?: getString(R.string.error)
                     )
                 }
             }
