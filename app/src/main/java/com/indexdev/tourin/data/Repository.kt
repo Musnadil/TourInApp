@@ -10,7 +10,6 @@ class Repository(private val apiHelper: ApiHelper) {
     suspend fun getPoiById(id:Int) = apiHelper.getPoiById(id)
     suspend fun postRate(rateRequest: RateRequest) = apiHelper.postRate(rateRequest)
     suspend fun editUsername(id:Int, updateUserRequest: UpdateUserRequest) = apiHelper.editUsername(id, updateUserRequest)
-    suspend fun getRecommendationList() = apiHelper.getRecommendationList()
     suspend fun getAllUserMitra() = apiHelper.getAllUserMitra()
     suspend fun getUserPartnerById(id: Int) = apiHelper.getUserPartnerById(id)
     suspend fun getProductByPartnerId(id: Int) = apiHelper.getProductByPartnerId(id)
