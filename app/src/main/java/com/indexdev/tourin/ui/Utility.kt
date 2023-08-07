@@ -21,6 +21,7 @@ var latLngTour: LatLng? = null
 var distanceLocation: Double? = null
 var inArea = false
 var listPoi: MutableList<ResponsePOI> = ArrayList()
+var listPoiName: MutableList<String> = ArrayList()
 var distanceMarker: Double? = null
 var idMarker: String? = null
 var facilityName: String? = null
