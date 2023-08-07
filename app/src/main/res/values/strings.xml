@@ -2,8 +2,11 @@
     <string name="app_name">TourIn</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="desc_danau_toba">Danau Toba adalah danau vulkanik terbesar di Indonesia dan juga salah satu danau terbesar di dunia. Terletak di Sumatera Utara, danau ini terbentuk akibat letusan supervulkan sekitar 74.000 tahun yang lalu. Letusan ini mengakibatkan kolapsnya kawah gunung berapi dan membentuk sebuah kaldera raksasa yang kemudian diisi dengan air hujan, membentuk Danau Toba yang kita kenal saat ini.</string>
     <string name="search_less_travel_more">Search less, Travel More!</string>
-    <string name="first_onboarding_text">Let the TourIn app will introduce you 10 New Bali Tours.</string>
+    <string name="first_onboarding_text">Aplikasi TourIn menyediakan informasi lengkap tentang fasilitas umum dan penyedia layanan di 10 Wisata Bali Baru, memudahkan wisatawan untuk menemukan dan menikmati fasilitas yang dibutuhkan selama perjalanan mereka.</string>
+    <string name="second_onboarding_text">10 Wisata Bali Baru merupakan wisata yang kedepannya akan dilakukan pengembangan lebih lanjut oleh pemerintah pariwisata Indonesia. Wisata tersebut antara lain Danau Toba, Tanjung Kelayang, Tanjung Lesung, Kepulauan Seribu, Borobudur, Bromo Tengger Semeru, Mandalika, Labuan Bajo, Wakatobi, dan Morotai.</string>
+    <string name="third_onboarding_text">Let the TourIn app will introduce you 10 New Bali Tours.</string>
     <string name="enjoy_your_vacation">Enjoy Your Vacation</string>
     <string name="we_will_guide_you_to_find_public_facilities">We will guide you to find public facilities.</string>
     <string name="let_s_travel">Let’s Travel!</string>
