@@ -92,6 +92,9 @@
             app:destination="@id/loginFragment"
             app:popUpTo="@id/homeFragment"
             app:popUpToInclusive="true"/>
+        <action
+            android:id="@+id/action_homeFragment_to_descFragment"
+            app:destination="@id/descFragment" />
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
@@ -226,5 +229,14 @@
         android:name="com.indexdev.tourin.ui.listratefacility.ListRateFacilityFragment"
         android:label="fragment_list_rate_facility"
         tools:layout="@layout/fragment_list_rate_facility" />
+    <fragment
+        android:id="@+id/descFragment"
+        android:name="com.indexdev.tourin.ui.desc.DescFragment"
+        android:label="fragment_desc"
+        tools:layout="@layout/fragment_desc" >
+        <action
+            android:id="@+id/action_descFragment_to_mapsFragment"
+            app:destination="@id/mapsFragment" />
+    </fragment>
 
 </navigation>
