@@ -44,6 +44,7 @@ class ProductPartnerFragment : Fragment() {
         const val ID_PRODUK = "ID_PRODUK"
         const val OPENING_HOURS = "OPENING_HOURS"
         const val CLOSING_HOURS = "CLOSING_HOURS"
+        const val DAY = "DAY"
     }
 
     override fun onCreateView(
@@ -175,6 +176,7 @@ class ProductPartnerFragment : Fragment() {
                                 bundle.putString(LONG, it.data.userMitraById.longi)
                                 bundle.putString(OPENING_HOURS,it.data.userMitraById.jamBuka)
                                 bundle.putString(CLOSING_HOURS,it.data.userMitraById.jamTutup)
+                                bundle.putString(DAY,it.data.userMitraById.hariBuka)
                                 binding.tvBusinessName.text = it.data.userMitraById.namaUsaha
                                 binding.tvBusinessNameCard.text = it.data.userMitraById.namaUsaha
                                 viewModel.getProductByPartnerId(partnerId)

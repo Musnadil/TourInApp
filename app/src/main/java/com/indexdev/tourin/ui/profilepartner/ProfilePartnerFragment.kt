@@ -51,6 +51,7 @@ class ProfilePartnerFragment : Fragment() {
         val longi = arguments?.getString(ProductPartnerFragment.LONG)
         val openingHours = arguments?.getString(ProductPartnerFragment.OPENING_HOURS)
         val closingHours = arguments?.getString(ProductPartnerFragment.CLOSING_HOURS)
+        val day = arguments?.getString(ProductPartnerFragment.DAY)
 
         Glide.with(requireContext())
             .load("https://tourin.musnadil.my.id/gambar/$imageUrl")
@@ -60,13 +61,14 @@ class ProfilePartnerFragment : Fragment() {
         binding.tvBusinessNameTop.text = businessName
         binding.tvBusinessName.text = businessName
         binding.tvBusinessOwner.text = businessOwner
+        binding.tvDay.text = day
         binding.tvNumberPhone.text = numberPhone
         binding.tvAddress.text = address
         binding.tvOpengHours.text = "$openingHours - $closingHours"
 
         binding.btnVisit.setOnClickListener {
             val googleMapsUrl =
-                "https://www.google.com/maps?q=${lat.toString().toDouble()},${
+                "https://maps.google.com/maps?daddr=${lat.toString().toDouble()},${
                     longi.toString().toDouble()
                 }"
             val uri = Uri.parse(googleMapsUrl)
