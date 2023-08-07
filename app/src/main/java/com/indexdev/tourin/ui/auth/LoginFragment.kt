@@ -2,6 +2,8 @@ package com.indexdev.tourin.ui.auth
 
 import android.content.Context
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -46,6 +48,9 @@ class LoginFragment : Fragment() {
         binding.btnForgotPassword.setOnClickListener {
             findNavController().navigate(R.id.action_loginFragment_to_forgotPasswordFragment)
         }
+        binding.btnBack.setOnClickListener {
+            findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
+        }
     }
 
 
@@ -60,6 +65,7 @@ class LoginFragment : Fragment() {
             } else if (binding.etPassword.text.toString().length <= 5) {
                 binding.passwordContainer.error = "Kata sandi minimal berisi 6 karakter"
             } else {
+                binding.loading.root.visibility = View.VISIBLE
                 val loginRequest = LoginRequest(
                     binding.etEmail.text.toString(),
                     binding.etPassword.text.toString()
@@ -73,54 +79,57 @@ class LoginFragment : Fragment() {
         val preference = requireContext().getSharedPreferences(SHARED_PREF, Context.MODE_PRIVATE)
         val userEditor = preference.edit()
         authViewModel.login.observe(viewLifecycleOwner) { resources ->
-            when (resources.status) {
-                LOADING -> {
-                    binding.loading.root.visibility = View.VISIBLE
-                }
-                SUCCESS -> {
-                    binding.loading.root.visibility = View.GONE
-                    when (resources.data?.code) {
-                        200 -> {
-                            userEditor.putString(ID_USER, resources.data.id)
-                            userEditor.putString(USERNAME, resources.data.username)
-                            userEditor.putString(TOKEN, resources.data.token)
-                            userEditor.apply()
-                            findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
-                        }
-                        405 -> {
-                            alertDialog(
-                                requireContext(),
-                                "Gagal masuk",
-                                "Password salah"
-                            )
-                        }
-                        404 -> {
-                            alertDialog(
-                                requireContext(),
-                                "Gagal masuk",
-                                "Email belum terdaftar"
-                            )
-                        }
-                        402 -> {
-                            alertDialog(
-                                requireContext(),
-                                "Gagal masuk",
-                                "Email yang anda masukan tidak ditemukan"
-                            )
+            Handler(Looper.getMainLooper()).postDelayed({
+                when (resources.status) {
+                    LOADING -> {
+                        binding.loading.root.visibility = View.VISIBLE
+                    }
+                    SUCCESS -> {
+                        binding.loading.root.visibility = View.GONE
+                        when (resources.data?.code) {
+                            200 -> {
+                                userEditor.putString(ID_USER, resources.data.id)
+                                userEditor.putString(USERNAME, resources.data.username)
+                                userEditor.putString(TOKEN, resources.data.token)
+                                userEditor.apply()
+                                findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
+                            }
+                            405 -> {
+                                alertDialog(
+                                    requireContext(),
+                                    "Gagal masuk",
+                                    "Password salah"
+                                )
+                            }
+                            404 -> {
+                                alertDialog(
+                                    requireContext(),
+                                    "Gagal masuk",
+                                    "Email belum terdaftar"
+                                )
+                            }
+                            402 -> {
+                                alertDialog(
+                                    requireContext(),
+                                    "Gagal masuk",
+                                    "Email yang anda masukan tidak ditemukan"
+                                )
+                            }
                         }
                     }
-                }
-                ERROR -> {
-                    binding.loading.root.visibility = View.GONE
-                    alertDialog(
-                        requireContext(),
-                        "Pesan",
-                        resources.message ?: getString(
-                            R.string.error
+                    ERROR -> {
+                        binding.loading.root.visibility = View.GONE
+                        alertDialog(
+                            requireContext(),
+                            "Pesan",
+                            "Harap tunggu sebentar, dan coba lagi"
+//                            resources.message ?: getString(
+//                                R.string.error
+//                            )
                         )
-                    )
+                    }
                 }
-            }
+            }, 1000)
         }
     }
 }
