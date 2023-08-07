@@ -55,8 +55,13 @@ class EditAccountDialogFragment(private val usernameUpdate: () -> Unit) : Dialog
         binding.btnUpdate.setOnClickListener {
             if (usernameOld != DEFAULT_VALUE && idUser != DEFAULT_VALUE) {
                 if (!binding.etUsername.text.isNullOrEmpty()) {
-                    val newUsername = UpdateUserRequest(binding.etUsername.text.toString())
-                    editViewModel.editUsername(idUser.toString().toInt(), newUsername)
+                    if (!binding.etUsername.text.toString().matches("[a-zA-Z ]+".toRegex())) {
+                        binding.usernameContainer.error =
+                            "Nama tidak boleh ada karakter selain huruf"
+                    } else {
+                        val newUsername = UpdateUserRequest(binding.etUsername.text.toString())
+                        editViewModel.editUsername(idUser.toString().toInt(), newUsername)
+                    }
                 } else {
                     binding.usernameContainer.error = "Username tidak boleh kosong"
                 }

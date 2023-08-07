@@ -107,6 +107,37 @@
         app:layout_constraintStart_toEndOf="@id/iv_person"
         app:layout_constraintTop_toBottomOf="@id/tv_business_name" />
 
+    <ImageView
+        android:id="@+id/iv_day"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:adjustViewBounds="true"
+        android:maxWidth="24dp"
+        android:maxHeight="24dp"
+        android:src="@drawable/ic_calendar"
+        app:layout_constraintBottom_toBottomOf="@id/tv_day"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tv_day"
+        app:tint="@color/black" />
+
+    <TextView
+        android:id="@+id/tv_day"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:ellipsize="end"
+        android:fontFamily="@font/poppins_regular"
+        android:maxLines="2"
+        android:text=""
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/iv_day"
+        app:layout_constraintTop_toBottomOf="@id/iv_person" />
 
     <ImageView
         android:id="@+id/iv_clock"
@@ -139,7 +170,7 @@
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/iv_person"
-        app:layout_constraintTop_toBottomOf="@id/tv_business_owner" />
+        app:layout_constraintTop_toBottomOf="@id/tv_day" />
 
     <ImageView
         android:id="@+id/iv_contact"
