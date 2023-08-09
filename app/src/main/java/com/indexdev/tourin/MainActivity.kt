@@ -33,7 +33,8 @@ class MainActivity : AppCompatActivity() {
 
     private val listWhiteTheme = listOf(
         R.id.homeFragment,
-        R.id.mapsFragment
+        R.id.mapsFragment,
+        R.id.descFragment
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {

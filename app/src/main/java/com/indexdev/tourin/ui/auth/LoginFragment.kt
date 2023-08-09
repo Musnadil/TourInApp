@@ -92,7 +92,8 @@ class LoginFragment : Fragment() {
                                 userEditor.putString(USERNAME, resources.data.username)
                                 userEditor.putString(TOKEN, resources.data.token)
                                 userEditor.apply()
-                                findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
+//                                findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
+                                findNavController().popBackStack()
                             }
                             405 -> {
                                 alertDialog(

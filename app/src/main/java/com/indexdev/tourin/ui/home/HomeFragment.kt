@@ -2,14 +2,12 @@ package com.indexdev.tourin.ui.home
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.app.AlertDialog
 import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -17,7 +15,6 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.indexdev.tourin.R
 import com.indexdev.tourin.data.api.Status.*
-import com.indexdev.tourin.data.model.response.ResponseRecommendation
 import com.indexdev.tourin.data.model.response.ResponseTourList
 import com.indexdev.tourin.databinding.FragmentHomeBinding
 import com.indexdev.tourin.ui.edit.EditAccountDialogFragment
@@ -38,13 +35,14 @@ class HomeFragment : Fragment() {
     private val listPopularTour: MutableList<ResponseTourList> = ArrayList()
 
     companion object {
-        private const val LOCATION_REQUEST_CODE = 1
+        const val LOCATION_REQUEST_CODE = 1
         const val ID_TOUR = "ID_TOUR"
         const val TOUR_NAME = "TOUR_NAME"
         const val IMG_URL = "IMG_URL"
         const val LAT = "LAT"
         const val LONG = "LONG"
         const val ADDRESS = "ADDRESS"
+        const val DESC = "DESC"
     }
 
     override fun onCreateView(
@@ -98,10 +96,10 @@ class HomeFragment : Fragment() {
         val calendar = Calendar.getInstance()
         calendar.time = date
 
-        if (username == DEFAULT_VALUE){
+        if (username == DEFAULT_VALUE) {
             binding.tvGreating.visibility = View.GONE
             binding.tvUsername.text = "Masuk"
-        } else{
+        } else {
             binding.tvUsername.text = username
             when (calendar.get(Calendar.HOUR_OF_DAY)) {
                 in 12..14 -> {
@@ -181,135 +179,63 @@ class HomeFragment : Fragment() {
 
     private fun detailTour() {
         val preference = requireContext().getSharedPreferences(SHARED_PREF, Context.MODE_PRIVATE)
-        val username = preference.getString(USERNAME, DEFAULT_VALUE)
         popularTourAdapter = PopularTourAdapter(object : PopularTourAdapter.OnClickListener {
             override fun onClickItem(data: ResponseTourList) {
-                findNavController().navigate(R.id.action_homeFragment_to_descFragment)
-//                val POIBundle = Bundle()
-//                if (username == DEFAULT_VALUE){
-//                    AlertDialog.Builder(requireContext())
-//                        .setTitle("Pesan")
-//                        .setMessage("Untuk melihat wisata anda harus login terlebih dahulu.")
-//                        .setPositiveButton("Ok") { positiveButton, _ ->
-//                            positiveButton.dismiss()
-//                            findNavController().navigate(R.id.action_homeFragment_to_loginFragment)
-//                        }
-//                        .setNegativeButton("Batal") { negativeButton, _ ->
-//                            negativeButton.dismiss()
-//                        }
-//                        .show()
-//                } else {
-//                    if (ActivityCompat.checkSelfPermission(
-//                            requireContext(),
-//                            Manifest.permission.ACCESS_FINE_LOCATION
-//                        ) != PackageManager.PERMISSION_GRANTED
-//                    ) {
-//                        AlertDialog.Builder(requireContext())
-//                            .setTitle("Pesan")
-//                            .setMessage("Akses lokasi belum diijinkan, beri ijin lokasi terlebih dahulu")
-//                            .setPositiveButton("Ok") { positiveButton, _ ->
-//                                positiveButton.dismiss()
-//                                ActivityCompat.requestPermissions(
-//                                    requireActivity(),
-//                                    arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
-//                                    LOCATION_REQUEST_CODE
-//                                )
-//                            }
-//                            .show()
-//                    } else{
-//                        POIBundle.putString(ID_TOUR, data.idWisata)
-//                        POIBundle.putString(TOUR_NAME, data.wisata)
-//                        POIBundle.putString(LAT, data.lat)
-//                        POIBundle.putString(LONG, data.longi)
-//                        POIBundle.putString(ADDRESS, data.alamat)
-//                        POIBundle.putString(IMG_URL, data.urlImage)
-//                        val ratingEdit = preference.edit()
-//                        ratingEdit.putString(
-//                            SplashScreenFragment.ID_TOUR,
-//                            data.idWisata
-//                        )
-//                        ratingEdit.putString(
-//                            SplashScreenFragment.IMG_URL,
-//                            data.urlImage
-//                        )
-//                        ratingEdit.putString(
-//                            SplashScreenFragment.TOUR_NAME,
-//                            data.wisata
-//                        )
-//                        ratingEdit.apply()
-//                        findNavController().navigate(R.id.action_homeFragment_to_mapsFragment, POIBundle)
-//                    }
-//
-//                }
-
+                val POIBundle = Bundle()
+                POIBundle.putString(ID_TOUR, data.idWisata)
+                POIBundle.putString(TOUR_NAME, data.wisata)
+                POIBundle.putString(LAT, data.lat)
+                POIBundle.putString(LONG, data.longi)
+                POIBundle.putString(ADDRESS, data.alamat)
+                POIBundle.putString(IMG_URL, data.urlImage)
+                POIBundle.putString(DESC, data.deskripsi)
+                val ratingEdit = preference.edit()
+                ratingEdit.putString(
+                    SplashScreenFragment.ID_TOUR,
+                    data.idWisata
+                )
+                ratingEdit.putString(
+                    SplashScreenFragment.IMG_URL,
+                    data.urlImage
+                )
+                ratingEdit.putString(
+                    SplashScreenFragment.TOUR_NAME,
+                    data.wisata
+                )
+                ratingEdit.apply()
+                findNavController().navigate(
+                    R.id.action_homeFragment_to_descFragment,
+                    POIBundle
+                )
             }
-
         })
         binding.rvPopularTour.adapter = popularTourAdapter
 
         allListTourAdapter = AllListTourAdapter(object : AllListTourAdapter.OnclickListener {
             override fun onClickItem(data: ResponseTourList) {
-//                findNavController().navigate(R.id.action_homeFragment_to_descFragment)
-
                 val POIBundle = Bundle()
-                if (username == DEFAULT_VALUE){
-                    AlertDialog.Builder(requireContext())
-                        .setTitle("Pesan")
-                        .setMessage("Untuk melihat wisata anda harus login terlebih dahulu.")
-                        .setPositiveButton("Ok") { positiveButton, _ ->
-                            positiveButton.dismiss()
-                            findNavController().navigate(R.id.action_homeFragment_to_loginFragment)
-                        }
-                        .setNegativeButton("Batal") { negativeButton, _ ->
-                            negativeButton.dismiss()
-                        }
-                        .show()
-                } else {
-                    if (ActivityCompat.checkSelfPermission(
-                            requireContext(),
-                            Manifest.permission.ACCESS_FINE_LOCATION
-                        ) != PackageManager.PERMISSION_GRANTED
-                    ) {
-                        AlertDialog.Builder(requireContext())
-                            .setTitle("Pesan")
-                            .setMessage("Akses lokasi belum diijinkan, beri ijin lokasi terlebih dahulu")
-                            .setPositiveButton("Ok") { positiveButton, _ ->
-                                positiveButton.dismiss()
-                                ActivityCompat.requestPermissions(
-                                    requireActivity(),
-                                    arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
-                                    LOCATION_REQUEST_CODE
-                                )
-                            }
-                            .show()
-                    } else{
-                        POIBundle.putString(ID_TOUR, data.idWisata)
-                        POIBundle.putString(TOUR_NAME, data.wisata)
-                        POIBundle.putString(LAT, data.lat)
-                        POIBundle.putString(LONG, data.longi)
-                        POIBundle.putString(ADDRESS, data.alamat)
-                        POIBundle.putString(IMG_URL, data.urlImage)
-                        val ratingEdit = preference.edit()
-                        ratingEdit.putString(
-                            SplashScreenFragment.ID_TOUR,
-                            data.idWisata
-                        )
-                        ratingEdit.putString(
-                            SplashScreenFragment.IMG_URL,
-                            data.urlImage
-                        )
-                        ratingEdit.putString(
-                            SplashScreenFragment.TOUR_NAME,
-                            data.wisata
-                        )
-                        ratingEdit.apply()
-                        findNavController().navigate(R.id.action_homeFragment_to_descFragment,POIBundle)
-
-
-//                        findNavController().navigate(R.id.action_homeFragment_to_mapsFragment, POIBundle)
-                    }
-
-                }
+                POIBundle.putString(ID_TOUR, data.idWisata)
+                POIBundle.putString(TOUR_NAME, data.wisata)
+                POIBundle.putString(LAT, data.lat)
+                POIBundle.putString(LONG, data.longi)
+                POIBundle.putString(ADDRESS, data.alamat)
+                POIBundle.putString(IMG_URL, data.urlImage)
+                POIBundle.putString(DESC, data.deskripsi)
+                val ratingEdit = preference.edit()
+                ratingEdit.putString(
+                    SplashScreenFragment.ID_TOUR,
+                    data.idWisata
+                )
+                ratingEdit.putString(
+                    SplashScreenFragment.IMG_URL,
+                    data.urlImage
+                )
+                ratingEdit.putString(
+                    SplashScreenFragment.TOUR_NAME,
+                    data.wisata
+                )
+                ratingEdit.apply()
+                findNavController().navigate(R.id.action_homeFragment_to_descFragment, POIBundle)
             }
         })
         binding.rvAllTour.adapter = allListTourAdapter

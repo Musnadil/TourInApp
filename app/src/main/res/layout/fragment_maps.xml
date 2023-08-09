@@ -14,13 +14,13 @@
 
     <ImageView
         android:id="@+id/btn_back"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:layout_marginStart="16dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_margin="16dp"
         android:background="@drawable/circle"
         android:backgroundTint="@color/white_theme"
-        android:contentDescription="@string/button_back"
-        android:src="@drawable/ic_back"
+        android:padding="4dp"
+        android:src="@drawable/ic_arrow_back"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/status_bar" />
 
@@ -120,8 +120,7 @@
             app:fab_colorNormal="@color/grey_theme"
             app:fab_colorPressed="@color/light_grey_theme"
             app:fab_label="Lokasi Wisata"
-            app:fab_size="mini"
-            />
+            app:fab_size="mini" />
 
         <com.github.clans.fab.FloatingActionButton
             android:id="@+id/fab_my_location"
